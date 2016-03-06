@@ -18,3 +18,11 @@ G:\AspNET\VideoSchool\bin\System.Web.Mvc.xml
 G:\AspNET\VideoSchool\obj\Debug\VideoSchool.csprojResolveAssemblyReference.cache
 G:\AspNET\VideoSchool\obj\Debug\VideoSchool.dll
 G:\AspNET\VideoSchool\obj\Debug\VideoSchool.pdb
+g:\GIT\VideoSchool\VideoSchool\bin\VideoSchool.dll.config
+g:\GIT\VideoSchool\VideoSchool\bin\VideoSchool.dll
+g:\GIT\VideoSchool\VideoSchool\bin\VideoSchool.pdb
+g:\GIT\VideoSchool\VideoSchool\bin\MySql.Data.dll
+g:\GIT\VideoSchool\VideoSchool\bin\MySql.Data.Entity.dll
+g:\GIT\VideoSchool\VideoSchool\obj\Debug\VideoSchool.csprojResolveAssemblyReference.cache
+g:\GIT\VideoSchool\VideoSchool\obj\Debug\VideoSchool.dll
+g:\GIT\VideoSchool\VideoSchool\obj\Debug\VideoSchool.pdb

@@ -6,3 +6,21 @@
 
 <h2>Index</h2>
 
+UserID: @Model.id <br />
+Name:   @Model.name <br />
+Email:  @Model.email <br />
+Status: @Model.status <br />
+
+@using(Html.BeginForm())
+{
+    <div>
+        Email: 
+        @Html.TextBox("email", Model.email)
+    </div>
+    <div>
+        Passw:
+        @Html.Password("passw", "")
+    </div>
+
+    <input type="submit" value="Login" class="btn btn-success" />
+}

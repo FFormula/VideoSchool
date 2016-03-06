@@ -120,6 +120,7 @@ namespace VideoSchool.Models
 
         public string addslashes (string text)
         {
+            if (text == null) return "";
             return text.Replace ("\'", "\\\'");
         }
     }

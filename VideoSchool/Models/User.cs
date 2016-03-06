@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -7,12 +8,14 @@ namespace VideoSchool.Models
 {
     public class User
     {
-        string id;
-        string status;
+        MySQL sql;
+
+        public string id { get; private set; }
+        public string status { get; private set; }
         
-        string name  { get; set; }
-        string email { get; set; }
-        string passw { get; set; }
+        public string name  { get; set; }
+        public string email { get; set; }
+        public string passw { get; set; }
 
         /// <summary>
         /// Create an empty instance of User model
@@ -24,19 +27,41 @@ namespace VideoSchool.Models
             name = "";
             email = "";
             passw = "";
+            this.sql = null;
+        }
+
+        public User (MySQL sql)
+            : this ()
+        {
+            this.sql = sql;
         }
 
         /// <summary>
         /// Create User model and load User by id
         /// </summary>
         /// <param name="id">user_id - an unique user's number in database</param>
-        public User (string id)
+        public void Select (string id)
         {
-            this.id = id;
             string query = @"
-                SELECT name, email, status
+                SELECT id, name, email, status
                   FROM user
-                 WHERE id = 'this.id'";
+                 WHERE id = '" + sql.addslashes (id) + "'";
+            DataTable table = sql.Select(query);
+            try
+            {
+                id  = table.Rows[0]["id"].ToString();
+                name = table.Rows[0]["name"].ToString();
+                email = table.Rows[0]["email"].ToString();
+                status = table.Rows[0]["status"].ToString();
+            }
+            catch (Exception ex)
+            {
+                id = "";
+                status = "0";
+                name = "";
+                email = "";
+                passw = "";
+            }
         }
 
 	    /// <summary>
@@ -57,17 +82,20 @@ namespace VideoSchool.Models
         /// Check this.email and this.passw by user table.
         /// </summary>
         /// <returns>True - email and password correct, False - invalid authorisation</returns>
-	    bool Login()		
+	    public bool Login()		
 	    {
 		    // no action checking
             string query = @"
-		    SELECT COUNT(*) 
+		    SELECT COALESCE(min(id),-1) AS UserID
 		      FROM user
-		     WHERE email = 'formulist@gmail.com'  
-		       AND passw = password('qwas')
+		     WHERE email = '" + sql.addslashes (this.email) + @"'  
+		       AND passw = password('" + sql.addslashes (this.passw) + @"')
 		       AND status != '0'";
-		    int result = 0;
-		    return result == 1;
+            string id = sql.Scalar(query);
+            if (id == "-1")
+                return false;
+            this.id = id;
+            return true;
 	    }
 
         /// <summary>
