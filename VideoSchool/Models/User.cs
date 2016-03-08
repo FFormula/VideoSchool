@@ -8,7 +8,7 @@ namespace VideoSchool.Models
 {
     public class User
     {
-        MySQL sql;
+        DataBase sql;
 
         public string id { get; private set; }
         public string status { get; private set; }
@@ -35,7 +35,7 @@ namespace VideoSchool.Models
         public User (Shared shared)
             : this ()
         {
-            this.sql = shared.sql;
+            this.sql = shared.db;
             this.error = shared.error;
         }
 

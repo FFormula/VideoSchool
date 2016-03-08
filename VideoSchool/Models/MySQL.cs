@@ -5,13 +5,13 @@ using System.Web.Configuration;
 
 namespace VideoSchool.Models
 {
-    public class MySQL
+    public class DataBase
     {
         private MySqlConnection con;
         public Error error { get; private set; }
         public string query { get; private set; }
 
-        public MySQL (Error error)
+        public DataBase (Error error)
         {
             this.error = error;
             try
@@ -29,7 +29,7 @@ namespace VideoSchool.Models
             }
         }
 
-        ~MySQL ()
+        ~DataBase ()
         {
             try
             {

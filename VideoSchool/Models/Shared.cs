@@ -8,7 +8,7 @@ namespace VideoSchool.Models
 {
     public class Shared
     {
-        public MySQL sql { get; private set; }
+        public DataBase db { get; private set; }
         public Error error { get; private set; }
         public Controller controller { get; private set; }
 
@@ -16,7 +16,7 @@ namespace VideoSchool.Models
         {
             this.controller = controller;
             error = new Error();
-            sql = new MySQL(error);
+            db = new DataBase(error);
         }
 
     }
