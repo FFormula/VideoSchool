@@ -17,9 +17,7 @@ namespace VideoSchool.Models
         public string email { get; set; }
         public string passw { get; set; }
 
-        public string error_text { get; private set; }
-        public string error_meth { get; private set; }
-        public string error_excp { get; private set; }
+        public Error error;
 
         /// <summary>
         /// Create an empty instance of User model
@@ -31,25 +29,14 @@ namespace VideoSchool.Models
             name = "";
             email = "";
             passw = "";
-            error_excp = "";
-            error_text = "";
-            error_meth = "";
             this.sql = null;
         }
 
-        public User (MySQL sql)
+        public User (Shared shared)
             : this ()
         {
-            this.sql = sql;
-        }
-
-        /// <summary>
-        /// Check for errors after last method
-        /// </summary>
-        /// <returns>True - there is an error, False - no errors</returns>
-        public bool IsError()
-        {
-            return error_excp != "";
+            this.sql = shared.sql;
+            this.error = shared.error;
         }
 
         /// <summary>
@@ -65,6 +52,12 @@ namespace VideoSchool.Models
                   FROM user
                  WHERE id = '" + sql.addslashes (id) + "'";
                 DataTable table = sql.Select(query);
+                if (error.IsErrors()) return;
+                if (table.Rows.Count == 0)
+                {
+                    error.MarkUserError("User " + id + " not found");
+                    return;
+                }
                 id  = table.Rows[0]["id"].ToString();
                 name = table.Rows[0]["name"].ToString();
                 email = table.Rows[0]["email"].ToString();
@@ -77,16 +70,14 @@ namespace VideoSchool.Models
                 name = "";
                 email = "";
                 passw = "";
-                error_text = "Error selecting user data";
-                error_meth = "User::Select(" + id + ")";
-                error_excp = ex.Message;
+                error.MarkSystemError(ex);
             }
         }
 
 	    /// <summary>
 	    /// Join new user - add his to the user table.
 	    /// </summary>
-        public bool Insert()		
+        public void Insert()		
 	    {
 		    // no action checking
             try
@@ -97,8 +88,13 @@ namespace VideoSchool.Models
 		        SELECT COUNT(*)
 		          FROM user
 		         WHERE email = '" + sql.addslashes(this.email) + @"'";
-                if (sql.Scalar(query) != "0")
-                    return false;
+                string result = sql.Scalar(query);
+                if (error.IsErrors()) return;
+                if (result != "0")
+                {
+                    error.MarkUserError("This email already taken");
+                    return;
+                }
 
                 query = @"
 		        INSERT INTO user
@@ -107,14 +103,11 @@ namespace VideoSchool.Models
 		               passw = password('" + sql.addslashes(this.passw) + @"'),
 		               status = '1'";
                 sql.Insert(query);
-                return true;
+                if (error.IsErrors()) return;
             }
             catch (Exception ex)
             {
-                error_excp = ex.Message;
-                error_meth = "User::Insert";
-                error_text = "Error inserting new record int user data table";
-                return false;
+                error.MarkSystemError(ex);
             }
 	    }
 
@@ -122,20 +115,30 @@ namespace VideoSchool.Models
         /// Check this.email and this.passw by user table.
         /// </summary>
         /// <returns>True - email and password correct, False - invalid authorisation</returns>
-	    public bool Login()		
+	    public void Login()		
 	    {
 		    // no action checking
-            string query = @"
+            try
+            {
+                string query = @"
 		    SELECT COALESCE(min(id),-1) AS UserID
 		      FROM user
-		     WHERE email = '" + sql.addslashes (this.email) + @"'  
-		       AND passw = password('" + sql.addslashes (this.passw) + @"')
+		     WHERE email = '" + sql.addslashes(this.email) + @"'  
+		       AND passw = password('" + sql.addslashes(this.passw) + @"')
 		       AND status != '0'";
-            string id = sql.Scalar(query);
-            if (id == "-1")
-                return false;
-            this.id = id;
-            return true;
+                string id = sql.Scalar(query);
+                if (error.IsErrors()) return;
+                if (id == "-1")
+                {
+                    error.MarkUserError("Email or password incorrect");
+                    return;
+                }
+                this.id = id;
+            } 
+            catch (Exception ex)
+            {
+                error.MarkSystemError(ex);
+            }
 	    }
 
         /// <summary>

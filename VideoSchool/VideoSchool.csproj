@@ -116,6 +116,7 @@
     </Compile>
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\MySQL.cs" />
+    <Compile Include="Models\Shared.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

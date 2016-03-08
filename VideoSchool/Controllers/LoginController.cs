@@ -9,21 +9,20 @@ namespace VideoSchool.Controllers
 {
     public class LoginController : Controller
     {
-        MySQL sql;
+        Shared shared;
         User user;
-        public ActionResult ErrorActionResult;
 
         public LoginController ()
         {
-            sql = new MySQL();
-            user = new User(sql);
-            ViewBag.error = "";
+            shared = new Shared(this);
+            user = new User(shared);
         }
 
         [HttpGet]
         public ActionResult Index()
         {
-            if (IsError()) return ErrorActionResult;
+            user.Select("1");
+            if (shared.error.IsErrors()) return ShowError();
             return View(user);
         }
 
@@ -32,18 +31,21 @@ namespace VideoSchool.Controllers
         {
             user.email = post.email;
             user.passw = post.passw;
-            if (user.Login())
+            user.Login();
+            if (shared.error.mode == ErrorMode.UserError)
             {
-                user.Select(user.id);
-                Session["user_id"] = user.id;
-                Session["user_email"] = user.email;
-                Session["user_name"] = user.name;
-                if (IsError()) return ErrorActionResult;
-                return RedirectToAction("Index", "Login");
+                ViewBag.error = shared.error.text;
+                return View(user);
             }
-            ViewBag.error = "Адрес эл. почты или пароль указан не верно";
-            if (IsError()) return ErrorActionResult;
-            return View(user);
+            if (shared.error.IsErrors()) return ShowError();                
+            user.Select(user.id);
+            if (shared.error.IsErrors()) return ShowError();                
+
+            Session["user_id"] = user.id;
+            Session["user_email"] = user.email;
+            Session["user_name"] = user.name;
+
+            return RedirectToAction("Index", "Login");
         }
 
 
@@ -52,14 +54,14 @@ namespace VideoSchool.Controllers
             Session["user_id"] = null;
             Session["user_name"] = null;
             Session["user_email"] = null;
-            if (IsError()) return ErrorActionResult;
+            if (shared.error.IsErrors()) return ShowError();
             return RedirectToAction("Index", "Login");
         }
 
         [HttpGet]
         public ActionResult Signup()
         {
-            if (IsError()) return ErrorActionResult;
+            if (shared.error.IsErrors()) return ShowError();
             return View(user);
         }
 
@@ -69,36 +71,20 @@ namespace VideoSchool.Controllers
             user.name = post.name;
             user.email = post.email;
             user.passw = post.passw;
-            bool ok = user.Insert();
-            if (IsError()) return ErrorActionResult;
-            if (!ok)
+            user.Insert();
+            if (shared.error.mode == ErrorMode.UserError)
             {
-                ViewBag.error = "This email already taken";
+                ViewBag.error = shared.error.text;
                 return View(user);
             }
+            if (shared.error.IsErrors()) return ShowError();
             return RedirectToAction("Index", "Login");
         }
 
-        public bool IsError()
+        public ActionResult ShowError()
         {
-            if (sql.IsError())
-            {
-                ViewBag.error = sql.error;
-                ViewBag.query = sql.query;
-                ErrorActionResult = View("~/Views/Error.cshtml");
-                return true;
-            }
-            if (user.IsError())
-            {
-                ViewBag.error =
-                    user.error_text + "<br/>" +
-                    user.error_excp + "<br/>" +
-                    user.error_meth + "<br/>";
-                ViewBag.query = sql.query;
-                ErrorActionResult = View("~/Views/Error.cshtml");
-                return true;
-            }
-            return false;
+            return View("~/Views/Error.cshtml", shared.error);
         }
+
     }
 }

@@ -1,9 +1,10 @@
-﻿@{
-    ViewBag.Title = "Error";
-}
+﻿@model VideoSchool.Models.Error
 
-<h2>Error</h2>
+<h2>Last Error</h2>
 
-<p><strong>Query:</strong> @ViewBag.query</p>
-<p><strong>Error:</strong> @ViewBag.error</p>
-
+<p><strong>Mode:</strong> @Model.mode</p>
+<p><strong>Text:</strong> @Model.text</p>
+<p><strong>Source:</strong> @Model.exception.Source</p>
+<p><strong>Exception:</strong> @Model.exception.Message</p>
+<p><strong>Query:</strong> @Model.query</p>
+<p><strong>Stack:</strong> <pre>@Model.exception.StackTrace</pre></p>
