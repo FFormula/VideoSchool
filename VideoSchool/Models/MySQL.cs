@@ -25,6 +25,7 @@ namespace VideoSchool.Models
             {
                 error.MarkDBaseError(ex, "Error connection to mysql", query);
                 con = null;
+                throw ex;
             }
         }
 
@@ -42,7 +43,7 @@ namespace VideoSchool.Models
 
         public DataTable Select (string myquery)
         {
-            if (error.IsErrors()) return null;
+            if (error.AnyError()) return null;
             try
             {
                 query = myquery;
@@ -55,13 +56,13 @@ namespace VideoSchool.Models
             catch (Exception ex)
             {
                 error.MarkDBaseError(ex, "Error on Select query", query);
-                return null;
+                throw ex;
             }
         }
 
         public string Scalar (string myquery)
         {
-            if (error.IsErrors()) return null;
+            if (error.AnyError()) return null;
             try
             {
                 query = myquery;
@@ -76,13 +77,13 @@ namespace VideoSchool.Models
             catch (Exception ex)
             {
                 error.MarkDBaseError(ex, "Error on Scalar query", query);
-                return "";
+                throw ex;
             }
         }
 
         public long Insert(string myquery)
         {
-            if (error.IsErrors()) return -1;
+            if (error.AnyError()) return -1;
             try
             {
                 query = myquery;
@@ -93,13 +94,13 @@ namespace VideoSchool.Models
             catch (Exception ex)
             {
                 error.MarkDBaseError(ex, "Error on Insert query", query);
-                return -1;
+                throw ex;
             }
         }
 
         public int Update(string myquery)
         {
-            if (error.IsErrors()) return -1;
+            if (error.AnyError()) return -1;
             try
             {
                 query = myquery;
@@ -109,7 +110,7 @@ namespace VideoSchool.Models
             catch (Exception ex)
             {
                 error.MarkDBaseError(ex, "Error on Update query", query);
-                return -1;
+                throw ex;
             }
         }
 

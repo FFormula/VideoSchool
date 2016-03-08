@@ -21,68 +21,97 @@ namespace VideoSchool.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            user.Select("1");
-            if (shared.error.IsErrors()) return ShowError();
-            return View(user);
+            try 
+            {
+                return View(user);
+            } 
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
         }
 
         [HttpPost]
         public ActionResult Index(User post)
         {
-            user.email = post.email;
-            user.passw = post.passw;
-            user.Login();
-            if (shared.error.mode == ErrorMode.UserError)
+            try
             {
-                ViewBag.error = shared.error.text;
-                return View(user);
+                user.email = post.email;
+                user.passw = post.passw;
+                user.Login();
+                if (shared.error.UserErrors())
+                {
+                    ViewBag.error = shared.error.text;
+                    return View(user);
+                }
+                user.Select(user.id);
+
+                Session["user_id"] = user.id;
+                Session["user_email"] = user.email;
+                Session["user_name"] = user.name;
+
+                return RedirectToAction("Index", "Login");
+            } 
+            catch (Exception ex)
+            {
+                return ShowError(ex);
             }
-            if (shared.error.IsErrors()) return ShowError();                
-            user.Select(user.id);
-            if (shared.error.IsErrors()) return ShowError();                
-
-            Session["user_id"] = user.id;
-            Session["user_email"] = user.email;
-            Session["user_name"] = user.name;
-
-            return RedirectToAction("Index", "Login");
         }
-
 
         public ActionResult Logout ()
         {
-            Session["user_id"] = null;
-            Session["user_name"] = null;
-            Session["user_email"] = null;
-            if (shared.error.IsErrors()) return ShowError();
-            return RedirectToAction("Index", "Login");
+            try
+            {
+                Session["user_id"] = null;
+                Session["user_name"] = null;
+                Session["user_email"] = null;
+                return RedirectToAction("Index", "Login");
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
         }
 
         [HttpGet]
         public ActionResult Signup()
         {
-            if (shared.error.IsErrors()) return ShowError();
-            return View(user);
+            try
+            {
+                return View(user);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
         }
 
         [HttpPost]
         public ActionResult Signup(User post)
         {
-            user.name = post.name;
-            user.email = post.email;
-            user.passw = post.passw;
-            user.Insert();
-            if (shared.error.mode == ErrorMode.UserError)
+            try 
             {
-                ViewBag.error = shared.error.text;
-                return View(user);
+                user.name = post.name;
+                user.email = post.email;
+                user.passw = post.passw;
+                user.Insert();
+                if (shared.error.UserErrors ())
+                {
+                    ViewBag.error = shared.error.text;
+                    return View(user);
+                }
+                return RedirectToAction("Index", "Login");
             }
-            if (shared.error.IsErrors()) return ShowError();
-            return RedirectToAction("Index", "Login");
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
         }
 
-        public ActionResult ShowError()
+        public ActionResult ShowError(Exception ex)
         {
+            if (shared.error.NoErrors())
+                shared.error.MarkSystemError(ex);
             return View("~/Views/Error.cshtml", shared.error);
         }
 

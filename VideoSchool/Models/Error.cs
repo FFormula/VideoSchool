@@ -57,9 +57,19 @@ namespace VideoSchool.Models
             this.text = "System error";
         }
 
-        public bool IsErrors()
+        public bool AnyError()
         {
             return mode != ErrorMode.NoErrors;
+        }
+
+        public bool NoErrors()
+        {
+            return mode == ErrorMode.NoErrors;
+        }
+
+        public bool UserErrors()
+        {
+            return mode == ErrorMode.UserError;
         }
     }
 }

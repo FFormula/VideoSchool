@@ -52,7 +52,6 @@ namespace VideoSchool.Models
                   FROM user
                  WHERE id = '" + sql.addslashes (id) + "'";
                 DataTable table = sql.Select(query);
-                if (error.IsErrors()) return;
                 if (table.Rows.Count == 0)
                 {
                     error.MarkUserError("User " + id + " not found");
@@ -65,12 +64,7 @@ namespace VideoSchool.Models
             }
             catch (Exception ex)
             {
-                id = "";
-                status = "0";
-                name = "";
-                email = "";
-                passw = "";
-                error.MarkSystemError(ex);
+                ThrowError(ex);
             }
         }
 
@@ -79,35 +73,33 @@ namespace VideoSchool.Models
 	    /// </summary>
         public void Insert()		
 	    {
-		    // no action checking
             try
             {
+                // no action checking
                 string query;
 
                 query = @"
-		        SELECT COUNT(*)
-		          FROM user
-		         WHERE email = '" + sql.addslashes(this.email) + @"'";
-                string result = sql.Scalar(query);
-                if (error.IsErrors()) return;
-                if (result != "0")
+		    SELECT COUNT(*)
+		        FROM user
+		        WHERE email = '" + sql.addslashes(this.email) + @"'";
+
+                if (sql.Scalar(query) != "0")
                 {
                     error.MarkUserError("This email already taken");
                     return;
                 }
 
                 query = @"
-		        INSERT INTO user
-		           SET name = '" + sql.addslashes(this.name) + @"',
-		               email = '" + sql.addslashes(this.email) + @"',
-		               passw = password('" + sql.addslashes(this.passw) + @"'),
-		               status = '1'";
+		    INSERT INTO user
+		        SET name = '" + sql.addslashes(this.name) + @"',
+		            email = '" + sql.addslashes(this.email) + @"',
+		            passw = password('" + sql.addslashes(this.passw) + @"'),
+		            status = '1'";
                 sql.Insert(query);
-                if (error.IsErrors()) return;
-            }
+            } 
             catch (Exception ex)
             {
-                error.MarkSystemError(ex);
+                ThrowError(ex);
             }
 	    }
 
@@ -127,7 +119,6 @@ namespace VideoSchool.Models
 		       AND passw = password('" + sql.addslashes(this.passw) + @"')
 		       AND status != '0'";
                 string id = sql.Scalar(query);
-                if (error.IsErrors()) return;
                 if (id == "-1")
                 {
                     error.MarkUserError("Email or password incorrect");
@@ -137,7 +128,7 @@ namespace VideoSchool.Models
             } 
             catch (Exception ex)
             {
-                error.MarkSystemError(ex);
+                ThrowError(ex);
             }
 	    }
 
@@ -222,7 +213,7 @@ namespace VideoSchool.Models
             string query = @"
                 SELECT id FROM action 
 			     WHERE action = 'action'";
-		    string action_id = "";
+		    //string action_id = "";
 
             query = @"
             SELECT COUNT(*) 
@@ -234,6 +225,13 @@ namespace VideoSchool.Models
             return false;
 	    }
 
+
+        private void ThrowError (Exception ex)
+        {
+            if (error.NoErrors())
+                error.MarkSystemError(ex);
+            throw ex;
+        }
 
 
     }
