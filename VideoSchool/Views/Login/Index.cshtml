@@ -10,9 +10,19 @@ UserID: @Model.id <br />
 Name:   @Model.name <br />
 Email:  @Model.email <br />
 Status: @Model.status <br />
+Session<br />
+User_id: @Session["user_id"] <br />
+Email: @Session["user_email"] <br />
+Name: @Session["user_name"] <br />
 
-@using(Html.BeginForm())
+@if(Session["user_id"] == null)
+{ 
+
+using(Html.BeginForm())
 {
+    <div style="color: red">
+        @ViewBag.error
+    </div>
     <div>
         Email: 
         @Html.TextBox("email", Model.email)
@@ -23,4 +33,10 @@ Status: @Model.status <br />
     </div>
 
     <input type="submit" value="Login" class="btn btn-success" />
+}
+
+}
+else
+{
+    @Html.ActionLink("Выход", "Logout", "Login", new { }, new { @class="btn btn-danger" } )
 }

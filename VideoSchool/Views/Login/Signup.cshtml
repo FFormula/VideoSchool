@@ -1,0 +1,31 @@
+﻿@model VideoSchool.Models.User
+
+@{
+    ViewBag.Title = "Signup";
+}
+
+<h2>Signup</h2>
+
+
+@using (Html.BeginForm("Signup", "Login", FormMethod.Post))
+{
+    <div style="color: red">
+        @ViewBag.error
+    </div>
+
+    <p>@Html.AntiForgeryToken()</p>
+    <div>
+        Имя
+        @Html.TextBox("name", Model.name)
+    </div>
+    <div>
+        email
+        @Html.TextBox("email", Model.email)
+    </div>
+    <div>
+        Пароль
+        @Html.Password("passw")
+    </div>
+    <div><input type="submit" value="Записаться" class="btn btn-success" /></div>
+
+}

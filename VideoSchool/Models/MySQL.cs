@@ -123,5 +123,10 @@ namespace VideoSchool.Models
             if (text == null) return "";
             return text.Replace ("\'", "\\\'");
         }
+
+        public void ClearError ()
+        {
+            error = "";
+        }
     }
 }

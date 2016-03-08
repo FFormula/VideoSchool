@@ -17,6 +17,10 @@ namespace VideoSchool.Models
         public string email { get; set; }
         public string passw { get; set; }
 
+        public string error_text { get; private set; }
+        public string error_meth { get; private set; }
+        public string error_excp { get; private set; }
+
         /// <summary>
         /// Create an empty instance of User model
         /// </summary>
@@ -27,6 +31,9 @@ namespace VideoSchool.Models
             name = "";
             email = "";
             passw = "";
+            error_excp = "";
+            error_text = "";
+            error_meth = "";
             this.sql = null;
         }
 
@@ -37,18 +44,27 @@ namespace VideoSchool.Models
         }
 
         /// <summary>
+        /// Check for errors after last method
+        /// </summary>
+        /// <returns>True - there is an error, False - no errors</returns>
+        public bool IsError()
+        {
+            return error_excp != "";
+        }
+
+        /// <summary>
         /// Create User model and load User by id
         /// </summary>
         /// <param name="id">user_id - an unique user's number in database</param>
         public void Select (string id)
         {
-            string query = @"
+            try
+            {
+                string query = @"
                 SELECT id, name, email, status
                   FROM user
                  WHERE id = '" + sql.addslashes (id) + "'";
-            DataTable table = sql.Select(query);
-            try
-            {
+                DataTable table = sql.Select(query);
                 id  = table.Rows[0]["id"].ToString();
                 name = table.Rows[0]["name"].ToString();
                 email = table.Rows[0]["email"].ToString();
@@ -61,21 +77,45 @@ namespace VideoSchool.Models
                 name = "";
                 email = "";
                 passw = "";
+                error_text = "Error selecting user data";
+                error_meth = "User::Select(" + id + ")";
+                error_excp = ex.Message;
             }
         }
 
 	    /// <summary>
 	    /// Join new user - add his to the user table.
 	    /// </summary>
-        void Insert()		
+        public bool Insert()		
 	    {
 		    // no action checking
-            string query = @"
-		    INSERT INTO user
-		       SET name = 'Jevgenij',
-		           email = 'formulist@gmail.com',
-		           passw = password('qwas'),
-		           status = '1'";
+            try
+            {
+                string query;
+
+                query = @"
+		        SELECT COUNT(*)
+		          FROM user
+		         WHERE email = '" + sql.addslashes(this.email) + @"'";
+                if (sql.Scalar(query) != "0")
+                    return false;
+
+                query = @"
+		        INSERT INTO user
+		           SET name = '" + sql.addslashes(this.name) + @"',
+		               email = '" + sql.addslashes(this.email) + @"',
+		               passw = password('" + sql.addslashes(this.passw) + @"'),
+		               status = '1'";
+                sql.Insert(query);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                error_excp = ex.Message;
+                error_meth = "User::Insert";
+                error_text = "Error inserting new record int user data table";
+                return false;
+            }
 	    }
 
         /// <summary>
