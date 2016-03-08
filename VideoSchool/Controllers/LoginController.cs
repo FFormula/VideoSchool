@@ -14,7 +14,7 @@ namespace VideoSchool.Controllers
 
         public LoginController ()
         {
-            shared = new Shared(this);
+            shared = new Shared();
             user = new User(shared);
         }
 

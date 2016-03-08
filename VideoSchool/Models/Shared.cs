@@ -10,11 +10,9 @@ namespace VideoSchool.Models
     {
         public DataBase db { get; private set; }
         public Error error { get; private set; }
-        public Controller controller { get; private set; }
 
-        public Shared (Controller controller)
+        public Shared ()
         {
-            this.controller = controller;
             error = new Error();
             db = new DataBase(error);
         }
