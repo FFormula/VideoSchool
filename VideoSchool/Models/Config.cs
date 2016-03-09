@@ -10,6 +10,8 @@ namespace VideoSchool.Models
     {
         public string mysql_connection { get; set; }
 
+        public string filename = "config.txt";
+
         /// <summary>
         /// Init config for required Run Mode
         /// </summary>
@@ -42,7 +44,12 @@ namespace VideoSchool.Models
         /// </summary>
         public void InitFromTest ()
         {
-            mysql_connection = "server=localhost;UserId=root;Password=qwas;database=SCHOOL;CharSet=utf8";
+            mysql_connection = System.IO.File.ReadAllText(filename);
+        }
+
+        public void SaveFromTest ()
+        {
+            System.IO.File.WriteAllText(filename, "server=localhost;UserId=root;Password=qwas;database=SCHOOL;CharSet=utf8");
         }
     }
 }
