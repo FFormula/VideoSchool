@@ -1,0 +1,206 @@
+.footer
+{
+	width: 100%;
+	height: 60px;
+	padding: 10px 50px;
+	
+	line-height: 40px;
+	font-size: 17px;
+	
+	background-color: #f5f5f5;
+}
+body > .content {
+	min-height: calc(100% - 182px);
+	display: inline-block;
+	
+	z-index: -100;
+}
+
+.nav a:hover {
+	background-color: #e7e7e7 !important;
+}
+
+.nav-notifications {
+	width: 40px;
+}
+
+.notifications-list {
+	visibility: hidden;
+	
+	position: absolute;
+	margin-top: 60px;
+	
+	width: 500px;
+	height: 462px;
+	
+	background-color: #f8f8f8;
+	border: 1px solid #e7e7e7;
+	
+	z-index: 100;
+}
+
+.notification {
+	background-color: #dadada;
+	
+	margin: 10px;
+	height: 80px;
+}
+
+.notification a {
+	color: black;
+	font-weight: bold;
+}
+
+.notification > .type {
+	background-color: #c5c5c5;
+	width: 40px;
+	height: 100%;
+	float: left;
+	padding: 25px 0 0 8px;
+}
+
+.notification > .type > * {
+	font-size: 25px;
+}
+
+.notification > .title {
+	position: relative;
+	left: 10px;
+	padding: 5px;
+	
+	font-weight: bold;
+}
+
+.notification > .content {
+	position: relative;
+	left: 10px;
+	
+	font-size: 16px;
+	width: 95%;
+}
+
+.notifications-list > .triangle {
+	position: absolute;
+	left: 9px;
+	top: -15px;
+	
+	width: 0;
+	height: 0;
+	
+	border-top: 30px solid #f8f8f8;
+	border-right: 30px solid transparent;
+	
+	transform: rotate(45deg);
+}
+
+.notifications-list > .triangle-border {
+	left: 8px;
+	top: -16px;
+	
+	border-top: 32px solid #e7e7e7;
+	border-right: 32px solid transparent;
+}
+
+@media screen and (max-width: 768px) {
+	.notifications-list {
+		left: -20px;
+	}
+	.notifications-list > .triangle {
+		left: 29px;
+	}
+
+	.notifications-list > .triangle-border {
+		left: 28px;
+		top: -16px;
+	}
+}
+
+.notification-ok { background-color: #B3DE7B;}
+.notification-ok > .type { background-color: #629C28; }
+.notification-info { background-color: #9ECEFF;}
+.notification-info > .type { background-color: #3184BF; }
+.notification-warning { background-color: #FF9072;}
+.notification-warning > .type { background-color: #AF4B31; }
+
+#messages {
+	min-width: 300px;
+	height: 400px;
+	background-color: #f8f8f8;
+	border: 1px solid #e7e7e7;
+}
+
+#messages-title {
+	text-align: center;
+	font-size: 20px;
+	line-height: 35px;
+}
+
+.message {
+	height: 90px;
+	margin: 5px;
+	
+	background-color: #f8f8f8;
+	border: 1px solid #e7e7e7;
+}
+
+.message .user-photo {
+	width: 60px;
+	height: 60px;
+	margin: 15px;
+	float: left;
+}
+
+.message .title {
+	font-weight: bold;
+	height: 20px;
+}
+
+.message .text {
+	height: 40px;
+}
+
+.message .reply {
+	position: relative;
+	right: 10px;
+	top: 2px;
+	
+	float: right;
+	
+	height: 20px;
+	font-size: 12px;
+	
+	background-color: #f8f8f8;
+	border: 1px solid #e7e7e7;
+	border-radius: 10px;
+}
+
+#events {
+	min-width: 300px;
+	
+	margin-top: 25px;
+	height: 110px;
+	background-color: #f8f8f8;
+	border: 1px solid #e7e7e7;
+}
+
+#events-title {
+	text-align: center;
+	font-size: 20px;
+	line-height: 35px;
+}
+
+#event-icon {
+	float: left;
+	margin: 5px 10px 10px 10px;
+	
+	border-radius: 100%;
+}
+
+#event-icon img {
+	border-radius: 100%;
+}
+
+#event-text {
+	padding-top: 5px;
+	font-size: 20px;
+}
