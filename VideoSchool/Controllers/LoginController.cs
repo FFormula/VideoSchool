@@ -12,12 +12,19 @@ namespace VideoSchool.Controllers
         Shared shared;
         User user;
 
+        /// <summary>
+        /// Create a Share and Init Login Controller 
+        /// </summary>
         public LoginController ()
         {
             shared = new Shared(RunMode.WebDebug);
             user = new User(shared);
         }
 
+        /// <summary>
+        /// Generate an Index page
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Index()
         {
@@ -31,6 +38,11 @@ namespace VideoSchool.Controllers
             }
         }
 
+        /// <summary>
+        /// Process an Sign In
+        /// </summary>
+        /// <param name="post">email and passw</param>
+        /// <returns>An error view or Redirect to the Index</returns>
         [HttpPost]
         public ActionResult Index(User post)
         {
@@ -39,7 +51,7 @@ namespace VideoSchool.Controllers
                 user.email = post.email;
                 user.passw = post.passw;
                 user.Login();
-                if (shared.error.UserErrors())
+                if (shared.error.UserError())
                 {
                     ViewBag.error = shared.error.text;
                     return View(user);
@@ -58,6 +70,10 @@ namespace VideoSchool.Controllers
             }
         }
 
+        /// <summary>
+        /// Lougout from site
+        /// </summary>
+        /// <returns>An error or redirect to Index page</returns>
         public ActionResult Logout ()
         {
             try
@@ -73,6 +89,10 @@ namespace VideoSchool.Controllers
             }
         }
 
+        /// <summary>
+        /// A new User Registration FOrm
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Signup()
         {
@@ -86,6 +106,11 @@ namespace VideoSchool.Controllers
             }
         }
 
+        /// <summary>
+        /// Process User Registration
+        /// </summary>
+        /// <param name="post">name, email, passw</param>
+        /// <returns>An error view or redirect to Index page</returns>
         [HttpPost]
         public ActionResult Signup(User post)
         {
@@ -95,7 +120,7 @@ namespace VideoSchool.Controllers
                 user.email = post.email;
                 user.passw = post.passw;
                 user.Insert();
-                if (shared.error.UserErrors ())
+                if (shared.error.UserError ())
                 {
                     ViewBag.error = shared.error.text;
                     return View(user);
@@ -108,6 +133,11 @@ namespace VideoSchool.Controllers
             }
         }
 
+        /// <summary>
+        /// Generate an Error View
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <returns></returns>
         public ActionResult ShowError(Exception ex)
         {
             if (shared.error.NoErrors())

@@ -30,6 +30,10 @@ namespace VideoSchool.Models
             this.shared = null;
         }
 
+        /// <summary>
+        /// Create a functional instance of an User model
+        /// </summary>
+        /// <param name="shared"></param>
         public User (Shared shared)
             : this ()
         {
@@ -222,7 +226,10 @@ namespace VideoSchool.Models
             return false;
 	    }
 
-
+        /// <summary>
+        /// Throw a last error if exists, or throw new Ex error
+        /// </summary>
+        /// <param name="ex">Last error Exception</param>
         private void ThrowError (Exception ex)
         {
             if (shared.error.NoErrors())
