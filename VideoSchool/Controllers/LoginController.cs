@@ -14,7 +14,7 @@ namespace VideoSchool.Controllers
 
         public LoginController ()
         {
-            shared = new Shared();
+            shared = new Shared(RunMode.WebDebug);
             user = new User(shared);
         }
 

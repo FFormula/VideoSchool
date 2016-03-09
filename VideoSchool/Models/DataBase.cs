@@ -1,29 +1,32 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
-using System.Web.Configuration;
 
 namespace VideoSchool.Models
 {
     public class DataBase
     {
+        Shared shared;
         private MySqlConnection con;
-        public Error error { get; private set; }
         public string query { get; private set; }
 
-        public DataBase (Error error)
+        public DataBase (Shared shared)
         {
-            this.error = error;
+            this.shared = shared;
+            Open();
+        }
+
+        public void Open()
+        {
             try
             {
                 query = "OPEN CONNECTION TO MYSQL";
-                con = new MySqlConnection(
-                    WebConfigurationManager.ConnectionStrings["conn"].ConnectionString);
+                con = new MySqlConnection(shared.config.mysql_connection);
                 con.Open();
             }
             catch (Exception ex)
             {
-                error.MarkDBaseError(ex, "Error connection to mysql", query);
+                shared.error.MarkDBaseError(ex, "Error connection to mysql", query);
                 con = null;
                 throw ex;
             }
@@ -43,7 +46,7 @@ namespace VideoSchool.Models
 
         public DataTable Select (string myquery)
         {
-            if (error.AnyError()) return null;
+            if (shared.error.AnyError()) return null;
             try
             {
                 query = myquery;
@@ -55,14 +58,14 @@ namespace VideoSchool.Models
             }
             catch (Exception ex)
             {
-                error.MarkDBaseError(ex, "Error on Select query", query);
+                shared.error.MarkDBaseError(ex, "Error on Select query", query);
                 throw ex;
             }
         }
 
         public string Scalar (string myquery)
         {
-            if (error.AnyError()) return null;
+            if (shared.error.AnyError()) return null;
             try
             {
                 query = myquery;
@@ -76,14 +79,14 @@ namespace VideoSchool.Models
             }
             catch (Exception ex)
             {
-                error.MarkDBaseError(ex, "Error on Scalar query", query);
+                shared.error.MarkDBaseError(ex, "Error on Scalar query", query);
                 throw ex;
             }
         }
 
         public long Insert(string myquery)
         {
-            if (error.AnyError()) return -1;
+            if (shared.error.AnyError()) return -1;
             try
             {
                 query = myquery;
@@ -93,14 +96,14 @@ namespace VideoSchool.Models
             }
             catch (Exception ex)
             {
-                error.MarkDBaseError(ex, "Error on Insert query", query);
+                shared.error.MarkDBaseError(ex, "Error on Insert query", query);
                 throw ex;
             }
         }
 
         public int Update(string myquery)
         {
-            if (error.AnyError()) return -1;
+            if (shared.error.AnyError()) return -1;
             try
             {
                 query = myquery;
@@ -109,7 +112,7 @@ namespace VideoSchool.Models
             }
             catch (Exception ex)
             {
-                error.MarkDBaseError(ex, "Error on Update query", query);
+                shared.error.MarkDBaseError(ex, "Error on Update query", query);
                 throw ex;
             }
         }

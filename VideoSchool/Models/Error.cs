@@ -16,14 +16,18 @@ namespace VideoSchool.Models
 
     public class Error
     {
+        // can be used for reading config data, where to put error logs
+        Shared shared;
+
         public Exception exception { get; set; }
         public string query { get; set; }
         public string text { get; set; }
 
         public ErrorMode mode { get; set; }
         
-        public Error ()
+        public Error (Shared shared)
         {
+            this.shared = shared;
             Clear();
         }
 

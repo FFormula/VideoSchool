@@ -8,7 +8,7 @@ namespace VideoSchool.Models
 {
     public class User
     {
-        DataBase sql;
+        Shared shared;
 
         public string id { get; private set; }
         public string status { get; private set; }
@@ -16,8 +16,6 @@ namespace VideoSchool.Models
         public string name  { get; set; }
         public string email { get; set; }
         public string passw { get; set; }
-
-        public Error error;
 
         /// <summary>
         /// Create an empty instance of User model
@@ -29,14 +27,13 @@ namespace VideoSchool.Models
             name = "";
             email = "";
             passw = "";
-            this.sql = null;
+            this.shared = null;
         }
 
         public User (Shared shared)
             : this ()
         {
-            this.sql = shared.db;
-            this.error = shared.error;
+            this.shared = shared;
         }
 
         /// <summary>
@@ -50,11 +47,11 @@ namespace VideoSchool.Models
                 string query = @"
                 SELECT id, name, email, status
                   FROM user
-                 WHERE id = '" + sql.addslashes (id) + "'";
-                DataTable table = sql.Select(query);
+                 WHERE id = '" + shared.db.addslashes (id) + "'";
+                DataTable table = shared.db.Select(query);
                 if (table.Rows.Count == 0)
                 {
-                    error.MarkUserError("User " + id + " not found");
+                    shared.error.MarkUserError("User " + id + " not found");
                     return;
                 }
                 id  = table.Rows[0]["id"].ToString();
@@ -81,21 +78,21 @@ namespace VideoSchool.Models
                 query = @"
 		    SELECT COUNT(*)
 		        FROM user
-		        WHERE email = '" + sql.addslashes(this.email) + @"'";
+		        WHERE email = '" + shared.db.addslashes(this.email) + @"'";
 
-                if (sql.Scalar(query) != "0")
+                if (shared.db.Scalar(query) != "0")
                 {
-                    error.MarkUserError("This email already taken");
+                    shared.error.MarkUserError("This email already taken");
                     return;
                 }
 
                 query = @"
 		    INSERT INTO user
-		        SET name = '" + sql.addslashes(this.name) + @"',
-		            email = '" + sql.addslashes(this.email) + @"',
-		            passw = password('" + sql.addslashes(this.passw) + @"'),
+		        SET name = '" + shared.db.addslashes(this.name) + @"',
+		            email = '" + shared.db.addslashes(this.email) + @"',
+		            passw = password('" + shared.db.addslashes(this.passw) + @"'),
 		            status = '1'";
-                sql.Insert(query);
+                shared.db.Insert(query);
             } 
             catch (Exception ex)
             {
@@ -115,13 +112,13 @@ namespace VideoSchool.Models
                 string query = @"
 		    SELECT COALESCE(min(id),-1) AS UserID
 		      FROM user
-		     WHERE email = '" + sql.addslashes(this.email) + @"'  
-		       AND passw = password('" + sql.addslashes(this.passw) + @"')
+		     WHERE email = '" + shared.db.addslashes(this.email) + @"'  
+		       AND passw = password('" + shared.db.addslashes(this.passw) + @"')
 		       AND status != '0'";
-                string id = sql.Scalar(query);
+                string id = shared.db.Scalar(query);
                 if (id == "-1")
                 {
-                    error.MarkUserError("Email or password incorrect");
+                    shared.error.MarkUserError("Email or password incorrect");
                     return;
                 }
                 this.id = id;
@@ -228,8 +225,8 @@ namespace VideoSchool.Models
 
         private void ThrowError (Exception ex)
         {
-            if (error.NoErrors())
-                error.MarkSystemError(ex);
+            if (shared.error.NoErrors())
+                shared.error.MarkSystemError(ex);
             throw ex;
         }
 
