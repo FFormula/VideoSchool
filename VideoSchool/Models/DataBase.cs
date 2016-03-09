@@ -9,17 +9,21 @@ namespace VideoSchool.Models
         Shared shared;
         private MySqlConnection con;
         public string query { get; private set; }
+        public bool connected;
+
 
         public DataBase (Shared shared)
         {
             this.shared = shared;
-            Open();
+            connected = false;
         }
 
         public void Open()
         {
+            if (connected) return;
             try
             {
+                connected = true;
                 query = "OPEN CONNECTION TO MYSQL";
                 con = new MySqlConnection(shared.config.mysql_connection);
                 con.Open();
@@ -34,6 +38,7 @@ namespace VideoSchool.Models
 
         ~DataBase ()
         {
+            if (!connected) return;
             try
             {
                 con.Close();
@@ -47,6 +52,7 @@ namespace VideoSchool.Models
         public DataTable Select (string myquery)
         {
             if (shared.error.AnyError()) return null;
+            if (!connected) Open();
             try
             {
                 query = myquery;
@@ -66,6 +72,7 @@ namespace VideoSchool.Models
         public string Scalar (string myquery)
         {
             if (shared.error.AnyError()) return null;
+            if (!connected) Open();
             try
             {
                 query = myquery;
@@ -87,6 +94,7 @@ namespace VideoSchool.Models
         public long Insert(string myquery)
         {
             if (shared.error.AnyError()) return -1;
+            if (!connected) Open();
             try
             {
                 query = myquery;
@@ -104,6 +112,7 @@ namespace VideoSchool.Models
         public int Update(string myquery)
         {
             if (shared.error.AnyError()) return -1;
+            if (!connected) Open();
             try
             {
                 query = myquery;
