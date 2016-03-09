@@ -140,11 +140,24 @@ namespace VideoSchool.Models
 	    void UpdateStatus(int status)	//	изменить статус пользователя
 	    {
 		    // user_Update
-		    string query = @"
+            try
+            {
+                if ((id ?? "") == "")
+                {
+                    shared.error.MarkUserError("User ID not specified");
+                    return;
+                }
+                string query = @"
             UPDATE user
 		       SET status = '1'
-		     WHERE id = '1'
+		     WHERE id = '" + shared.db.addslashes(id) + @"'
 		     LIMIT 1";
+                shared.db.Update(query);
+            } 
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
 	    }
 
 	    /// <summary>
