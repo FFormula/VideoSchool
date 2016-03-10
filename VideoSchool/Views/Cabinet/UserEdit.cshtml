@@ -1,0 +1,27 @@
+﻿@model VideoSchool.Models.User
+
+@{
+    ViewBag.Title = "UserEdit";
+}
+
+<h2>UserEdit</h2>
+
+@using (Html.BeginForm("Users", "Cabinet"))
+{
+    <div style="color: red">
+        @ViewBag.error
+    </div>
+    <div>
+        ID: @Model.id<br/>
+        Status: @Model.status<br/>
+    </div>
+    <div>
+        Name:
+        @Html.TextBox("name", Model.name)
+    </div>
+    <div>
+        E-mail:
+        @Html.TextBox("email", Model.email)
+    </div>
+    <div><input type="submit" value="Save changes" class="btn btn-success" /></div>
+}
