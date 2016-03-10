@@ -1,0 +1,1 @@
+server=localhost;UserId=root;Password=qwas;database=SCHOOL;CharSet=utf8
