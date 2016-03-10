@@ -15,107 +15,20 @@
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="/videosharp/" class="pull-left" style="margin-right: 10px"><img src="~/images//logo.png" width="50px"></a>
-                <a class="navbar-brand" href="#">Видео школа</a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ENG <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Russian</a></li>
-                            <li><a href="#">English</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">French</a></li>
-                            <li><a href="#">Lithuanian</a></li>
-                            <li><a href="#">Ukrainian</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" style="color: blue"></span> {Username} <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Profile</a></li>
-                            <li><a href="#">Pacakges</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Reports on video tutorials</a></li>
-                            <li><a href="#">Reports on console</a></li>
-                            <li><a href="#">Messages</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#" class="navbar-nav" style="color: red"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                </ul>
-            </div>
-        </div>
+        @Html.Partial("_Header")
     </nav>
 
     <div style="height: 50px"></div>
 
     <nav class="navbar navbar-default">
-        <div class="navbar-inner" style="margin: 0 50px 0 50px;">
-            <ul class="nav navbar-nav navbar-left">
-                <li class="nav-notifications">
-                    <a href="#" class="navbar-brand"><span class="glyphicon glyphicon-bell" style="color: red" onclick="ToggleNotifications()"></span></a>
-                    <div class="notifications-list">
-                        <div class="triangle triangle-border"></div>
-                        <div class="triangle"></div>
-                        <div class="notification">
-                            <div class="type"><span class="glyphicon glyphicon-bell" style="color: white"></div>
-                            <div class="title">Test notification</div>
-                            <div class="content">Some message in the notification. Yay ^^ it works!</div>
-                        </div>
-                        <div class="notification notification-ok">
-                            <div class="type"><span class="glyphicon glyphicon-ok" style="color: white"></div>
-                            <div class="title">Видеоурок пройден</div>
-                            <div class="content">Ваш отчёт по видеоуроку <a href="#">Новые технологии/пирамидки</a> набрал необходимое количество баллов</div>
-                        </div>
-                        <div class="notification notification-warning">
-                            <div class="type"><span class="glyphicon glyphicon-remove" style="color: white"></div>
-                            <div class="title">Видеоурок не пройден</div>
-                            <div class="content">Ваш отчёт по видеоуроку <a href="#">Новые технологии/пирамидки</a> был отклонён</div>
-                        </div>
-                        <div class="notification notification-info">
-                            <div class="type"><span class="glyphicon glyphicon-bell" style="color: white"></div>
-                            <div class="title">Начался вебинар</div>
-                            <div class="content">В данный момент идёт вебинар по курсу <a href="#">Комбинаторика</a></div>
-                        </div>
-                        <div class="notification">
-                            <div class="type"><span class="glyphicon glyphicon-bell" style="color: white"></div>
-                            <div class="title">Test notification</div>
-                            <div class="content">Some message in the notification. Yay ^^ it works!</div>
-                        </div>
-                    </div>
-                </li>
-                <li><a href="#" class="navbar-brand"><span class="glyphicon glyphicon-envelope" style="color: red"></span></a></li>
-
-                <li><a href="#" class="navbar-brand">Courses</span></a></li>
-                <li><a href="#" class="navbar-brand">Articles</span></a></li>
-                <li><a href="#" class="navbar-brand">Users</a></li>
-                <li><a href="#" class="navbar-brand">Forum</a></li>
-            </ul>
-            <ul class="nav navbar-right">
-                <li><a href="#" class="navbar-brand"><span class="glyphicon glyphicon-question-sign" style="color: #3184BF"></span></a></li>
-            </ul>
-        </div>
+        @Html.Partial("_Menu")
     </nav>
+
     <div class="content">
-        <div class="col-md-1"></div>
-        <div class="col-md-8">
-            <h1>Page content</h1>
-            <p class="lead">
-                This block will be replaced with page content.<br>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-               <p> @RenderBody()</p>
-            </p>
+        <div class="col-md-10">
+            <p> @RenderBody()</p>
         </div>
-        <div class="col-md-3">
+        <!--div class="col-md-3">
             <div id="messages">
                 <div id="messages-title">Messages</div>
                 <div id="messages-list">
@@ -141,10 +54,10 @@
                     <div id="event-text"><a href="#">Новый курс "Сетевые технологии"</a></div>
                 </div>
             </div>
-        </div>
+        </div -->
     </div>
     <footer class="footer">
-        <p class="text-muted">© 2016 Формула Программиста</p>
+        <p class="text-muted">© 2016 Video School 2.0</p>
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>

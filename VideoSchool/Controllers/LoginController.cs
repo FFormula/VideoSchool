@@ -58,6 +58,7 @@ namespace VideoSchool.Controllers
                 }
                 user.Select(user.id);
 
+                Session["logged"] = "1";
                 Session["user_id"] = user.id;
                 Session["user_email"] = user.email;
                 Session["user_name"] = user.name;
@@ -78,6 +79,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
+                Session["logged"] = null;
                 Session["user_id"] = null;
                 Session["user_name"] = null;
                 Session["user_email"] = null;
