@@ -49,6 +49,8 @@ namespace VideoSchool.Controllers
         /// <returns></returns>
         public ActionResult Users()
         {
+            User user = new User(shared);
+
             return View();
         }
 
