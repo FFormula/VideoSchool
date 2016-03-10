@@ -157,6 +157,7 @@
     <Content Include="Views\Cabinet\Index.cshtml" />
     <Content Include="Views\Help\Index.cshtml" />
     <Content Include="Views\Help\About.cshtml" />
+    <Content Include="Views\Cabinet\Users.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

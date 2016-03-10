@@ -17,6 +17,8 @@ namespace VideoSchool.Models
         public string email { get; set; }
         public string passw { get; set; }
 
+        public User[] list { get; private set; }
+        
         /// <summary>
         /// Create an empty instance of User model
         /// </summary>
@@ -69,7 +71,56 @@ namespace VideoSchool.Models
             }
         }
 
-	    /// <summary>
+        /// <summary>
+        /// Create an User List by filter
+        /// </summary>
+        /// <param name="id">user_id - an unique user's number in database</param>
+        public void SelectList(string filter, int limit)
+        {
+            try
+            {
+                string filterSlashes = shared.db.addslashes(filter);
+                string query;
+                
+                if (filter == "")
+                    query = @"
+                SELECT id, name, email, status
+                  FROM user
+                 ORDER BY id DESC 
+                 LIMIT " + limit.ToString();
+                else
+                    query = @"
+                SELECT id, name, email, status
+                  FROM user
+                 WHERE id = '" + filterSlashes + @"'
+                    OR name LIKE = '%" + filterSlashes + @"%'
+                    OR email LIKE = '%" + filterSlashes + @"%'
+                 ORDER BY id DESC 
+                 LIMIT " + limit.ToString();
+
+                DataTable table = shared.db.Select(query);
+                if (table.Rows.Count == 0)
+                {
+                    shared.error.MarkUserError("Empty list of Users");
+                    return;
+                }
+                list = new User[table.Rows.Count];
+                for (int j = 0; j < list.Length; j++)
+                {
+                    list [j].id  = table.Rows[0]["id"].ToString();
+                    list [j].name = table.Rows[0]["name"].ToString();
+                    list [j].email = table.Rows[0]["email"].ToString();
+                    list [j].status = table.Rows[0]["status"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
+        }
+
+        
+        /// <summary>
 	    /// Join new user - add his to the user table.
 	    /// </summary>
         public void Insert()		
@@ -238,6 +289,8 @@ namespace VideoSchool.Models
 		                        WHERE user_id = 'this.id')";
             return false;
 	    }
+
+
 
         /// <summary>
         /// Throw a last error if exists, or throw new Ex error
