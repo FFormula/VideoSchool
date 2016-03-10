@@ -47,11 +47,50 @@ namespace VideoSchool.Controllers
         /// List of all Users for administrator
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         public ActionResult Users()
         {
-            User user = new User(shared);
+            try
+            {
+                string id = (RouteData.Values["id"] ?? "").ToString();
+                User user;
+                if (id == "")
+                {
+                    user = new User(shared);
+                    user.SelectList("", 10);
+                    return View(user);
+                }
+                user = new User(shared);
+                user.Select(id);
+                return View("UserEdit", user);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
 
-            return View();
+        [HttpPost]
+        public ActionResult Users(User post)
+        {
+            try
+            {
+                string id = (RouteData.Values["id"] ?? "").ToString();
+                if (id == "")
+                    return RedirectToAction("Users", "Cabinet");
+                User user = new User(shared);
+                user.Select(id);
+                if (shared.error.AnyError())
+                    return RedirectToAction("Users", "Cabinet");
+                user.name = post.name;
+                user.email = post.email;
+                user.Update();
+                return RedirectToAction("Users", "Cabinet", new { id = "" });
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
         }
 
         /// <summary>
@@ -88,6 +127,18 @@ namespace VideoSchool.Controllers
         public ActionResult Payments()
         {
             return View();
+        }
+
+        /// <summary>
+        /// Generate an Error View
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <returns></returns>
+        public ActionResult ShowError(Exception ex)
+        {
+            if (shared.error.NoErrors())
+                shared.error.MarkSystemError(ex);
+            return View("~/Views/Error.cshtml", shared.error);
         }
     }
 }

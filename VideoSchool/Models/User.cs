@@ -60,10 +60,7 @@ namespace VideoSchool.Models
                     shared.error.MarkUserError("User " + id + " not found");
                     return;
                 }
-                id  = table.Rows[0]["id"].ToString();
-                name = table.Rows[0]["name"].ToString();
-                email = table.Rows[0]["email"].ToString();
-                status = table.Rows[0]["status"].ToString();
+                ExtractRow(table, 0);
             }
             catch (Exception ex)
             {
@@ -107,16 +104,22 @@ namespace VideoSchool.Models
                 list = new User[table.Rows.Count];
                 for (int j = 0; j < list.Length; j++)
                 {
-                    list [j].id  = table.Rows[0]["id"].ToString();
-                    list [j].name = table.Rows[0]["name"].ToString();
-                    list [j].email = table.Rows[0]["email"].ToString();
-                    list [j].status = table.Rows[0]["status"].ToString();
+                    list[j] = new User();
+                    list[j].ExtractRow(table, j);
                 }
             }
             catch (Exception ex)
             {
                 ThrowError(ex);
             }
+        }
+
+        private void ExtractRow (DataTable table, int row)
+        {
+            id = table.Rows[row]["id"].ToString();
+            name = table.Rows[row]["name"].ToString();
+            email = table.Rows[row]["email"].ToString();
+            status = table.Rows[row]["status"].ToString();
         }
 
         
@@ -214,15 +217,22 @@ namespace VideoSchool.Models
 	    /// <summary>
 	    /// Change user name or/and email. Can be done by admin only.
 	    /// </summary>
-        void Update ()		// редактирование данных пользователя: name & email
+        public void Update ()		// редактирование данных пользователя: name & email
 	    {
 		    // user_Update
-		    string query = @"
+            try { 
+		        string query = @"
             UPDATE user
-		       SET name = 'John',
-		           email = 'jevgesha@mail.ru'
-		     WHERE id = '1'
+		       SET name = '" + shared.db.addslashes(this.name) + @"',
+		           email = '" + shared.db.addslashes(this.email) + @"'
+		     WHERE id = '" + shared.db.addslashes(this.id) + @"'
 		     LIMIT 1";
+                shared.db.Update(query);
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
 	    }
 
         /// <summary>
