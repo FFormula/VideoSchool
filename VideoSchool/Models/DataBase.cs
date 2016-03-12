@@ -111,6 +111,25 @@ namespace VideoSchool.Models
         }
 
         /// <summary>
+        /// Return a single string-value
+        /// </summary>
+        /// <param name="myquery">SQL query</param>
+        /// <returns>Fetched scalar value</returns>
+        public int ScalarInt(string myquery)
+        {
+            try
+            {
+                return Convert.ToInt32(Scalar(myquery));
+            }
+            catch (Exception ex)
+            {
+                if (shared.error.NoErrors())
+                    shared.error.MarkSystemError(ex);
+                throw ex;
+            }
+        }
+
+        /// <summary>
         /// Complete an Insert query
         /// </summary>
         /// <param name="myquery">SQL query</param>

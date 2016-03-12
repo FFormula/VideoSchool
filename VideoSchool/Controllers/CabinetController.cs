@@ -48,21 +48,32 @@ namespace VideoSchool.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Users()
+        public ActionResult UserList(string filter = null)
+        {
+            try
+            {
+                User user = new User(shared);
+                user.filter = filter ?? "";
+                user.SelectUsers();
+                return View(user);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult UserEdit()
         {
             try
             {
                 string id = (RouteData.Values["id"] ?? "").ToString();
-                User user;
                 if (id == "")
-                {
-                    user = new User(shared);
-                    user.SelectList("", 10);
-                    return View(user);
-                }
-                user = new User(shared);
+                    return RedirectToAction("UserList", "Cabinet");
+                User user = new User(shared);
                 user.Select(id);
-                return View("UserEdit", user);
+                return View(user);
             }
             catch (Exception ex)
             {
@@ -71,21 +82,21 @@ namespace VideoSchool.Controllers
         }
 
         [HttpPost]
-        public ActionResult Users(User post)
+        public ActionResult UserEdit(User post)
         {
             try
             {
                 string id = (RouteData.Values["id"] ?? "").ToString();
                 if (id == "")
-                    return RedirectToAction("Users", "Cabinet");
+                    return RedirectToAction("UserList", "Cabinet");
                 User user = new User(shared);
                 user.Select(id);
                 if (shared.error.AnyError())
-                    return RedirectToAction("Users", "Cabinet");
+                    return RedirectToAction("UserList", "Cabinet");
                 user.name = post.name;
                 user.email = post.email;
                 user.Update();
-                return RedirectToAction("Users", "Cabinet", new { id = "" });
+                return RedirectToAction("UserList", "Cabinet");
             }
             catch (Exception ex)
             {

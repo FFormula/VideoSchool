@@ -1,0 +1,42 @@
+﻿@model VideoSchool.Models.User
+@using System.Data;
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>List of all users</h2>
+
+@using(Html.BeginForm("UserList", "Cabinet", FormMethod.Get))
+{
+    <div>
+        Filter:
+        @Html.TextBox("filter", Session["user_filter"], new { @style = "width: 100px" })
+        <input type="submit" value="Filter" />
+    </div>
+}
+
+<div>
+    There are @Model.qtable.lines rows.
+</div>
+@if(Model.qtable.lines > 0)
+{ 
+<table border="1" cellpadding="5" cellspacing="0" width="500">
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Status</th>
+    </tr>
+@foreach (DataRow x in Model.qtable.table.Rows)
+{
+    <tr>
+        <td>@Html.ActionLink(@x["id"].ToString(), "UserEdit", "Cabinet", 
+                             new { id = x["id"].ToString() }, new { })</td>
+        <td>@x["name"].ToString()</td>
+        <td>@x["email"].ToString()</td>
+        <td>@x["status"].ToString()</td>
+    </tr>
+}
+</table>
+}

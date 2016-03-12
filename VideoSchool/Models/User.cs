@@ -17,8 +17,9 @@ namespace VideoSchool.Models
         public string email { get; set; }
         public string passw { get; set; }
 
-        public User[] list { get; private set; }
-        
+        public QTable qtable { get; private set; }
+        public string filter { get; set; }
+
         /// <summary>
         /// Create an empty instance of User model
         /// </summary>
@@ -68,53 +69,7 @@ namespace VideoSchool.Models
             }
         }
 
-        /// <summary>
-        /// Create an User List by filter
-        /// </summary>
-        /// <param name="id">user_id - an unique user's number in database</param>
-        public void SelectList(string filter, int limit)
-        {
-            try
-            {
-                string filterSlashes = shared.db.addslashes(filter);
-                string query;
-                
-                if (filter == "")
-                    query = @"
-                SELECT id, name, email, status
-                  FROM user
-                 ORDER BY id DESC 
-                 LIMIT " + limit.ToString();
-                else
-                    query = @"
-                SELECT id, name, email, status
-                  FROM user
-                 WHERE id = '" + filterSlashes + @"'
-                    OR name LIKE = '%" + filterSlashes + @"%'
-                    OR email LIKE = '%" + filterSlashes + @"%'
-                 ORDER BY id DESC 
-                 LIMIT " + limit.ToString();
-
-                DataTable table = shared.db.Select(query);
-                if (table.Rows.Count == 0)
-                {
-                    shared.error.MarkUserError("Empty list of Users");
-                    return;
-                }
-                list = new User[table.Rows.Count];
-                for (int j = 0; j < list.Length; j++)
-                {
-                    list[j] = new User();
-                    list[j].ExtractRow(table, j);
-                }
-            }
-            catch (Exception ex)
-            {
-                ThrowError(ex);
-            }
-        }
-
-        private void ExtractRow (DataTable table, int row)
+        private void ExtractRow(DataTable table, int row)
         {
             id = table.Rows[row]["id"].ToString();
             name = table.Rows[row]["name"].ToString();
@@ -123,6 +78,36 @@ namespace VideoSchool.Models
         }
 
         
+        /// <summary>
+        /// Create an User List by filter
+        /// </summary>
+        public void SelectUsers()
+        {
+            try
+            {
+                qtable = new QTable(shared);
+                string filterSlashes = shared.db.addslashes(filter);
+                
+                string where = " 1 ";
+                if (filter != "")
+                    where = 
+                    " (id = '" + filterSlashes + @"'
+                       OR name LIKE '%" + filterSlashes + @"%'
+                       OR email LIKE '%" + filterSlashes + @"%')";
+
+                qtable.Init (
+                        "SELECT COUNT(*) FROM user WHERE " + where,
+                       @"SELECT id, name, email, status
+                           FROM user 
+                          WHERE " + where + @"
+                          ORDER BY id DESC");
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
+        }
+
         /// <summary>
 	    /// Join new user - add his to the user table.
 	    /// </summary>
