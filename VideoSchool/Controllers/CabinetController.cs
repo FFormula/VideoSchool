@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using VideoSchool.Models;
+using VideoSchool.Models.Units;
 
 namespace VideoSchool.Controllers
 {
@@ -97,6 +98,64 @@ namespace VideoSchool.Controllers
                 user.email = post.email;
                 user.Update();
                 return RedirectToAction("UserList", "Cabinet");
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ActionList (string filter)
+        {
+            try
+            {
+                Models.Units.Action action = new Models.Units.Action(shared);
+                action.filter = filter ?? "";
+                action.SelectActions();
+                return View(action);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ActionEdit ()
+        {
+            try
+            {
+                string id = (RouteData.Values["id"] ?? "").ToString();
+                if (id == "")
+                    return RedirectToAction("ActionList", "Cabinet");
+                Models.Units.Action action = new Models.Units.Action(shared);
+                action.Select(id);
+                return View(action);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ActionEdit (Models.Units.Action post)
+        {
+            try
+            {
+                string id = (RouteData.Values["id"] ?? "").ToString();
+                if (id == "")
+                    return RedirectToAction("ActionList", "Cabinet");
+                Models.Units.Action action = new Models.Units.Action(shared);
+                action.Select(id);
+                if (shared.error.AnyError())
+                    return RedirectToAction("ActionList", "Cabinet");
+                action.name = post.name;
+                action.info = post.info;
+                action.status = post.status;
+                action.Update();
+                return RedirectToAction("ActionList", "Cabinet");
             }
             catch (Exception ex)
             {

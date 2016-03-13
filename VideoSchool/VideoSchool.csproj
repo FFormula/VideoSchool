@@ -136,12 +136,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Units\Action.cs" />
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\DataBase.cs" />
     <Compile Include="Models\QTable.cs" />
     <Compile Include="Models\Shared.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Units\BaseUnit.cs" />
+    <Compile Include="Models\Units\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +162,8 @@
     <Content Include="Views\Help\About.cshtml" />
     <Content Include="Views\Cabinet\UserList.cshtml" />
     <Content Include="Views\Cabinet\UserEdit.cshtml" />
+    <Content Include="Views\Cabinet\ActionList.cshtml" />
+    <Content Include="Views\Cabinet\ActionEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

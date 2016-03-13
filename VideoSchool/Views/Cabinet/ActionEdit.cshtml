@@ -1,0 +1,34 @@
+﻿@model VideoSchool.Models.Units.Action
+
+@{
+    ViewBag.Title = "ActionEdit";
+}
+
+<h2>ActionEdit</h2>
+
+@using (Html.BeginForm("ActionEdit", "Cabinet"))
+{
+    <div style="color: red">
+        @ViewBag.error
+    </div>
+    <div>
+        ID: @Model.id<br />
+    </div>
+    <div>
+        <h3 class="alert-link">Name:</h3>
+
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+        @Html.TextBox("name", Model.name, new { @class = "form-control" })
+    </div>
+    <div>
+        <h3 class="alert-link">Info:</h3>
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+        @Html.TextBox("info", Model.info, new { @class = "form-control" })
+    </div>
+    <div>
+        <h3 class="alert-link">Status:</h3>
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+        @Html.TextBox("status", Model.status, new { @class = "form-control" })
+    </div>
+    <div><input type="submit" value="Save changes" title="Save changes of the users" class="btn btn-success" /></div>
+}

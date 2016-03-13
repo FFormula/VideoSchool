@@ -4,12 +4,10 @@ using System.Data;
 using System.Linq;
 using System.Web;
 
-namespace VideoSchool.Models
+namespace VideoSchool.Models.Units
 {
-    public class User
+    public class User : BaseUnit
     {
-        Shared shared;
-
         public string id { get; private set; }
         public string status { get; private set; }
         
@@ -17,30 +15,18 @@ namespace VideoSchool.Models
         public string email { get; set; }
         public string passw { get; set; }
 
-        public QTable qtable { get; private set; }
-        public string filter { get; set; }
-
         /// <summary>
         /// Create an empty instance of User model
         /// </summary>
         public User ()
+            : base ()
         {
-            id = "";
-            status = "0";
-            name = "";
-            email = "";
-            passw = "";
-            this.shared = null;
         }
 
-        /// <summary>
-        /// Create a functional instance of an User model
-        /// </summary>
-        /// <param name="shared"></param>
         public User (Shared shared)
-            : this ()
+            : base (shared)
         {
-            this.shared = shared;
+
         }
 
         /// <summary>
@@ -284,20 +270,5 @@ namespace VideoSchool.Models
 		                        WHERE user_id = 'this.id')";
             return false;
 	    }
-
-
-
-        /// <summary>
-        /// Throw a last error if exists, or throw new Ex error
-        /// </summary>
-        /// <param name="ex">Last error Exception</param>
-        private void ThrowError (Exception ex)
-        {
-            if (shared.error.NoErrors())
-                shared.error.MarkSystemError(ex);
-            throw ex;
-        }
-
-
     }
 }
