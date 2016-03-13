@@ -4,16 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-UserID: @Model.id <br />
-Name:   @Model.name <br />
-Email:  @Model.email <br />
-Status: @Model.status <br />
-Session<br />
-User_id: @Session["user_id"] <br />
-Email: @Session["user_email"] <br />
-Name: @Session["user_name"] <br />
+<h2>Welcome to VideoSchool!</h2>
 
 @if(Session["user_id"] == null)
 { 
@@ -23,17 +14,31 @@ using(Html.BeginForm())
     <div style="color: red">
         @ViewBag.error
     </div>
-    <div>
+    <div class="form-group">
         Email: 
-        @Html.TextBox("email", Model.email)
+        @Html.TextBox("email", Model.email, new { @class = "form-control input-lg" })
     </div>
-    <div>
+    <div class="form-group">
         Passw:
-        @Html.Password("passw", "")
+        @Html.Password("passw", "", new { @class = "form-control input-lg" })
     </div>
 
     <input type="submit" value="Login" class="btn btn-success" />
-}
+
+
+
+    }
+
+    <div style="visibility:hidden">
+        UserID: @Model.id <br />
+        Name:   @Model.name <br />
+        Email:  @Model.email <br />
+        Status: @Model.status <br />
+        Session<br />
+        User_id: @Session["user_id"] <br />
+        Email: @Session["user_email"] <br />
+        Name: @Session["user_name"] <br />
+    </div>
 
 }
 else
