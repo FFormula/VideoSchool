@@ -1,6 +1,6 @@
 ﻿<div class="container">
     <div class="navbar-header">
-        <a href="/" class="pull-left" style="margin-right: 10px"><img src="~/images/logo.png" width="50px"></a>
+        <a href="/" class="pull-left" style="margin-right: 10px"><img src="~/images/logo.png" width="50"></a>
         <a href="/" class="navbar-brand">VideoSchool.info</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
@@ -13,8 +13,8 @@
                 </ul>
             </li>
 *@
-            @if (Session["logged"] == "1")
-            {
+        @if (Session["logged"] == "1")
+        {
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     <span class="glyphicon glyphicon-user" style="color: blue"></span> 
@@ -23,34 +23,36 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="/Cabinet/">Profile</a></li>
+                    <li>------------</li>
+                    <li><a href="/Login/Logout">Logout</a></li>
                 </ul>
             </li>
-            } else {
+        } else {
             <li>
                 <a href="/Login/Signup" class="navbar-nav" style="color: red">
                     <span class="glyphicon glyphicon-education"></span>
                     Sign UP
                 </a>
             </li>
-            }
-            @if (Session["logged"] == "1")
-            {
-            <li>
-                <a href="/Login/Logout" class="navbar-nav" style="color: red">
-                    <span class="glyphicon glyphicon-log-out"></span> 
-                    Logout
-                </a>
-            </li>
-            }
-            else
-            {
+        }
+        @if (Session["logged"] == "1")
+        {
+        }
+        else
+        {
             <li>
                 <a href="/Login/Index" class="navbar-nav" style="color: green">
                     <span class="glyphicon glyphicon-log-in"></span> 
                     Log In
                 </a>
             </li>
-            }
-            </ul>
+        }
+            <li>
+                <a href="/Help" class="navbar-nav">
+                    <span class="glyphicon glyphicon-question-sign" style="color: #3184BF"></span>
+                    Help
+                </a>
+            </li>
+        </ul>
     </div>
 </div>

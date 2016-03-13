@@ -9,39 +9,44 @@
     <span class="glyphicon glyphicon-user"></span>
     <span class="glyphicon glyphicon-user"></span>
     <span class="glyphicon glyphicon-user"></span>
-     &nbsp; List of all users</h2>
+     &nbsp; List of all users
+</h2>
 
 @using(Html.BeginForm("UserList", "Cabinet", FormMethod.Get))
 {
     <div>
         <h5>Filter:</h5>
         @Html.TextBox("filter", Session["user_filter"], new { @class = "field-filter form-control" })
-      <!-- <input type="submit" value="Filter" class="btn btn-primary" />--> 
-        <button type="submit" value="Filter" class="btn btn-primary form-control btn-filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+        @* <input type="submit" value="Filter" class="btn btn-primary" /> *@
+        <button type="submit" value="Filter" class="btn btn-primary form-control btn-filter">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
     </div>
 }
 
 <div>
     There are @Model.qtable.lines rows.
 </div>
+
 @if(Model.qtable.lines > 0)
 { 
-<table class="table table-hover">
-    <tr class="success">
-        <th><span class="glyphicon glyphicon-edit"></span></th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Status</th>
-    </tr>
-@foreach (DataRow x in Model.qtable.table.Rows)
-{
-    <tr>
-        <td>@Html.ActionLink(@x["id"].ToString(), "UserEdit", "Cabinet", 
-                             new { id = x["id"].ToString() }, new { })</td>
-        <td>@x["name"].ToString()</td>
-        <td>@x["email"].ToString()</td>
-        <td>@x["status"].ToString()</td>
-    </tr>
-}
-</table>
+    <table class="table table-hover">
+        <tr class="success">
+            <th><span class="glyphicon glyphicon-edit"></span></th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+        </tr>
+    @foreach (DataRow x in Model.qtable.table.Rows)
+    {
+        <tr>
+            <td>@Html.ActionLink(@x["id"].ToString(), "UserEdit", "Cabinet", 
+                                 new { id = x["id"].ToString() }, new { })</td>
+            <td>@x["name"].ToString()</td>
+            <td>@x["email"].ToString()</td>
+            <td>@x["status"].ToString()</td>
+        </tr>
+
+    }
+    </table>
 }
