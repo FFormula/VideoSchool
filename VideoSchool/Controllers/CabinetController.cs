@@ -176,6 +176,20 @@ namespace VideoSchool.Controllers
                 return ShowError(ex);
             }
         }
+        public ActionResult RoleList(string filter)
+        {            
+            try
+            {
+                Models.Units.Role role = new Models.Units.Role(shared);
+                role.filter = filter ?? "";
+                role.SelectRoles();
+                return View(role);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
 
         /// <summary>
         /// A list of medals

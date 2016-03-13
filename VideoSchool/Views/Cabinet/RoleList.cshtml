@@ -1,8 +1,8 @@
-﻿@model VideoSchool.Models.Units.Action
+﻿@model VideoSchool.Models.Units.Role
 @using System.Data;
 
 @{
-    ViewBag.Title = "Action List";
+    ViewBag.Title = "Roles List";
 }
 
 <h2>
@@ -10,7 +10,7 @@
     &nbsp; List of all actions
 </h2>
 
-@using (Html.BeginForm("ActionList", "Cabinet", FormMethod.Get))
+@using (Html.BeginForm("RoleList", "Cabinet", FormMethod.Get))
 {
     <div>
         <h5>Filter:</h5>
@@ -20,16 +20,16 @@
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
         </button>
 
-       
+
     </div>
 }
 
 <div>
     There are @Model.qtable.lines rows.
-    @Html.ActionLink("Add", "ActionEdit", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus", @title = "add new action" })
+    @Html.ActionLink("Add", "ActionEdit", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus", @title = "add new role" })
 </div>
 <div>
-   
+
 </div>
 @if (Model.qtable.lines > 0)
 {
@@ -38,19 +38,19 @@
             <th><span class="glyphicon glyphicon-edit"></span></th>
             <th>Name</th>
             <th>Info</th>
-            <th>Status</th>
+         
         </tr>
         @foreach (DataRow x in Model.qtable.table.Rows)
         {
             <tr>
                 <td>
                     @Html.ActionLink(@x["id"].ToString(), "ActionEdit", "Cabinet",
-                                 new { id = x["id"].ToString() }, new { @class= "btn btn-success", @title="edit action "+@x["id"].ToString() })
-            </td>
-            <td>@x["name"].ToString()</td>
-            <td>@x["info"].ToString()</td>
-            <td>@x["status"].ToString()</td>
-        </tr>
+                                 new { id = x["id"].ToString() }, new { @class = "btn btn-success", @title = "edit action " + @x["id"].ToString() })
+                </td>
+                <td>@x["name"].ToString()</td>
+                <td>@x["info"].ToString()</td>
+               
+            </tr>
 
         }
     </table>

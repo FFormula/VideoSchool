@@ -4,7 +4,7 @@
     ViewBag.Title = "ActionEdit";
 }
 
-<h2>ActionEdit</h2>
+    <h2 class="alert-link" >ActionEdit</h2>
 
 @using (Html.BeginForm("ActionEdit", "Cabinet"))
 {
@@ -12,22 +12,26 @@
         @ViewBag.error
     </div>
     <div>
-        ID: @Model.id<br />
+        <h2 class="alert-link"></h2>
+        <span class="alert alert-info">
+            <strong>ID: </strong> @Model.id 
+        </span>
+       
     </div>
     <div>
         <h3 class="alert-link">Name:</h3>
 
-        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-        @Html.TextBox("name", Model.name, new { @class = "form-control" })
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+        @Html.TextBox("name", Model.name, new { @class = "form-control", @placeholder = "Password" })
     </div>
     <div>
         <h3 class="alert-link">Info:</h3>
-        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
         @Html.TextBox("info", Model.info, new { @class = "form-control" })
     </div>
     <div>
         <h3 class="alert-link">Status:</h3>
-        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
         @Html.TextBox("status", Model.status, new { @class = "form-control" })
     </div>
     <div><input type="submit" value="Save changes" title="Save changes of the users" class="btn btn-success" /></div>

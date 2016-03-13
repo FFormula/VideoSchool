@@ -28,3 +28,5 @@ textarea {
                margin-left: -4px;
                margin-top: 5px;
 }
+* { margin:0; padding:0;
+}

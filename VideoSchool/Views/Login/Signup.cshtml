@@ -9,6 +9,7 @@
 
 @using (Html.BeginForm("Signup", "Login", FormMethod.Post))
 {
+
     <div style="color: red">
         @ViewBag.error
     </div>
@@ -16,15 +17,15 @@
     <p>@Html.AntiForgeryToken()</p>
     <div>
         Имя
-        @Html.TextBox("name", Model.name, new {@class="form-control@" })
+        @Html.TextBox("name", Model.name, new {@class="form-control" })
     </div>
     <div>
         email
-        @Html.TextBox("email", Model.email, new { @class = "form-control@" })
+        @Html.TextBox("email", Model.email, new { @class = "form-control" })
     </div>
     <div>
         Пароль
-        @Html.Password("passw", new { @class = "form-control@" })
+        @Html.Password("passw", new { }, new { @class = "form-control" })
     </div>
     <div><input type="submit" value="Записаться" class="btn btn-success" /></div>
 
