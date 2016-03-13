@@ -130,7 +130,10 @@ namespace VideoSchool.Controllers
                 if (id == "")
                     return RedirectToAction("ActionList", "Cabinet");
                 Models.Units.Action action = new Models.Units.Action(shared);
-                action.Select(id);
+                if (id == "Add")
+                    action.SelectNew();
+                else
+                    action.Select(id);
                 return View(action);
             }
             catch (Exception ex)
@@ -148,13 +151,24 @@ namespace VideoSchool.Controllers
                 if (id == "")
                     return RedirectToAction("ActionList", "Cabinet");
                 Models.Units.Action action = new Models.Units.Action(shared);
-                action.Select(id);
-                if (shared.error.AnyError())
-                    return RedirectToAction("ActionList", "Cabinet");
-                action.name = post.name;
-                action.info = post.info;
-                action.status = post.status;
-                action.Update();
+                if (id == "Add")
+                {
+                    action.SelectNew();
+                    action.name = post.name;
+                    action.info = post.info;
+                    action.status = post.status;
+                    action.Insert();
+                }
+                else
+                {
+                    action.Select(id);
+                    if (shared.error.AnyError())
+                        return RedirectToAction("ActionList", "Cabinet");
+                    action.name = post.name;
+                    action.info = post.info;
+                    action.status = post.status;
+                    action.Update();
+                }
                 return RedirectToAction("ActionList", "Cabinet");
             }
             catch (Exception ex)

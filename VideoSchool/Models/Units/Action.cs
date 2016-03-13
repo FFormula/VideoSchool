@@ -27,6 +27,14 @@ namespace VideoSchool.Models.Units
         {
         }
 
+        public void SelectNew()
+        {
+            this.id = "New";
+            this.name = "";
+            this.info = "-";
+            this.status = "0";
+        }
+
         public void Select(string id)
         {
             try
