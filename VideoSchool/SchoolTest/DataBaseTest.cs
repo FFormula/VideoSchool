@@ -15,6 +15,6 @@ namespace SchoolTest
             shared = new Shared(RunMode.UnitTest);
             string result = shared.db.Scalar("SELECT 2 + 2 * 2");
             Assert.AreEqual("6", result);
-        }
+        } 
     }
 }

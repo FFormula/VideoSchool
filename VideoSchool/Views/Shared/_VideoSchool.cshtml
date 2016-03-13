@@ -19,13 +19,12 @@
         @Html.Partial("_Header")
     </nav>
 
-    <div style="height: 50px"></div>
-
     <nav class="navbar navbar-default">
         @Html.Partial("_Menu")
     </nav>
 
-    <div class="content col-md-12">
+    <div>
+        <div class="col-md-1"></div>
         <div class="col-md-10">
             <p> @RenderBody()</p>
         </div>

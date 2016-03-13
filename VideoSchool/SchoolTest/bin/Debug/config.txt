@@ -1,1 +1,1 @@
-server=localhost;UserId=root;Password=qwas;database=SCHOOL;CharSet=utf8
+server=localhost;UserId=root;Password=;database=SCHOOL;CharSet=utf8
