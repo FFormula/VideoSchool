@@ -14,14 +14,24 @@
     <div>
         ID: @Model.id<br/>
         Status: @Model.status<br/>
+       
     </div>
+    <h3 class="alert-link" title="Warning! Changes status not recomended!">Change status:</h3>
+    <select class="form-control">
+        <option>1</option>
+        <option>2</option>
+      </select>
     <div>
-        Name:
-        @Html.TextBox("name", Model.name)
-    </div>
+     <h3 class="alert-link">Name:</h3> 
+    
+            <span class="field-image input-group-addon"><i class="glyphicon glyphicon-user"></i></span>  
+            @Html.TextBox("name", Model.name, new {@class="form-control" })
+  </div>
     <div>
-        E-mail:
-        @Html.TextBox("email", Model.email)
-    </div>
-    <div><input type="submit" value="Save changes" class="btn btn-success" /></div>
+        <h3 class="alert-link">E-mail:</h3>
+        <!--<span class="field-filter glyphicon glyphicon-envelope"></span> --> 
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span> 
+           @Html.TextBox("email", Model.email, new { @class = "form-control" })
+</div>
+    <div><input type="submit" value="Save changes" title="Save changes of the users" class="btn btn-success" /></div>
 }

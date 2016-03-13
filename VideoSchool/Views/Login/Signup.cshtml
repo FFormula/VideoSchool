@@ -16,15 +16,15 @@
     <p>@Html.AntiForgeryToken()</p>
     <div>
         Имя
-        @Html.TextBox("name", Model.name)
+        @Html.TextBox("name", Model.name, new {@class="form-control@" })
     </div>
     <div>
         email
-        @Html.TextBox("email", Model.email)
+        @Html.TextBox("email", Model.email, new { @class = "form-control@" })
     </div>
     <div>
         Пароль
-        @Html.Password("passw")
+        @Html.Password("passw", new { @class = "form-control@" })
     </div>
     <div><input type="submit" value="Записаться" class="btn btn-success" /></div>
 

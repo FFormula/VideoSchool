@@ -12,6 +12,7 @@
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <link href="~/Content/_Layout.css" rel="stylesheet">
+    <link href="~/Content/Site.css" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -24,7 +25,7 @@
         @Html.Partial("_Menu")
     </nav>
 
-    <div class="content">
+    <div class="content col-md-12">
         <div class="col-md-10">
             <p> @RenderBody()</p>
         </div>
@@ -56,7 +57,7 @@
             </div>
         </div -->
     </div>
-    <footer class="footer">
+    <footer class="footer col-md-12">
         <p class="text-muted">© 2016 Video School 2.0</p>
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
