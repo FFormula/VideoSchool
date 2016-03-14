@@ -56,7 +56,6 @@ namespace VideoSchool.Models.Units
             email = table.Rows[row]["email"].ToString();
             status = table.Rows[row]["status"].ToString();
         }
-
         
         /// <summary>
         /// Create an User List by filter
@@ -96,32 +95,33 @@ namespace VideoSchool.Models.Units
             try
             {
                 // no action checking
-                string query;
-
-                query = @"
-		    SELECT COUNT(*)
-		        FROM user
-		        WHERE email = '" + shared.db.addslashes(this.email) + @"'";
-
-                if (shared.db.Scalar(query) != "0")
+                if (getIdByEmail () != "-1")
                 {
                     shared.error.MarkUserError("This email already taken");
                     return;
                 }
-
-                query = @"
-		    INSERT INTO user
+                shared.db.Insert(
+           @"INSERT INTO user
 		        SET name = '" + shared.db.addslashes(this.name) + @"',
 		            email = '" + shared.db.addslashes(this.email) + @"',
 		            passw = password('" + shared.db.addslashes(this.passw) + @"'),
-		            status = '1'";
-                shared.db.Insert(query);
+		            status = '1'");
             } 
             catch (Exception ex)
             {
                 ThrowError(ex);
             }
 	    }
+
+        private string getIdByEmail ()
+        {
+            if ((this.email ?? "").Length < 5) 
+                return "-1";
+            return shared.db.Scalar (
+                @"SELECT COALESCE(min(id),-1)
+		            FROM user
+		           WHERE email = '" + shared.db.addslashes(this.email) + @"'");
+        }
 
         /// <summary>
         /// Check this.email and this.passw by user table.
@@ -201,17 +201,73 @@ namespace VideoSchool.Models.Units
 	    }
 
         /// <summary>
-        /// Change current user password to this.passw
+        /// Request new password for user by this.email
         /// </summary>
-        void ChangePassword ()	// генерация нового пароля 
+        public string RequestPassword ()	// генерация нового пароля 
         {
     	    // no action checking
-    	    this.passw = GeneratePassword (9);
-            string query = @"
-		    UPDATE user
-		       SET passw = password('this.passw')
-		     WHERE id = '1'
-		     LIMIT 1";
+            try {
+                string myid = getIdByEmail();
+                if (myid == "-1")
+                {
+                    shared.error.MarkUserError("User with this email does not registered");
+                    return "";
+                }
+                if ((this.passw ?? "").Length < 5)
+                {
+                    shared.error.MarkUserError("Password must be at least 5 symbols length");
+                    return "";
+                }
+                shared.db.Update (
+              @"UPDATE user
+		           SET passw_new = password('" + shared.db.addslashes(this.passw) + @"')
+		         WHERE email = '"              + shared.db.addslashes(this.email) + 
+              "' LIMIT 1");
+
+                string passwordActivationCode = shared.db.Scalar(
+                    "SELECT password(password('" + shared.db.addslashes(this.passw) + @"'))");
+                return myid + "." + passwordActivationCode;
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+                return "";
+            }
+        }
+
+        public void ActivatePassword (string code)
+        {
+            try
+            {
+                int p = code.IndexOf(".");
+                if (p == -1)
+                {
+                    shared.error.MarkUserError ("Wrong activation code format");
+                    return;
+                }
+                string id = code.Substring(0, p);
+                string p2 = code.Substring(p + 1);
+
+                string exists = shared.db.Scalar (
+                    @"SELECT COUNT(*) FROM user
+                       WHERE id = '" + shared.db.addslashes(id) + @"'
+                         AND password(passw_new) = '" + shared.db.addslashes(p2) + "'");
+                if (exists == "0")
+                {
+                    shared.error.MarkUserError("Invalid activation code");
+                    return;
+                }
+                shared.db.Update(
+                    @"UPDATE user 
+                         SET passw = passw_new,
+                             passw_new = ''
+                       WHERE id = '" + shared.db.addslashes(id) + @"'
+                         AND password(passw_new) = '" + shared.db.addslashes(p2) + "'");
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
         }
 
         /// <summary>

@@ -12,6 +12,15 @@ namespace VideoSchool.Models
 
         public string filename = "config.txt";
 
+        public string smtpHost;
+        public string smtpPort;
+        public string smtpUser;
+        public string smtpPass;
+        public string mailFrom;
+        public string mailName;
+        public string mailReplyTo;
+        public string mailCc;
+
         /// <summary>
         /// Init config for required Run Mode
         /// </summary>
@@ -37,6 +46,14 @@ namespace VideoSchool.Models
         public void InitFromWeb ()
         {
             mysql_connection = WebConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+            smtpHost = WebConfigurationManager.AppSettings.Get("smtpHost");
+            smtpPort = WebConfigurationManager.AppSettings.Get("smtpPort");
+            smtpUser = WebConfigurationManager.AppSettings.Get("smtpUser");
+            smtpPass = WebConfigurationManager.AppSettings.Get("smtpPass");
+            mailFrom = WebConfigurationManager.AppSettings.Get("mailFrom");
+            mailName = WebConfigurationManager.AppSettings.Get("mailName");
+            mailReplyTo = WebConfigurationManager.AppSettings.Get("mailReplyTo");
+            mailCc = WebConfigurationManager.AppSettings.Get("mailCc");
         }
 
         /// <summary>

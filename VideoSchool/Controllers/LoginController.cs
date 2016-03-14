@@ -136,6 +136,71 @@ namespace VideoSchool.Controllers
             }
         }
 
+        public ActionResult RequestPassword()
+        {
+            try
+            {
+                return View(user);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult RequestPassword(User post)
+        {
+            try 
+            {
+                user.email = post.email;
+                user.passw = post.passw;
+                string passwordActivationCode = user.RequestPassword();
+                if (shared.error.UserError())
+                {
+                    ViewBag.error = shared.error.text;
+                    return View(user);
+                }
+
+                EMail email = new EMail(shared);
+                
+                string message = @"To use your new password follow the link:
+                
+                http://localhost:64199/Login/ActivatePassword?code=" + 
+                    passwordActivationCode;
+                
+                email.Send (user.email, "Activate your new Password", message);
+
+                return RedirectToAction("ActivatePassword", "Login");
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
+
+        public ActionResult ActivatePassword (string code)
+        {
+            try {
+                if ((code ?? "") == "")
+                {
+                    ViewBag.error = "Check your email and follow activation link to set activate your new password";
+                    return View(user);
+                }
+                user.ActivatePassword (code);
+                if (shared.error.UserError())
+                {
+                    ViewBag.error = shared.error.text;
+                    return View(user);
+                }
+                return RedirectToAction("Index", "Login");
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
+
         /// <summary>
         /// Generate an Error View
         /// </summary>

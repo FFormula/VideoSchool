@@ -9,23 +9,23 @@
 @if(Session["user_id"] == null)
 { 
 
-using(Html.BeginForm())
-{
-    <div style="color: red">
-        @ViewBag.error
-    </div>
-    <div class="form-group">
-        Email: 
-        @Html.TextBox("email", Model.email, new { @class = "form-control input-lg" })
-    </div>
-    <div class="form-group">
-        Passw:
-        @Html.Password("passw", "", new { @class = "form-control input-lg" })
-    </div>
+    using(Html.BeginForm())
+    {
+        <div style="color: red">
+            @ViewBag.error
+        </div>
+        <div class="form-group">
+            Email: 
+            @Html.TextBox("email", Model.email, new { @class = "form-control input-lg" })
+        </div>
+        <div class="form-group">
+            Passw:
+            @Html.Password("passw", "", new { @class = "form-control input-lg" })
+        </div>
 
-    <input type="submit" value="Login" class="btn btn-success" />
-
-
+        <input type="submit" value="Login" class="btn btn-success" />
+    
+        @Html.ActionLink("Forgot password?", "RequestPassword", "Login")
 
     }
 

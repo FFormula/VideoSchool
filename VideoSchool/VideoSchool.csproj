@@ -136,6 +136,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EMail.cs" />
     <Compile Include="Models\Units\Action.cs" />
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\Error.cs" />
@@ -166,6 +167,8 @@
     <Content Include="Views\Cabinet\ActionList.cshtml" />
     <Content Include="Views\Cabinet\ActionEdit.cshtml" />
     <Content Include="Views\Cabinet\RoleList.cshtml" />
+    <Content Include="Views\Login\RequestPassword.cshtml" />
+    <Content Include="Views\Login\ActivatePassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
