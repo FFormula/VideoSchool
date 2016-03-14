@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VideoSchool.Models.Units;
 using VideoSchool.Models;
 
 namespace SchoolTest

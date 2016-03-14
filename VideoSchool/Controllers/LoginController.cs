@@ -193,7 +193,8 @@ namespace VideoSchool.Controllers
                     ViewBag.error = shared.error.text;
                     return View(user);
                 }
-                return RedirectToAction("Index", "Login");
+                ViewBag.success = "1";
+                return View(user);
             }
             catch (Exception ex)
             {

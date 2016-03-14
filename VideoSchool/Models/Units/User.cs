@@ -113,6 +113,10 @@ namespace VideoSchool.Models.Units
             }
 	    }
 
+        /// <summary>
+        /// Check user table for email
+        /// </summary>
+        /// <returns>-1: email not found, N: user id</returns>
         private string getIdByEmail ()
         {
             if ((this.email ?? "").Length < 5) 
@@ -235,6 +239,11 @@ namespace VideoSchool.Models.Units
             }
         }
 
+        /// <summary>
+        /// Parse code from email-link and check it
+        /// Activate new password once
+        /// </summary>
+        /// <param name="code"></param>
         public void ActivatePassword (string code)
         {
             try
