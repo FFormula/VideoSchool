@@ -6,28 +6,31 @@
 }
 
 <h2>
-    <span class="glyphicon glyphicon-apple"></span>
-    &nbsp; List of all actions
+    <span class="glyphicon glyphicon-certificate"></span>
+    &nbsp; List of all roles
 </h2>
-
-@using (Html.BeginForm("RoleList", "Cabinet", FormMethod.Get))
-{
-    <div>
-        <h5>Filter:</h5>
-        @Html.TextBox("filter", Model.filter, new { @class = "field-filter form-control" })
-        @* <input type="submit" value="Filter" class="btn btn-primary" /> *@
-        <button type="submit" value="Filter" class="btn btn-primary form-control btn-filter">
-            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-        </button>
-
-
-    </div>
-}
-
 <div>
-    There are @Model.qtable.lines rows.
-    @Html.ActionLink("Add", "ActionEdit", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus", @title = "add new role" })
+    @using (Html.BeginForm("RoleList", "Cabinet", FormMethod.Get))
+    {
+        <div>
+            <h5>Filter:</h5>
+            @Html.TextBox("filter", Model.filter, new { @class = "field-filter form-control" })
+            @* <input type="submit" value="Filter" class="btn btn-primary" /> *@
+            <button type="submit" value="Filter" class="btn btn-primary form-control btn-filter">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            </button>
+
+
+        </div>
+    }
 </div>
+<div class="col-lg-12">
+    There are @Model.qtable.lines rows.
+    @Html.ActionLink("Add", "RoleEdit", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus btn btn-success", @title = "add new role" })
+</div>
+
+   <hr />
+
 <div>
 
 </div>
@@ -35,21 +38,22 @@
 {
     <table class="table table-hover">
         <tr class="success">
-            <th><span class="glyphicon glyphicon-edit"></span></th>
+            <th><span class="glyphicon glyphicon-edit"></span> </th>
             <th>Name</th>
             <th>Info</th>
-         
+            <th>Edit Actions</th>
         </tr>
         @foreach (DataRow x in Model.qtable.table.Rows)
         {
             <tr>
                 <td>
-                    @Html.ActionLink(@x["id"].ToString(), "ActionEdit", "Cabinet",
-                                 new { id = x["id"].ToString() }, new { @class = "btn btn-success", @title = "edit action " + @x["id"].ToString() })
+                    @Html.ActionLink(@x["id"].ToString(), "RoleEdit", "Cabinet",
+                                 new { id = x["id"].ToString() }, new { @class = "btn btn-success", @title = "edit role " + @x["id"].ToString() })
                 </td>
                 <td>@x["name"].ToString()</td>
                 <td>@x["info"].ToString()</td>
-               
+                <td>@Html.ActionLink("Actions "+@x["name"].ToString(), "RoleEdit", "Cabinet",
+                                 new { id = x["id"].ToString() }, new { @class = "btn btn-default", @title = "edit actions for role " + @x["id"].ToString() })</td>
             </tr>
 
         }

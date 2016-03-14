@@ -176,6 +176,12 @@ namespace VideoSchool.Controllers
                 return ShowError(ex);
             }
         }
+
+        /// <summary>
+        /// list roles of the filter
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         public ActionResult RoleList(string filter)
         {            
             try
@@ -190,6 +196,75 @@ namespace VideoSchool.Controllers
                 return ShowError(ex);
             }
         }
+
+
+        //---
+
+
+
+        [HttpGet]
+        public ActionResult RoleEdit()
+        {
+            try
+            {
+                string id = (RouteData.Values["id"] ?? "").ToString();
+                if (id == "")
+                    return RedirectToAction("RoleList", "Cabinet");
+                Models.Units.Role role = new Models.Units.Role(shared);
+                if (id == "Add")
+                    role.SelectNew();
+                else
+                   role.Select(id);
+                return View(role);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult RoleEdit(Models.Units.Role post)
+        {
+            try
+            {
+                string id = (RouteData.Values["id"] ?? "").ToString();
+                if (id == "")
+                    return RedirectToAction("RoleList", "Cabinet");
+                Models.Units.Role role = new Models.Units.Role(shared);
+                if (id == "Add")
+                {
+                    role.SelectNew();
+                    role.name = post.name;
+                    role.info = post.info;
+                   
+                    role.Insert();
+                }
+                else
+                {
+                    role.Select(id);
+                    if (shared.error.AnyError())
+                        return RedirectToAction("RoleList", "Cabinet");
+                    role.name = post.name;
+                    role.info = post.info;
+                   
+                    role.Update();
+                }
+                return RedirectToAction("RoleList", "Cabinet");
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
+
+
+
+        //-------
+
+
+
+
 
         /// <summary>
         /// A list of medals
