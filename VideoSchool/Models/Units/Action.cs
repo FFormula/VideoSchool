@@ -13,18 +13,15 @@ namespace VideoSchool.Models.Units
         public string info { get; set; }
         public string status { get; set; }
 
-        public Action ()
-            : base ()
+        public Action () : this (null) { }
+
+        public Action (Shared shared)
+            : base (shared)
         {
             id = "";
             name = "";
             info = "";
             status = "0";
-        }
-
-        public Action (Shared shared)
-            : base (shared)
-        {
         }
 
         public void SelectNew()

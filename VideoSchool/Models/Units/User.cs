@@ -15,18 +15,12 @@ namespace VideoSchool.Models.Units
         public string email { get; set; }
         public string passw { get; set; }
 
-        /// <summary>
-        /// Create an empty instance of User model
-        /// </summary>
-        public User ()
-            : base ()
+        public User () : this (null) { }
+        public User (Shared shared) : base (shared) 
         {
-        }
-
-        public User (Shared shared)
-            : base (shared)
-        {
-
+            name = "";
+            email = "";
+            passw = "";
         }
 
         /// <summary>

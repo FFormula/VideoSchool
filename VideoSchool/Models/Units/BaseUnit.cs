@@ -8,14 +8,10 @@ namespace VideoSchool.Models.Units
     public class BaseUnit
     {
         protected Shared shared;
-
         public QTable qtable { get; protected set; }
         public string filter { get; set; }
 
-        public BaseUnit ()
-        {
-            shared = null;
-        }
+        public BaseUnit () : this (null) { }
 
         public BaseUnit (Shared shared)
         {
