@@ -29,7 +29,7 @@ CREATE TABLE `action` (
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '0-отключено, 1-работает',
   PRIMARY KEY (`id`),
   UNIQUE KEY `Индекс 2` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Список всех возможных действий в системе';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='Список всех возможных действий в системе';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `action` (
 
 LOCK TABLES `action` WRITE;
 /*!40000 ALTER TABLE `action` DISABLE KEYS */;
-INSERT INTO `action` VALUES (1,'user_Update','-',1),(2,'role_Update','-',1),(3,'role_EditUser','-',1),(4,'role_EditAction','-',1),(5,'action_Update','-',1);
+INSERT INTO `action` VALUES (1,'user_Update','-',1),(2,'role_Update','-',1),(3,'role_EditUser','-',1),(4,'role_EditAction','-',1),(5,'action_Update','Info',1),(6,'action_test','qqqq',0),(7,'Administrator','Main Boss',1);
 /*!40000 ALTER TABLE `action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,8 +131,9 @@ CREATE TABLE `user` (
   `email` varchar(255) DEFAULT NULL COMMENT 'Электропочта для авторизации',
   `passw` varchar(255) DEFAULT NULL COMMENT 'Закодированный пароль',
   `status` int(11) DEFAULT '0' COMMENT '0-нет доступа, 1-есть',
+  `passw_new` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Список всех пользователей системы';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Список всех пользователей системы';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +142,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Jevgenij','fformula@gmail.com','*E75A663C6384E4833CBD81F37797B862017C2555',1),(2,'Valera','walera@yandex.ru','*CEFAE98A0AE1BD158A659D26CEF833E5035AD7BC',1),(3,'Muza','hely@muza.org','*E75A663C6384E4833CBD81F37797B862017C2555',1),(4,'111','walera@yandex.ru1','*E75A663C6384E4833CBD81F37797B862017C2555',1);
+INSERT INTO `user` VALUES (1,'Magic','fformula@gmail.com','*CC67043C7BCFF5EEA5566BD9B1F3C74FD9A5CF5D',1,''),(2,'Valera','walera@yandex.ru','*CEFAE98A0AE1BD158A659D26CEF833E5035AD7BC',1,NULL),(3,'Olia','hely@muza.org','*E75A663C6384E4833CBD81F37797B862017C2555',1,NULL),(4,'Michael','misha@moskva.ru','*E75A663C6384E4833CBD81F37797B862017C2555',1,NULL),(5,'Abc111','aaa@aaa.aaa','*E75A663C6384E4833CBD81F37797B862017C2555',1,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -154,4 +155,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-08 16:51:46
+-- Dump completed on 2016-03-14 16:00:35
