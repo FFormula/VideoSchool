@@ -103,8 +103,6 @@ namespace VideoSchool.Models
                 throw new Exception("Duplicate key in config file");
             string val = line.Substring(p + 1);
             items.Add(key, val);
-            //System.IO.File.AppendAllText("demo.txt", key + " " + val + "\n");
-            //Debug.WriteLine(key + " = " + val);
         }
 
         private void ExtractValues()
