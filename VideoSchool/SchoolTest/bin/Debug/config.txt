@@ -1,1 +1,0 @@
-server=localhost;UserId=root;Password=;database=SCHOOL;CharSet=utf8
