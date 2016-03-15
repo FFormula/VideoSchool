@@ -51,6 +51,11 @@ namespace VideoSchool.Models
         {
             try
             {
+                if (to.IndexOf("@") == -1)
+                {
+                    shared.error.MarkUserError("Invalid Email address");
+                    return;
+                }
                 CheckConfig();
                 SmtpClient smtpClient = new SmtpClient(smtpHost, Convert.ToInt16(smtpPort));
 

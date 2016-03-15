@@ -177,7 +177,7 @@ namespace VideoSchool.Controllers
                 
                 http://localhost:64199/Login/ActivatePassword?code=" + code;
                 
-                email.Send (user.email, "Activate your new Password", message);
+                email.Send (up.email, "Activate your new Password", message);
 
                 return RedirectToAction("ActivatePassword", "Login");
             }
