@@ -260,6 +260,25 @@ namespace VideoSchool.Controllers
 
 
 
+        public ActionResult RoleAction()
+        {
+            try
+            {
+                string id = (RouteData.Values["id"] ?? "").ToString();
+                if (id == "")
+                    return RedirectToAction("RoleList", "Cabinet");
+                Models.Units.Role role = new Models.Units.Role(shared);
+                if (id == "Add")
+                    role.SelectNew();
+                else
+                    role.Select(id);
+                return View(role);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
         //-------
 
 

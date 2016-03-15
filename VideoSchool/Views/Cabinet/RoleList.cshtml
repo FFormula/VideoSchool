@@ -18,15 +18,15 @@
             @* <input type="submit" value="Filter" class="btn btn-primary" /> *@
             <button type="submit" value="Filter" class="btn btn-primary form-control btn-filter">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-            </button>
-
+            </button> &nbsp;
+            @Html.ActionLink("Add", "RoleEdit", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus btn btn-success", @title = "add new role" })
 
         </div>
     }
 </div>
 <div class="col-lg-12">
     There are @Model.qtable.lines rows.
-    @Html.ActionLink("Add", "RoleEdit", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus btn btn-success", @title = "add new role" })
+   
 </div>
 
    <hr />
@@ -52,7 +52,7 @@
                 </td>
                 <td>@x["name"].ToString()</td>
                 <td>@x["info"].ToString()</td>
-                <td>@Html.ActionLink("Actions "+@x["name"].ToString(), "RoleEdit", "Cabinet",
+                <td>@Html.ActionLink("Actions "+@x["name"].ToString(), "RoleAction", "Cabinet",
                                  new { id = x["id"].ToString() }, new { @class = "btn btn-default", @title = "edit actions for role " + @x["id"].ToString() })</td>
             </tr>
 

@@ -170,6 +170,7 @@
     <Content Include="Views\Login\RequestPassword.cshtml" />
     <Content Include="Views\Login\ActivatePassword.cshtml" />
     <Content Include="Views\Cabinet\RoleEdit.cshtml" />
+    <Content Include="Views\Cabinet\RoleAction.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

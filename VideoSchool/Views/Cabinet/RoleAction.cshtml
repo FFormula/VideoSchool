@@ -1,0 +1,31 @@
+﻿@model VideoSchool.Models.Units.Role
+@using System.Data;
+
+@{
+    ViewBag.Title = "RoleAction";
+}
+
+<div class="alert alert-info">Actions of Role <strong>@Model.name</strong> </div>
+
+<table class="table table-hover">
+    <tr class="success">
+        <th><span class="glyphicon glyphicon-edit"></span></th>
+        <th>Name</th>
+        <th>Info</th>
+        <th>Status</th>
+    </tr>
+
+@foreach (DataRow x in Model.qtable.table.Rows)
+{
+       <tr>
+        <td>@x["id"].ToString()</td>
+        
+        <td>@x["name"].ToString()</td>
+        <td>@x["info"].ToString()</td>
+        <td>@x["status"].ToString()</td>
+    </tr>
+}
+</table>
+
+
+
