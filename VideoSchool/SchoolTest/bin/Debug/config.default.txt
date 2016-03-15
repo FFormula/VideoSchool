@@ -1,0 +1,10 @@
+mysqlConnection=server=localhost;UserId=root;Password=qwas;database=SCHOOL;CharSet=utf8
+hostname=http://localhost:64199/
+smtpHost=
+smtpPort=
+smtpUser=
+smtpPass=
+mailFrom=
+mailName=
+mailReplyTo=
+mailCc=

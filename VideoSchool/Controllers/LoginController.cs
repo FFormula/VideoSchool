@@ -18,7 +18,7 @@ namespace VideoSchool.Controllers
         /// </summary>
         public LoginController ()
         {
-            shared = new Shared(RunMode.WebDebug);
+            shared = new Shared();
             user = new User(shared);
         }
 
@@ -175,7 +175,7 @@ namespace VideoSchool.Controllers
                 
                 string message = @"To use your new password follow the link:
                 
-                http://localhost:64199/Login/ActivatePassword?code=" + code;
+                " + shared.config.hostname + "Login/ActivatePassword?code=" + code;
                 
                 email.Send (up.email, "Activate your new Password", message);
 

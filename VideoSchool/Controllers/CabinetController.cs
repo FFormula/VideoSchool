@@ -17,7 +17,7 @@ namespace VideoSchool.Controllers
         /// </summary>
         public CabinetController ()
         {
-            shared = new Shared(RunMode.WebDebug);
+            shared = new Shared();
         }
 
         // GET: Cabinet

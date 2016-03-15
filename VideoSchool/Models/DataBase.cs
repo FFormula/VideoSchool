@@ -31,7 +31,7 @@ namespace VideoSchool.Models
             {
                 connected = true;
                 query = "OPEN CONNECTION TO MYSQL";
-                con = new MySqlConnection(shared.config.mysql_connection);
+                con = new MySqlConnection(shared.config.mysqlConnection);
                 con.Open();
             }
             catch (Exception ex)

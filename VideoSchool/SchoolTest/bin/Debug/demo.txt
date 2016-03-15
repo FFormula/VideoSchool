@@ -1,0 +1,10 @@
+mysqlConnectio server=localhost;UserId=root;Password=;database=SCHOOL;CharSet=utf8
+hostnam http://localhost:64199/
+smtpHos email-smtp.eu-west-1.amazonaws.com
+smtpPor 587
+smtpUse AKIAIPMPL7AV4QVWXKJQ
+smtpPas AngFattXTIJG/hZM+D3LP0ponTG2abQMEBa12gSxPxyQ
+mailFro formulist@gmail.com
+mailNam Video School Server
+mailReplyT formulist@gmail.com
+mailC 

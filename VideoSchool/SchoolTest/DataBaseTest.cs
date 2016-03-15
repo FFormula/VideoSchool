@@ -12,7 +12,7 @@ namespace SchoolTest
         [TestMethod]
         public void TestScalar()
         {
-            shared = new Shared(RunMode.UnitTest);
+            shared = new Shared("config.txt");
             string result = shared.db.Scalar("SELECT 2 + 2 * 2");
             Assert.AreEqual("6", result);
         } 

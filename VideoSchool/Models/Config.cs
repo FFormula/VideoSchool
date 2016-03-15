@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
@@ -8,10 +9,12 @@ namespace VideoSchool.Models
 {
     public class Config
     {
-        public string mysql_connection { get; set; }
+        private string filename;
 
-        public string filename = "config.txt";
+        public string hostname;
 
+        public string mysqlConnection { get; set; }
+        
         public string smtpHost;
         public string smtpPort;
         public string smtpUser;
@@ -21,31 +24,31 @@ namespace VideoSchool.Models
         public string mailReplyTo;
         public string mailCc;
 
+        private string[] lines;
+        private Dictionary<string, string> items = null;
+
         /// <summary>
         /// Init config for required Run Mode
         /// </summary>
         /// <param name="mode">Where it will be run now</param>
-        public Config(RunMode mode)
+        public Config(string filename = "")
         {
-            switch (mode)
+            this.filename = filename;
+            if (this.filename == "") 
             {
-                case RunMode.WebDebug: 
-                case RunMode.WebRelease:
-                                InitFromWeb();
-                                break;
-
-                case RunMode.UnitTest:
-                                InitFromTest();
-                                break;
+                InitFromWebConfig();
+                return;
             }
+            InitFromFile();
         }
 
         /// <summary>
         /// Init for web browser, using WebConfigurationManager
         /// </summary>
-        public void InitFromWeb ()
+        public void InitFromWebConfig ()
         {
-            mysql_connection = WebConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+            mysqlConnection = WebConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+            hostname = WebConfigurationManager.AppSettings.Get("hostname");
             smtpHost = WebConfigurationManager.AppSettings.Get("smtpHost");
             smtpPort = WebConfigurationManager.AppSettings.Get("smtpPort");
             smtpUser = WebConfigurationManager.AppSettings.Get("smtpUser");
@@ -59,14 +62,64 @@ namespace VideoSchool.Models
         /// <summary>
         /// Init for unit test
         /// </summary>
-        public void InitFromTest ()
+        public void InitFromFile ()
         {
-            mysql_connection = System.IO.File.ReadAllText(filename);
+            Parse();
         }
 
-        public void SaveFromTest ()
+        public void Parse ()
         {
-            System.IO.File.WriteAllText(filename, "server=localhost;UserId=root;Password=qwas;database=SCHOOL;CharSet=utf8");
+            lines = System.IO.File.ReadAllLines(filename);
+            items = new Dictionary<string, string>();
+            for (int j = 0; j < lines.Length; j++)
+                ParseLine(lines[j]);
+            ExtractValues();
         }
+
+        private string ExtractOptional(string key)
+        {
+            string value;
+            if (!items.TryGetValue(key, out value))
+                value = "";
+            return value;
+        }
+
+        private string ExtractNeeded(string key)
+        {
+            string value;
+            if (!items.TryGetValue(key, out value))
+                value = ""; //  1; //value = items.Count.ToString(); //// throw new Exception("Missing config value for " + key);
+            return value;
+        }
+
+        private void ParseLine (string line)
+        {
+            if ((line ?? "") == "") return;
+            if (line[0] == ';') return;
+            int p = line.IndexOf("=");
+            if (p <= 0) return;
+            string key = line.Substring(0, p);
+            if (items.ContainsKey("key"))
+                throw new Exception("Duplicate key in config file");
+            string val = line.Substring(p + 1);
+            items.Add(key, val);
+            //System.IO.File.AppendAllText("demo.txt", key + " " + val + "\n");
+            //Debug.WriteLine(key + " = " + val);
+        }
+
+        private void ExtractValues()
+        {
+            mysqlConnection = ExtractNeeded("mysqlConnection");
+            hostname = ExtractNeeded("hostname");
+            smtpHost = ExtractNeeded("smtpHost");
+            smtpPort = ExtractNeeded("smtpPort");
+            smtpUser = ExtractNeeded("smtpUser");
+            smtpPass = ExtractNeeded("smtpPass");
+            mailFrom = ExtractNeeded("mailFrom");
+            mailName = ExtractNeeded("mailName");
+            mailReplyTo = ExtractOptional("mailReplyTo");
+            mailCc = ExtractOptional("mailCc");
+        }
+
     }
 }

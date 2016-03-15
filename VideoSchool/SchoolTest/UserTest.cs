@@ -8,14 +8,13 @@ namespace SchoolTest
     [TestClass]
     public class UserTest
     {
+        string configFilename = "config.txt";
         Shared shared;
 
         [TestMethod]
         public void TestSelect()
         {
-            shared = new Shared(RunMode.UnitTest);
-
-            //shared.config.SaveFromTest();
+            shared = new Shared(configFilename);
             User user = new User(shared);
             user.Select("1");
             Assert.AreEqual("fformula@gmail.com", user.email);
@@ -24,7 +23,7 @@ namespace SchoolTest
         [TestMethod]
         public void TestInsertAndDelete()
         {
-            shared = new Shared(RunMode.UnitTest);
+            shared = new Shared(configFilename);
 
             var query = @"
 		    INSERT INTO user
@@ -47,7 +46,7 @@ namespace SchoolTest
         [TestMethod]
         public void TestUpdate()
         {
-            shared = new Shared(RunMode.UnitTest);
+            shared = new Shared(configFilename);
 
             var query = @"
 		    INSERT INTO user

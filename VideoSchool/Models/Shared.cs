@@ -6,13 +6,6 @@ using System.Web.Mvc;
 
 namespace VideoSchool.Models
 {
-    public enum RunMode
-    {
-        WebDebug,    // Run Project from programmer's desktop
-        WebRelease, // Run Project on the web-server
-        UnitTest   // Run Unit test
-    };
-
     /// <summary>
     /// This class contains all stuff required for the others Models work
     /// </summary>
@@ -26,9 +19,9 @@ namespace VideoSchool.Models
         /// Init all stuffs for required Run Mode
         /// </summary>
         /// <param name="mode">A place, where it started</param>
-        public Shared (RunMode mode)
+        public Shared (string configFilename = "")
         {
-            config = new Config (mode);
+            config = new Config (configFilename);
             error = new Error(this);
             db = new DataBase(this);
         }

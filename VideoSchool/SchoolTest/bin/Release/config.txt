@@ -1,0 +1,10 @@
+mysqlConnection=server=localhost;UserId=root;Password=;database=SCHOOL;CharSet=utf8
+hostname=http://localhost:64199/
+smtpHost=email-smtp.eu-west-1.amazonaws.com
+smtpPort=587
+smtpUser=AKIAIPMPL7AV4QVWXKJQ
+smtpPass=AngFattXTIJG/hZM+D3LP0ponTG2abQMEBa12gSxPxyQ
+mailFrom=formulist@gmail.com
+mailName=Video School Server
+mailReplyTo=formulist@gmail.com
+mailCc=
