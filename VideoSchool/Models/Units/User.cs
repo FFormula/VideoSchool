@@ -117,7 +117,7 @@ namespace VideoSchool.Models.Units
         /// Check user table for email
         /// </summary>
         /// <returns>-1: email not found, N: user id</returns>
-        private string getIdByEmail ()
+        protected string getIdByEmail ()
         {
             if ((this.email ?? "").Length < 5) 
                 return "-1";
@@ -202,109 +202,6 @@ namespace VideoSchool.Models.Units
             {
                 ThrowError(ex);
             }
-	    }
-
-        /// <summary>
-        /// Request new password for user by this.email
-        /// </summary>
-        public string RequestPassword ()	// генерация нового пароля 
-        {
-    	    // no action checking
-            try {
-                string myid = getIdByEmail();
-                if (myid == "-1")
-                {
-                    shared.error.MarkUserError("User with this email does not registered");
-                    return "";
-                }
-                if ((this.passw ?? "").Length < 5)
-                {
-                    shared.error.MarkUserError("Password must be at least 5 symbols length");
-                    return "";
-                }
-                shared.db.Update (
-              @"UPDATE user
-		           SET passw_new = password('" + shared.db.addslashes(this.passw) + @"')
-		         WHERE email = '"              + shared.db.addslashes(this.email) + 
-              "' LIMIT 1");
-
-                string passwordActivationCode = shared.db.Scalar(
-                    "SELECT password(password('" + shared.db.addslashes(this.passw) + @"'))");
-                return myid + "." + passwordActivationCode;
-            }
-            catch (Exception ex)
-            {
-                ThrowError(ex);
-                return "";
-            }
-        }
-
-        /// <summary>
-        /// Parse code from email-link and check it
-        /// Activate new password once
-        /// </summary>
-        /// <param name="code"></param>
-        public void ActivatePassword (string code)
-        {
-            try
-            {
-                int p = code.IndexOf(".");
-                if (p == -1)
-                {
-                    shared.error.MarkUserError ("Wrong activation code format");
-                    return;
-                }
-                string id = code.Substring(0, p);
-                string p2 = code.Substring(p + 1);
-
-                string exists = shared.db.Scalar (
-                    @"SELECT COUNT(*) FROM user
-                       WHERE id = '" + shared.db.addslashes(id) + @"'
-                         AND password(passw_new) = '" + shared.db.addslashes(p2) + "'");
-                if (exists == "0")
-                {
-                    shared.error.MarkUserError("Invalid activation code");
-                    return;
-                }
-                shared.db.Update(
-                    @"UPDATE user 
-                         SET passw = passw_new,
-                             passw_new = ''
-                       WHERE id = '" + shared.db.addslashes(id) + @"'
-                         AND password(passw_new) = '" + shared.db.addslashes(p2) + "'");
-            }
-            catch (Exception ex)
-            {
-                ThrowError(ex);
-            }
-        }
-
-        /// <summary>
-        /// Generate an Random password of length L
-        /// </summary>
-        /// <param name="L">A length of password</param>
-        /// <returns>A random password</returns>
-        private string GeneratePassword(int L)
-        {
- 	        return "RandomPassword$";
-        }
-
-        /// <summary>
-        /// Change user password manually, with old and new one.
-        /// </summary>
-        /// <param name="old_passw">Old user password</param>
-        /// <param name="new_passw">New user password</param>
-        /// <returns>True - changed successfully, False - old password is wrong</returns>
-	    bool ChangePassword (string old_passw, string new_passw)		// смена старого пароля
-	    {
-		    // no action checking
-            string query = @"
-		    UPDATE user
-		       SET passw = password('this.passw')
-		     WHERE id = '1'
-		       AND passw = password('old_passw')
-		     LIMIT 1";
-            return true;
 	    }
 
         /// <summary>

@@ -58,18 +58,29 @@ namespace VideoSchool.Controllers
                     return View(user);
                 }
                 user.Select(user.id);
-
-                Session["logged"] = "1";
-                Session["user_id"] = user.id;
-                Session["user_email"] = user.email;
-                Session["user_name"] = user.name;
-
+                SetLoginUserParams();
                 return RedirectToAction("Index", "Login");
             } 
             catch (Exception ex)
             {
                 return ShowError(ex);
             }
+        }
+
+        private void SetLoginUserParams()
+        {
+            Session["logged"] = "1";
+            Session["user_id"] = user.id;
+            Session["user_email"] = user.email;
+            Session["user_name"] = user.name;
+        }
+
+        private void ClearLoginUserParams()
+        {
+            Session["logged"] = null;
+            Session["user_id"] = null;
+            Session["user_name"] = null;
+            Session["user_email"] = null;
         }
 
         /// <summary>
@@ -80,10 +91,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                Session["logged"] = null;
-                Session["user_id"] = null;
-                Session["user_name"] = null;
-                Session["user_email"] = null;
+                ClearLoginUserParams();
                 return RedirectToAction("Index", "Login");
             }
             catch (Exception ex)
@@ -153,9 +161,10 @@ namespace VideoSchool.Controllers
         {
             try 
             {
-                user.email = post.email;
-                user.passw = post.passw;
-                string passwordActivationCode = user.RequestPassword();
+                UserPassw up = new UserPassw(shared);
+                up.email = post.email;
+                up.passw = post.passw;
+                string code = up.RequestPassword();
                 if (shared.error.UserError())
                 {
                     ViewBag.error = shared.error.text;
@@ -166,8 +175,7 @@ namespace VideoSchool.Controllers
                 
                 string message = @"To use your new password follow the link:
                 
-                http://localhost:64199/Login/ActivatePassword?code=" + 
-                    passwordActivationCode;
+                http://localhost:64199/Login/ActivatePassword?code=" + code;
                 
                 email.Send (user.email, "Activate your new Password", message);
 
@@ -179,6 +187,7 @@ namespace VideoSchool.Controllers
             }
         }
 
+        [HttpGet]
         public ActionResult ActivatePassword (string code)
         {
             try {
@@ -187,12 +196,20 @@ namespace VideoSchool.Controllers
                     ViewBag.error = "Check your email and follow activation link to set activate your new password";
                     return View(user);
                 }
-                user.ActivatePassword (code);
+                UserPassw up = new UserPassw(shared);
+                string myid = up.ActivatePassword (code);
                 if (shared.error.UserError())
                 {
                     ViewBag.error = shared.error.text;
                     return View(user);
                 }
+                if (myid == "")
+                {
+                    ViewBag.error = "User not found";
+                    return View(user);
+                }
+                user.Select(myid);
+                SetLoginUserParams();
                 ViewBag.success = "1";
                 return View(user);
             }
@@ -205,8 +222,8 @@ namespace VideoSchool.Controllers
         /// <summary>
         /// Generate an Error View
         /// </summary>
-        /// <param name="ex"></param>
-        /// <returns></returns>
+        /// <param name="ex">Last Exception</param>
+        /// <returns>ActionResult for View</returns>
         public ActionResult ShowError(Exception ex)
         {
             if (shared.error.NoErrors())

@@ -142,6 +142,24 @@ namespace VideoSchool.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult ActionDrop()
+        {
+            try
+            {
+                string id = (RouteData.Values["id"] ?? "").ToString();
+                if (id == "")
+                    return RedirectToAction("ActionList", "Cabinet");
+                Models.Units.Action action = new Models.Units.Action(shared);
+                action.Delete(id);
+                return RedirectToAction("ActionList", "Cabinet");
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
+
         [HttpPost]
         public ActionResult ActionEdit (Models.Units.Action post)
         {

@@ -154,5 +154,21 @@ namespace VideoSchool.Models.Units
 			     WHERE id = 'id';	
 	    }
 */
+
+        public void Delete(string id)
+        {
+            try
+            {
+                string query = @"
+            DELETE FROM action
+		     WHERE id = '" + shared.db.addslashes(id) + @"'
+		     LIMIT 1";
+                shared.db.Update(query);
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
+        }
     }
 }

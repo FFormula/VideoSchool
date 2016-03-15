@@ -38,7 +38,7 @@ CREATE TABLE `action` (
 
 LOCK TABLES `action` WRITE;
 /*!40000 ALTER TABLE `action` DISABLE KEYS */;
-INSERT INTO `action` VALUES (1,'user_Update','-',1),(2,'role_Update','-',1),(3,'role_EditUser','-',1),(4,'role_EditAction','-',1),(5,'action_Update','Info',1),(6,'action_test','qqqq',0),(7,'Administrator','Main Boss',1);
+INSERT INTO `action` VALUES (1,'user_Update','-',1),(2,'role_Update','-',1),(3,'role_EditUser','-',1),(4,'role_EditAction','-',1),(5,'action_Update','Info',1);
 /*!40000 ALTER TABLE `action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,7 +54,7 @@ CREATE TABLE `role` (
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT 'Название роли',
   `info` text COMMENT 'Описание ролевой сути',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Список ролевых статусов проекта';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Список ролевых статусов проекта';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,6 +63,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (1,'Administrator','-'),(2,'Support','-'),(3,'Teacher','-');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,7 +132,6 @@ CREATE TABLE `user` (
   `email` varchar(255) DEFAULT NULL COMMENT 'Электропочта для авторизации',
   `passw` varchar(255) DEFAULT NULL COMMENT 'Закодированный пароль',
   `status` int(11) DEFAULT '0' COMMENT '0-нет доступа, 1-есть',
-  `passw_new` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Список всех пользователей системы';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -142,8 +142,34 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Magic','fformula@gmail.com','*CC67043C7BCFF5EEA5566BD9B1F3C74FD9A5CF5D',1,''),(2,'Valera','walera@yandex.ru','*CEFAE98A0AE1BD158A659D26CEF833E5035AD7BC',1,NULL),(3,'Olia','hely@muza.org','*E75A663C6384E4833CBD81F37797B862017C2555',1,NULL),(4,'Michael','misha@moskva.ru','*E75A663C6384E4833CBD81F37797B862017C2555',1,NULL),(5,'Abc111','aaa@aaa.aaa','*E75A663C6384E4833CBD81F37797B862017C2555',1,NULL);
+INSERT INTO `user` VALUES (1,'Magic','fformula@gmail.com','*45F2C3B4476FFF9AE3E6335C54339C17B96DB83B',1),(2,'Valera','walera@yandex.ru','*292FDBC78273BECE9E50C2FC2CB1BEA494B0425C',1),(3,'Olia','hely@muza.org','*7820354FA39E9B967F91EA31D397DC1E788D4D43',1),(4,'Michael','misha@moskva.ru','*E75A663C6384E4833CBD81F37797B862017C2555',1),(5,'Abc111','aaa@aaa.aaa','*E75A663C6384E4833CBD81F37797B862017C2555',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_passw`
+--
+
+DROP TABLE IF EXISTS `user_passw`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_passw` (
+  `user_id` int(11) NOT NULL COMMENT '№ пользователя',
+  `passw` varchar(255) NOT NULL COMMENT 'Новый пароль (закодированный)',
+  `code` varchar(255) NOT NULL COMMENT 'Код активации нового пароля',
+  `request_date` datetime NOT NULL COMMENT 'Дата запроса, для удаления устаревших записей',
+  KEY `FK_user_passw_user` (`user_id`),
+  CONSTRAINT `FK_user_passw_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Таблица для запроса новых паролей на время их активации';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_passw`
+--
+
+LOCK TABLES `user_passw` WRITE;
+/*!40000 ALTER TABLE `user_passw` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_passw` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -155,5 +181,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-14 16:00:35
-roleuser
+-- Dump completed on 2016-03-15 14:19:18

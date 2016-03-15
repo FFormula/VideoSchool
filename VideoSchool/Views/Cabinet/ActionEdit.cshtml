@@ -34,5 +34,8 @@
         <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
         @Html.TextBox("status", Model.status, new { @class = "form-control" })
     </div>
-    <div><input type="submit" value="Save changes" title="Save changes of the users" class="btn btn-success" /></div>
+    <div>
+        <input type="submit" value="Save changes" title="Save changes of the users" class="btn btn-success" />
+        @Html.ActionLink("Delete action", "ActionDrop", "Cabinet", new { id = Model.id }, new { @class="btn btn-warning" })
+    </div>
 }

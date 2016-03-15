@@ -174,6 +174,11 @@ namespace VideoSchool.Models
             }
         }
 
+        public int Delete(string myquery)
+        {
+            return Update(myquery);
+        }
+
         /// <summary>
         /// Screening user-string slashes
         /// </summary>
