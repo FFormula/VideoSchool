@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,7 @@ namespace VideoSchool.Models.Units
 {
     public class BaseUnit
     {
+        protected DataTable table;
         protected Shared shared;
         public QTable qtable { get; protected set; }
         public string filter { get; set; }
@@ -27,6 +29,11 @@ namespace VideoSchool.Models.Units
             if (shared.error.NoErrors())
                 shared.error.MarkSystemError(ex);
             throw ex;
+        }
+
+        protected string ExtractRowValue(string name, int row = 0)
+        {
+            return table.Rows[row][name].ToString();
         }
 
     }

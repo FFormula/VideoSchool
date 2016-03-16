@@ -35,13 +35,16 @@ namespace VideoSchool.Models.Units
                 SELECT id, name, email, status
                   FROM user
                  WHERE id = '" + shared.db.addslashes (id) + "'";
-                DataTable table = shared.db.Select(query);
+                table = shared.db.Select(query);
                 if (table.Rows.Count == 0)
                 {
                     shared.error.MarkUserError("User " + id + " not found");
                     return;
                 }
-                ExtractRow(table, 0);
+                id = ExtractRowValue("id");
+                name = ExtractRowValue("name");
+                email = ExtractRowValue("email");
+                status = ExtractRowValue("status");
             }
             catch (Exception ex)
             {
@@ -49,14 +52,6 @@ namespace VideoSchool.Models.Units
             }
         }
 
-        private void ExtractRow(DataTable table, int row)
-        {
-            id = table.Rows[row]["id"].ToString();
-            name = table.Rows[row]["name"].ToString();
-            email = table.Rows[row]["email"].ToString();
-            status = table.Rows[row]["status"].ToString();
-        }
-        
         /// <summary>
         /// Create an User List by filter
         /// </summary>
@@ -203,6 +198,23 @@ namespace VideoSchool.Models.Units
                 ThrowError(ex);
             }
 	    }
+
+        public bool Exists ()
+        {
+            try
+            {
+                string count = shared.db.Scalar(
+                    @"SELECT COUNT(*) 
+                        FROM user
+                       WHERE id = '" + shared.db.addslashes(this.id) + "'");
+                return (count == "1");
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+                return false;
+            }
+        }
 
         /// <summary>
         /// Check a permission to do this action

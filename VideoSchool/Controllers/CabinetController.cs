@@ -323,9 +323,55 @@ namespace VideoSchool.Controllers
             {
                 return ShowError(ex);
             }
+        }
 
 
+        [HttpGet]
+        public ActionResult Address ()
+        {
+            try
+            {
+                string id = (RouteData.Values["id"] ?? "").ToString();
+                if (id == "")
+                    return RedirectToAction("UserList", "Cabinet");
+                UserAddress userAddress = new UserAddress(shared);
+                userAddress.Select(id);
+                return View(userAddress);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
 
+        [HttpPost]
+        public ActionResult Address(UserAddress post)
+        {
+            try
+            {
+                string id = (RouteData.Values["id"] ?? "").ToString();
+                if (id == "")
+                    return RedirectToAction("UserList", "Cabinet");
+                UserAddress userAddress = new UserAddress(shared);
+                userAddress.zip = post.zip;
+                userAddress.area = post.area;
+                userAddress.city = post.city;
+                userAddress.street = post.street;
+                userAddress.country = post.country;
+                userAddress.personal = post.personal;
+                userAddress.Update();
+                if (shared.error.AnyError())
+                {
+                    ViewBag.error = shared.error.text;
+                    return View(post);
+                }
+                ViewBag.success = "OK";
+                return View(post);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
         }
 
 
