@@ -29,7 +29,7 @@ CREATE TABLE `action` (
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '0-отключено, 1-работает',
   PRIMARY KEY (`id`),
   UNIQUE KEY `Индекс 2` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='Список всех возможных действий в системе';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Список всех возможных действий в системе';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,7 +133,7 @@ CREATE TABLE `user` (
   `passw` varchar(255) DEFAULT NULL COMMENT 'Закодированный пароль',
   `status` int(11) DEFAULT '0' COMMENT '0-нет доступа, 1-есть',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Список всех пользователей системы';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='Список всех пользователей системы';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,8 +142,37 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Magic','fformula@gmail.com','*45F2C3B4476FFF9AE3E6335C54339C17B96DB83B',1),(2,'Valera','walera@yandex.ru','*292FDBC78273BECE9E50C2FC2CB1BEA494B0425C',1),(3,'Olia','hely@muza.org','*7820354FA39E9B967F91EA31D397DC1E788D4D43',1),(4,'Michael','misha@moskva.ru','*E75A663C6384E4833CBD81F37797B862017C2555',1),(5,'Abc111','aaa@aaa.aaa','*E75A663C6384E4833CBD81F37797B862017C2555',1);
+INSERT INTO `user` VALUES (1,'Magic','fformula@gmail.com','*6BA30F8FDEEC669B962CDE659268DB536A9D2A2C',1),(2,'Valera','walera@yandex.ru','*292FDBC78273BECE9E50C2FC2CB1BEA494B0425C',1),(3,'Olia','hely@muza.org','*7820354FA39E9B967F91EA31D397DC1E788D4D43',1),(4,'Michael','misha@moskva.ru','*E75A663C6384E4833CBD81F37797B862017C2555',1),(5,'Abc111','aaa@aaa.aaa','*E75A663C6384E4833CBD81F37797B862017C2555',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_address`
+--
+
+DROP TABLE IF EXISTS `user_address`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_address` (
+  `user_id` int(11) NOT NULL COMMENT '№ пользователя',
+  `country` varchar(255) DEFAULT NULL COMMENT 'Страна проживания',
+  `zip` varchar(255) DEFAULT NULL COMMENT 'Почтовый индекс',
+  `area` varchar(255) DEFAULT NULL COMMENT 'Область',
+  `city` varchar(255) DEFAULT NULL COMMENT 'Город',
+  `street` varchar(255) DEFAULT NULL COMMENT 'Улица, дом, квартира',
+  `personal` varchar(255) DEFAULT NULL COMMENT 'Получатель письма',
+  KEY `FK_user_address_user` (`user_id`),
+  CONSTRAINT `FK_user_address_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Физический почтовый адрес';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_address`
+--
+
+LOCK TABLES `user_address` WRITE;
+/*!40000 ALTER TABLE `user_address` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_address` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -181,5 +210,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-15 14:19:18
-role_action
+-- Dump completed on 2016-03-16 20:37:06
