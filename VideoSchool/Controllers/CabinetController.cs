@@ -289,7 +289,12 @@ namespace VideoSchool.Controllers
                 if (id == "Add")
                     role.SelectNew();
                 else
-                    role.Select(id);
+
+                { role.Select(id);
+                  role.SelectActionByRoleID();
+                    role.SelectActionForAddRole(role.id);
+
+                }
                 return View(role);
             }
             catch (Exception ex)
@@ -299,8 +304,40 @@ namespace VideoSchool.Controllers
         }
         //-------
 
+        [HttpGet]
+        public ActionResult AddAction4Role(string RoleId = "", string AddActionId="")
+        {
+            try
+            {
+                /*if (RoleId == "")
+                    return RedirectToAction("RoleList", "Cabinet");*/
+                Models.Units.Role role = new Models.Units.Role(shared);
+                
+                    role.Select(RoleId);
+                    role.InsertActionToRole(RoleId, AddActionId);
+              
+
+                return RedirectToAction("RoleAction", "Cabinet", new { id=RoleId} ); 
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
 
 
+
+        }
+
+
+        public ActionResult DelActionInRole(string RoleId = "", string DelActionId = "")
+        {
+
+            Models.Units.Role role = new Models.Units.Role(shared);
+            role.Select(RoleId);
+            role.DeleteFromRole(RoleId, DelActionId);
+
+            return RedirectToAction("RoleAction", "Cabinet", new { id = RoleId });
+        }
 
 
         /// <summary>

@@ -12,20 +12,42 @@
         <th><span class="glyphicon glyphicon-edit"></span></th>
         <th>Name</th>
         <th>Info</th>
-        <th>Status</th>
+        <th>Manager</th>
     </tr>
 
-@foreach (DataRow x in Model.qtable.table.Rows)
+@foreach (DataRow x in Model.currentRoleAction.table.Rows)
 {
        <tr>
         <td>@x["id"].ToString()</td>
         
         <td>@x["name"].ToString()</td>
         <td>@x["info"].ToString()</td>
-        <td>@x["status"].ToString()</td>
-    </tr>
+        <td>
+            <a href="~/Cabinet/DelActionInRole?DelActionId=@x["id"]&RoleId=@Model.id" >
+                <span class='btn btn-default glyphicon glyphicon-minus' style='color:red'>  </span>
+            </a>
+       </tr>
 }
 </table>
+@using (Html.BeginForm("AddAction4Role", "Cabinet", FormMethod.Get))
+{
+<div class="col-md-4">
+   
+     <select name="AddActionId" class="form-control input-lg col-md-4" style="float:left">
+   @foreach (DataRow x in Model.Action4Select.table.Rows)
+   {
+        <option value="@x["id"]">@x["name"]</option>
+   }
+       
+    </select>
+     <input type="hidden" name="RoleId" value="@Model.id" />
+     <button type="submit" value="Filter" class="btn btn-primary form-control" style="float:left; width: 50px;">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      </button>
+  </div>
+
+}
+
 
 
 

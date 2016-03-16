@@ -13,7 +13,7 @@
 @using (Html.BeginForm("ActionList", "Cabinet", FormMethod.Get))
 {
     <div>
-        <h5>Filter:</h5>
+      
         @Html.TextBox("filter", Model.filter, new { @class = "field-filter form-control" })
         @* <input type="submit" value="Filter" class="btn btn-primary" /> *@
         <button type="submit" value="Filter" class="btn btn-primary form-control btn-filter">
