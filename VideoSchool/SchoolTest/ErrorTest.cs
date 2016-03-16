@@ -10,7 +10,7 @@ namespace SchoolTest
         [TestMethod]
         public void TestMethodClear()
         {
-            Shared shared =  new Shared(RunMode.UnitTest);
+            Shared shared =  new Shared("config.txt");
             Error er = new Error(shared);
             er.exception = new Exception("Ой ошибочка");
             er.Clear();
