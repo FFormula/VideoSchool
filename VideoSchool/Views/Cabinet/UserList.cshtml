@@ -36,6 +36,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Status</th>
+            <th>***</th>
         </tr>
     @foreach (DataRow x in Model.qtable.table.Rows)
     {
@@ -45,6 +46,13 @@
             <td>@x["name"].ToString()</td>
             <td>@x["email"].ToString()</td>
             <td>@x["status"].ToString()</td>
+            
+            <td>
+                @Html.ActionLink("Edit Address", "AddressEdit", "Cabinet",
+                                 new { id = x["id"].ToString() }, new { @class="btn btn-default" })
+                @Html.ActionLink("Role User", "RoleList", "Cabinet",
+                                 new { id = x["id"].ToString() }, new { @class = "btn btn-default" })
+            </td>
         </tr>
 
     }

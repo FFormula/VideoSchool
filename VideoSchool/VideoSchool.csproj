@@ -146,6 +146,7 @@
     <Compile Include="Models\Units\BaseUnit.cs" />
     <Compile Include="Models\Units\Role.cs" />
     <Compile Include="Models\Units\User.cs" />
+    <Compile Include="Models\Units\UserAddress.cs" />
     <Compile Include="Models\Units\UserPassw.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -172,6 +173,7 @@
     <Content Include="Views\Login\ActivatePassword.cshtml" />
     <Content Include="Views\Cabinet\RoleEdit.cshtml" />
     <Content Include="Views\Cabinet\RoleAction.cshtml" />
+    <Content Include="Views\Cabinet\Address.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

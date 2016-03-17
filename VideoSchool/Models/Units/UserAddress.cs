@@ -34,7 +34,7 @@ namespace VideoSchool.Models.Units
                 SELECT zip, area, city, street, country, personal
                   FROM user_address
                  WHERE user_id = '" + shared.db.addslashes(id) + "'";
-                DataTable table = shared.db.Select(query);
+                 table = shared.db.Select(query);
                 if (table.Rows.Count == 0)
                 {
 
