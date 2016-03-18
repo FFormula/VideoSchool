@@ -8,12 +8,11 @@ namespace VideoSchool.Models.Units
 {
     public class User : BaseUnit
     {
-        public string id { get; private set; }
-        public string status { get; private set; }
-        
+        public string id    { get; set; }
         public string name  { get; set; }
         public string email { get; set; }
         public string passw { get; set; }
+        public string status { get; private set; }
 
         public User () : this (null) { }
         public User (Shared shared) : base (shared) 

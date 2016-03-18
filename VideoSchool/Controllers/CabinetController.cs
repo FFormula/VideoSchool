@@ -333,6 +333,8 @@ namespace VideoSchool.Controllers
             {
                 string id = (RouteData.Values["id"] ?? "").ToString();
                 if (id == "")
+                    id = Session["user_id"].ToString();
+                if (id == "")
                     return RedirectToAction("UserList", "Cabinet");
                 UserAddress userAddress = new UserAddress(shared);
                 userAddress.Select(id);
@@ -351,8 +353,11 @@ namespace VideoSchool.Controllers
             {
                 string id = (RouteData.Values["id"] ?? "").ToString();
                 if (id == "")
+                    id = Session["user_id"].ToString();
+                if (id == "")
                     return RedirectToAction("UserList", "Cabinet");
                 UserAddress userAddress = new UserAddress(shared);
+                userAddress.id = id;
                 userAddress.zip = post.zip;
                 userAddress.area = post.area;
                 userAddress.city = post.city;
