@@ -20,6 +20,7 @@ namespace VideoSchool.Controllers
         {
             shared = new Shared();
             user = new User(shared);
+            shared.menu.Init("home");
         }
 
         /// <summary>
@@ -101,7 +102,7 @@ namespace VideoSchool.Controllers
         }
 
         /// <summary>
-        /// A new User Registration FOrm
+        /// A new User Registration Form
         /// </summary>
         /// <returns></returns>
         [HttpGet]

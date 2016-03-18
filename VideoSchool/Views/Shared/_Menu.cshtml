@@ -1,8 +1,9 @@
 ﻿<div class="navbar-inner" style="margin: 0 50px 0 50px;">
     <ul class="nav navbar-nav navbar-left">
-        <li><a href="/Cabinet/UserList" class="navbar-brand">Users</a></li>
-        <li><a href="/Cabinet/ActionList" class="navbar-brand">Actions</a></li>
-        <li><a href="/Cabinet/RoleList" class="navbar-brand">Roles</a></li>
+@foreach(var x in Model.shared.menu.items)
+{ 
+        <li><a href="@x.href" class="@x.style">@x.text</a></li>
+}
     </ul>
     <ul class="nav navbar-right" style="width: 100px">
         <li><a href="/Help" class="navbar-brand"><span class="glyphicon glyphicon-bell" style="color: red"></span></a></li>

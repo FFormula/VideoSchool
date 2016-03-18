@@ -9,15 +9,23 @@ namespace VideoSchool.Controllers
 {
     public class HelpController : Controller
     {
+        Shared shared;
+
+        public HelpController()
+        {
+            shared = new Shared();
+            shared.menu.Init("home");
+        }
+
         // GET: Help
         public ActionResult Index()
         {
-            return View();
+            return View(shared);
         }
 
         public ActionResult About()
         {
-            return View();
+            return View(shared);
         }
 
     }

@@ -11,9 +11,11 @@ namespace VideoSchool.Models
     /// </summary>
     public class Shared
     {
+        public Shared shared;
         public Config config { get; private set; } // all configs
         public DataBase db { get; private set; }   // sql functions
         public Error error { get; private set; }   // errors manager
+        public Menu menu { get; private set; }
 
         /// <summary>
         /// Init all stuffs for required Run Mode
@@ -21,9 +23,11 @@ namespace VideoSchool.Models
         /// <param name="mode">A place, where it started</param>
         public Shared (string configFilename = "")
         {
+            shared = this;
             config = new Config (configFilename);
             error = new Error(this);
             db = new DataBase(this);
+            menu = new Menu(this);
         }
 
     }

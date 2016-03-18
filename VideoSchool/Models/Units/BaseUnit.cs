@@ -9,7 +9,7 @@ namespace VideoSchool.Models.Units
     public class BaseUnit
     {
         protected DataTable table;
-        protected Shared shared;
+        public Shared shared { get; private set; }
         public QTable qtable { get; protected set; }
         public string filter { get; set; }
 
