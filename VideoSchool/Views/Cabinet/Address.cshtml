@@ -10,45 +10,47 @@
    
   
     <div class="list-group col-lg-6">
-        <a href="#" class="list-group-item active col-lg-12">
-            <span class="glyphicon glyphicon-star"></span>Edit Address of User <strong>SuperUser</strong>  <span class="badge"></span>
-        </a>
-        <a href="#" class="list-group-item ">
-            <span class="glyphicon glyphicon-star"></span>Zip:  
-            @Html.TextBox("zip", Model.zip,  new { @class="form-control"})
-             <span class="badge"></span>
-        </a>
-        <a href="#" class="list-group-item  ">
-            <span class="glyphicon glyphicon-star"></span> Country: 
-            @Html.TextBox("country", Model.country, new { @class = "form-control" })
-             <span class="badge"></span>
-        </a>
-        <a href="#" class="list-group-item  ">
-            <span class="glyphicon glyphicon-star"></span> Area:
-            @Html.TextBox("area", Model.area, new { @class = "form-control" })
-             <span class="badge"></span>
-        </a>
-        <a href="#" class="list-group-item ">
-            <span class="glyphicon glyphicon-star"></span>  City:
-            @Html.TextBox("city", Model.city, new { @class = "form-control" })
-            <span class="badge"></span>
-        </a>
-       
-        <a href="#" class="list-group-item"> 
-            <span class="glyphicon glyphicon-ok-circle"></span> Street:   @Html.TextBox("street", Model.street, new { @class = "form-control" }) <span class="badge"></span>
-        </a>
-        <a href="#" class="list-group-item">
-            <span class="glyphicon glyphicon-user"></span> 
-             Personal:
-            @Html.TextBox("personal", Model.personal, new { @class = "form-control" })
-            <span class="badge"></span>
-        </a>
-    
+        <ul>
+            <li class="list-group-item active col-lg-12">
+                <span class="glyphicon glyphicon-star"></span>Edit Address of User <strong>SuperUser</strong>  <span class="badge"></span>
+            </li>
+            <li  class="list-group-item ">
+                <span class="glyphicon glyphicon-star"></span>Zip:
+                @Html.TextBox("zip", Model.zip, new { @class = "form-control" })
+                <span class="badge"></span>
+            </li>
+            <li class="list-group-item  ">
+                <span class="glyphicon glyphicon-star"></span> Country:
+                @Html.TextBox("country", Model.country, new { @class = "form-control" })
+                <span class="badge"></span>
+            </li>
+            <li class="list-group-item  ">
+                <span class="glyphicon glyphicon-star"></span> Area:
+                @Html.TextBox("area", Model.area, new { @class = "form-control" })
+                <span class="badge"></span>
+            </li>
+            <li class="list-group-item ">
+                <span class="glyphicon glyphicon-star"></span>  City:
+                @Html.TextBox("city", Model.city, new { @class = "form-control" })
+                <span class="badge"></span>
+            </li>
+
+            <li class="list-group-item">
+                <span class="glyphicon glyphicon-ok-circle"></span> Street:   @Html.TextBox("street", Model.street, new { @class = "form-control" }) <span class="badge"></span>
+            </li>
+            <li class="list-group-item">
+                <span class="glyphicon glyphicon-user"></span>
+                Personal:
+                @Html.TextBox("personal", Model.personal, new { @class = "form-control" })
+                <span class="badge"></span>
+            </li>
+        </ul>
     </div>
-    <div class="list-group col-lg-6">
+    <div class="list-group col-lg-3">
+        
         <a href="#" class="list-group-item active col-lg-12">
             <span class="glyphicon glyphicon-hand-down"></span>
-                Managment Buttons from Address of 
+                Managments
             <strong>SuperUser</strong>  
             <span class="badge"></span>
         </a>
@@ -56,12 +58,21 @@
             <span class="glyphicon glyphicon-floppy-disk"></span>
 
             <input type="submit" value="Save changes" name="saveaddress" class="btn btn-primary" />
-            <input type="submit" value="Cancel save changes" name="cancelsaveaddress" class="btn btn-default" />
+           
             <span class="badge"></span>
         </a>
+
         <a href="#" class="list-group-item">
-            <span class="glyphicon glyphicon-folder-close"></span>
-            <input type="submit" value="Clear fields of changes" name="clearaddress" class="btn btn-default" />
+            <span class="glyphicon glyphicon-floppy-disk"></span>
+
+            <input type="submit" value="Cancel" name="cancelsaveaddress" class="btn btn-default" />
+
+            <span class="badge"></span>
+        </a>
+       
+        <a href="#" class="list-group-item">
+            <span class="glyphicon glyphicon-floppy-disk"></span>
+           
             <input type="submit" value="Delete address" name="DeleteAddress" class="btn btn-danger" />
         </a>
    </div>
