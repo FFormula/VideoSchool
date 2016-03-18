@@ -26,6 +26,8 @@ namespace VideoSchool.Models.Units
             personal = "";
         }
 
+        public UserAddress(): this (null) { }
+
         public void Select (string id)
         {
             try
