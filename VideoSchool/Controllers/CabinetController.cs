@@ -11,6 +11,7 @@ namespace VideoSchool.Controllers
     public class CabinetController : Controller
     {
         Shared shared;
+        string currUserId = "";
 
         /// <summary>
         /// Constructor
@@ -20,9 +21,21 @@ namespace VideoSchool.Controllers
             shared = new Shared();
         }
 
-        // GET: Cabinet
+        public void Init ()
+        {
+            currUserId = Session["user_id"].ToString();
+        }
+
+        /// <summary>
+        /// Overall information about user
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
+            Init();
+            User user = new User(shared);
+            user.Select(currUserId);
+            ViewBag.UserID = currUserId;
             return View();
         }
 
@@ -325,20 +338,36 @@ namespace VideoSchool.Controllers
             }
         }
 
-
         [HttpGet]
-        public ActionResult Address ()
+        public ActionResult Address()
         {
             try
             {
-                string id = (RouteData.Values["id"] ?? "").ToString();
-                if (id == "")
-                    id = Session["user_id"].ToString();
-                if (id == "")
+                string id;
+                if (RouteData.Values["id"] == null)
                     return RedirectToAction("UserList", "Cabinet");
+                id = RouteData.Values["id"].ToString();
                 UserAddress userAddress = new UserAddress(shared);
                 userAddress.Select(id);
-                return View(userAddress);
+                return View("Address", userAddress);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult MyAddress()
+        {
+            try
+            {
+                Init();
+                if (currUserId == "")
+                    return RedirectToAction("Index", "Cabinet");
+                UserAddress userAddress = new UserAddress(shared);
+                userAddress.Select(currUserId);
+                return View("Address", userAddress);
             }
             catch (Exception ex)
             {
@@ -349,13 +378,26 @@ namespace VideoSchool.Controllers
         [HttpPost]
         public ActionResult Address(UserAddress post)
         {
+            string id;
+            if (RouteData.Values["id"] == null)
+                return RedirectToAction("UserList", "Cabinet");
+            id = RouteData.Values["id"].ToString();
+            return SaveAddress (post, id);
+        }
+
+        [HttpPost]
+        public ActionResult MyAddress(UserAddress post)
+        {
+            Init();
+            if (currUserId == "")
+                return RedirectToAction("Index", "Cabinet");
+            return SaveAddress (post, currUserId);
+        }
+
+        public ActionResult SaveAddress(UserAddress post, string id)
+        {
             try
             {
-                string id = (RouteData.Values["id"] ?? "").ToString();
-                if (id == "")
-                    id = Session["user_id"].ToString();
-                if (id == "")
-                    return RedirectToAction("UserList", "Cabinet");
                 UserAddress userAddress = new UserAddress(shared);
                 userAddress.id = id;
                 userAddress.zip = post.zip;
@@ -368,10 +410,10 @@ namespace VideoSchool.Controllers
                 if (shared.error.AnyError())
                 {
                     ViewBag.error = shared.error.text;
-                    return View(post);
+                    return View("Address", post);
                 }
                 ViewBag.success = "OK";
-                return View(post);
+                return View("Address", post);
             }
             catch (Exception ex)
             {
