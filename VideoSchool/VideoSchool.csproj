@@ -131,6 +131,10 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CabinetController.cs" />
+    <Compile Include="Controllers\CabinetController_Address.cs" />
+    <Compile Include="Controllers\CabinetController_Action.cs" />
+    <Compile Include="Controllers\CabinetController_Role.cs" />
+    <Compile Include="Controllers\CabinetController_User.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
