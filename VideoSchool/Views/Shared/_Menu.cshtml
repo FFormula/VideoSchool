@@ -2,7 +2,7 @@
     <ul class="nav navbar-nav navbar-left">
 @foreach(var x in Model.shared.menu.items)
 { 
-        <li><a href="@x.href" class="@x.style">@x.text</a></li>
+        <li><a href="@x.href" class="navbar-brand @if (x.active) { @Html.Raw("bg-success"); }">@x.text</a></li>
 }
     </ul>
     <ul class="nav navbar-right" style="width: 100px">

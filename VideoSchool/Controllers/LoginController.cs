@@ -20,7 +20,7 @@ namespace VideoSchool.Controllers
         {
             shared = new Shared();
             user = new User(shared);
-            shared.menu.Init("home");
+            shared.menu.Init("HOME");
         }
 
         /// <summary>
@@ -32,6 +32,7 @@ namespace VideoSchool.Controllers
         {
             try 
             {
+                shared.menu.Active ("login_index");
                 return View(user);
             } 
             catch (Exception ex)
@@ -110,6 +111,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
+                shared.menu.Active("login_signup");
                 return View(user);
             }
             catch (Exception ex)

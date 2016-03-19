@@ -14,7 +14,7 @@ namespace VideoSchool.Controllers
         public HelpController()
         {
             shared = new Shared();
-            shared.menu.Init("home");
+            shared.menu.Init("HOME");
         }
 
         // GET: Help
@@ -25,6 +25,7 @@ namespace VideoSchool.Controllers
 
         public ActionResult About()
         {
+            shared.menu.Active("help_about");
             return View(shared);
         }
 

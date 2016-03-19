@@ -7,15 +7,17 @@ namespace VideoSchool.Models
 {
     public struct MenuItem
     {
+        public string name;
         public string href;
         public string text;
-        public string style;
+        public bool active;
 
-        public MenuItem (string href, string text, string style = "navbar-brand")
+        public MenuItem (string name, string href, string text)
         {
+            this.name = name;
             this.href = href;
             this.text = text;
-            this.style = style;
+            active = false;
         }
 
     }
@@ -23,6 +25,7 @@ namespace VideoSchool.Models
     public class Menu
     {
         Shared shared;
+        public string name { get; private set; }
         public MenuItem [] items;
 
         public Menu (Shared shared)
@@ -35,21 +38,29 @@ namespace VideoSchool.Models
         {
             switch (theme)
             {
-                case "home" :   items = new MenuItem [] { 
-                                    new MenuItem ("/Help/About", "About"),
-                                    new MenuItem ("/Login/",     "Login", "navbar-brand bg-success"),
-                                    new MenuItem ("/Login/Signup", "Signup")
+                case "HOME" :   items = new MenuItem [] { 
+                                    new MenuItem ("help_about", "/Help/About", "About"),
+                                    new MenuItem ("login_index", "/Login/",     "Login"),
+                                    new MenuItem ("login_signup", "/Login/Signup", "Signup")
                                 };
                                 break;
-                case "login": items = new MenuItem[] { 
-                                    new MenuItem ("/Help/About", "About")
+                case "LOGIN": items = new MenuItem[] { 
+                                    new MenuItem ("help_about", "/Help/About", "About")
                                 };
                                 break;
-                case "admin" :  items = new MenuItem [] { 
-                                    new MenuItem ("/Help/About", "About")
+                case "ADMIN" :  items = new MenuItem [] { 
+                                    new MenuItem ("help_about", "/Help/About", "About")
                                 };
                                 break;
             }
+        }
+
+        public void Active (string name)
+        {
+            this.name = name;
+            for (int j = 0; j < items.Length; j ++)
+                if (items[j].name == this.name)
+                    items[j].active = true;
         }
 
 
