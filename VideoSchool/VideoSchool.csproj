@@ -179,6 +179,7 @@
     <Content Include="Views\Cabinet\RoleEdit.cshtml" />
     <Content Include="Views\Cabinet\RoleAction.cshtml" />
     <Content Include="Views\Cabinet\Address.cshtml" />
+    <Content Include="Views\Cabinet\AddressList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

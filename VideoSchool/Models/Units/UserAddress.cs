@@ -15,6 +15,10 @@ namespace VideoSchool.Models.Units
         public string country { get; set; }
         public string personal { get; set; }
 
+        public string user_id { get; set; } //id user
+        public string user_name { get; set; } //id user
+
+
         public UserAddress(Shared shared)
             : base(shared)
         {
@@ -24,6 +28,7 @@ namespace VideoSchool.Models.Units
             street = "";
             country = "";
             personal = "";
+            user_id = "";
         }
 
         public UserAddress(): this (null) { }
@@ -49,6 +54,7 @@ namespace VideoSchool.Models.Units
                 street = ExtractRowValue("street");
                 country = ExtractRowValue("country");
                 personal = ExtractRowValue("personal");
+                user_id = shared.db.addslashes(id);
             }
             catch (Exception ex)
             {

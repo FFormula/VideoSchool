@@ -11,23 +11,30 @@ namespace VideoSchool.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Address()
+        public ActionResult Address(string edit="")
         {
             try
             {
-                string id;
+                string id; 
                 if (RouteData.Values["id"] == null)
                     return RedirectToAction("UserList", "Cabinet");
                 id = RouteData.Values["id"].ToString();
-                UserAddress userAddress = new UserAddress(shared);
+               UserAddress userAddress = new UserAddress(shared);
+               
                 userAddress.Select(id);
-                return View("Address", userAddress);
+                if (edit == "ModeEdit")
+                    return View("Address", userAddress);
+                return View("AddressList", userAddress);
+               // return View("~/View/Shared/_Menu.cshtml", userAddress);
             }
             catch (Exception ex)
             {
                 return ShowError(ex);
             }
         }
+
+
+
 
         /// <summary>
         /// Load editable address for current user
@@ -43,7 +50,7 @@ namespace VideoSchool.Controllers
                     return RedirectToAction("Index", "Cabinet");
                 UserAddress userAddress = new UserAddress(shared);
                 userAddress.Select(currUserId);
-                return View("Address", userAddress);
+                return View("AddressList", userAddress);
             }
             catch (Exception ex)
             {
@@ -103,10 +110,10 @@ namespace VideoSchool.Controllers
                 if (shared.error.AnyError())
                 {
                     ViewBag.error = shared.error.text;
-                    return View("Address", post);
+                    return View("AddressList", post);
                 }
                 ViewBag.success = "OK";
-                return View("Address", post);
+                return View("AddressList", post);
             }
             catch (Exception ex)
             {

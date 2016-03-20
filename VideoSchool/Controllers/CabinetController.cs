@@ -16,6 +16,8 @@ namespace VideoSchool.Controllers
         public CabinetController ()
         {
             shared = new Shared();
+            shared.menu.Init("HOME");
+
         }
 
         /// <summary>
@@ -24,6 +26,7 @@ namespace VideoSchool.Controllers
         public void Init ()
         {
             currUserId = Session["user_id"].ToString();
+            shared.menu.Init("HOME");
         }
 
         /// <summary>
