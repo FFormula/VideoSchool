@@ -39,7 +39,7 @@ namespace VideoSchool.Controllers
             User user = new User(shared);
             user.Select(currUserId);
             ViewBag.UserID = currUserId;
-            return View();
+            return View(user);
         }
 
         /// <summary>
