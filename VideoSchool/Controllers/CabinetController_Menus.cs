@@ -10,15 +10,39 @@ namespace VideoSchool.Controllers
     {
         public ActionResult MenusList ()
         {
-            Menus menus = new Menus (this.shared);
-            menus.SelectMenus();
-            return View(menus);
+            try
+            { 
+               Menus menus = new Menus (this.shared);
+               menus.SelectMenus();
+               return View(menus);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
         }
 
         public ActionResult MenusEdit ()
         {
-            Menus menus = new Menus(this.shared);
-            return View(menus);
+            try
+            {
+                string id = (RouteData.Values["id"] ?? "").ToString();
+                if (id == "")
+                    return RedirectToAction("MenusList", "Cabinet");
+                Menus menus = new Menus(this.shared);
+                if (id == "Add")
+                    menus.SelectNew();
+                else
+                {
+                   
+                    menus.Select(id);
+                }
+                return View(menus);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
         }
     }
 }

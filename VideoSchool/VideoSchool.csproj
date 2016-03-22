@@ -184,6 +184,7 @@
     <Content Include="Views\Cabinet\Address.cshtml" />
     <Content Include="Views\Cabinet\AddressList.cshtml" />
     <Content Include="Views\Cabinet\MenusList.cshtml" />
+    <Content Include="Views\Cabinet\MenusEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

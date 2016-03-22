@@ -47,7 +47,7 @@ namespace VideoSchool.Models.Share
             this.shared = shared;
             main = "";
             active = "";
-            items = null;
+            items = new MenuItem[0];
         }
 
         public void Init(string main)

@@ -1,8 +1,72 @@
 ﻿@model VideoSchool.Models.Units.Menus
-
+@using System.Data;
 @{
-    ViewBag.Title = "MenusList";
+    ViewBag.Title = "Menus List";
 }
 
-<h2>MenusList</h2>
+
+
+<h2>
+    <span class="glyphicon glyphicon-menu-hamburger"></span>
+    &nbsp; List of all Menus
+</h2>
+
+@using (Html.BeginForm("ActionList", "Cabinet", FormMethod.Get))
+{
+    <div>
+
+        @Html.TextBox("filter", Model.filter, new { @class = "field-filter form-control" })
+        @* <input type="submit" value="Filter" class="btn btn-primary" /> *@
+        <button type="submit" value="Filter" class="btn btn-primary form-control btn-filter">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
+
+
+    </div>
+}
+
+<div class="col-lg-12 row">
+    There are @Model.qtable.lines rows.
+    @Html.ActionLink("Add", "MenusEdit", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus btn btn-default", @title = "add new action" })
+</div>
+<hr />
+<div>
+
+</div>
+@if (Model.qtable.lines > 0)
+    {
+
+
+         
+    <table class="table table-hover">
+        <tr class="success">
+            <th><span class="glyphicon glyphicon-edit"></span></th>
+            <th>Main</th>
+            <th>Menu</th>
+            <th>Href</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>nr</th>
+           
+        </tr>
+        @foreach (DataRow x in Model.qtable.table.Rows)
+
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(@x["id"].ToString(), "MenusEdit", "Cabinet",
+                                 new { id = x["id"].ToString() }, new { @class = "btn btn-success", @title = "edit action " + @x["id"].ToString() })
+                </td>
+                <td>@x["main"].ToString()</td>
+                <td>@x["menu"].ToString()</td>
+                <td>@x["href"].ToString()</td>
+                <td>@x["name"].ToString()</td>
+                
+                <td>@x["status"].ToString()</td>
+                <td>@x["nr"].ToString()</td>
+            </tr>
+
+        }
+    </table>
+}
 

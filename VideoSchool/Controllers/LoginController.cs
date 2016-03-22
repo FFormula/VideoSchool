@@ -22,6 +22,7 @@ namespace VideoSchool.Controllers
             shared = new Shared();
             user = new User(shared);
             shared.menu.Init("HOME");
+            //
         }
 
         /// <summary>

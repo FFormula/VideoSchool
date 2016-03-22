@@ -1,0 +1,66 @@
+﻿@model VideoSchool.Models.Units.Menus
+
+@{
+    ViewBag.Title = "MenusEdit";
+}
+
+    <h2 class="alert-link" >MenusEdit</h2>
+
+@using (Html.BeginForm("MenusEdit", "Cabinet"))
+{
+    <div style="color: red">
+        @ViewBag.error
+    </div>
+    <div>
+        <h2 class="alert-link"></h2>
+        <span class="alert alert-info">
+            <strong>ID: </strong> @Model.id 
+        </span>
+       
+    </div>
+    <div>
+        <h3 class="alert-link">Main:</h3>
+
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+        @Html.TextBox("name", Model.main, new { @class = "form-control" })
+    </div>
+    <div>
+        <h3 class="alert-link">Menu:</h3>
+
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+        @Html.TextBox("name", Model.menu, new { @class = "form-control" })
+    </div>
+    <div>
+        <h3 class="alert-link">Href:</h3>
+
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+        @Html.TextBox("name", Model.href, new { @class = "form-control" })
+    </div>
+
+
+    <div>
+        <h3 class="alert-link">Name:</h3>
+
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+        @Html.TextBox("name", Model.name, new { @class = "form-control", @placeholder = "Password" })
+    </div>
+    <div>
+        <h3 class="alert-link">Info:</h3>
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+        @Html.TextBox("info", Model.info, new { @class = "form-control" })
+    </div>
+    <div>
+        <h3 class="alert-link">Status:</h3>
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+        @Html.TextBox("status", Model.status, new { @class = "form-control" })
+    </div>
+    <div>
+        <h3 class="alert-link">Nr:</h3>
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+        @Html.TextBox("status", Model.nr, new { @class = "form-control" })
+    </div>
+    <div>
+        <input type="submit" value="Save changes" title="Save changes of the users" class="btn btn-success" />
+        @Html.ActionLink("Cancel", "ActionList", "Cabinet")
+    </div>
+}

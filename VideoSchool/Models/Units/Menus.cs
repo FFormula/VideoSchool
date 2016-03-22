@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Web;
 using VideoSchool.Models.Share;
 
@@ -33,6 +34,11 @@ namespace VideoSchool.Models.Units
             info = "";
         }
 
+        internal void SelectNew()
+        {
+            throw new NotImplementedException();
+        }
+
         public void SelectMenus ()
         {
             try
@@ -42,17 +48,18 @@ namespace VideoSchool.Models.Units
 
                 string where = " 1 ";
                 if (filter != "")
-                    where =
-                    " (main = '" + filterSlashes + @"'
+                    where +=
+                    " AND (main = '" + filterSlashes + @"'
                        OR menu LIKE '%" + filterSlashes + @"%'
                        OR href LIKE '%" + filterSlashes + @"%'
                        OR name LIKE '%" + filterSlashes + @"%'
-                       OR info LIKE '%" + filterSlashes + @"%')";
+                       OR info LIKE '%" + filterSlashes + @"%'
+                       OR id =       '" + filterSlashes + @"')";
 
                 qtable.Init(
                         "SELECT COUNT(*) FROM menu WHERE " + where,
-                       @"SELECT main, menu, href, name, info, status, nr
-                           FROM user 
+                       @"SELECT id, main, menu, href, name, info, status, nr
+                           FROM menu 
                           WHERE " + where + @"
                           ORDER BY main, nr DESC");
             }
@@ -61,6 +68,37 @@ namespace VideoSchool.Models.Units
                 ThrowError(ex);
             }
         }
+        public void Select(string id)
+        {
+            try
+            {
+                string query = @"
+                SELECT id, main, menu, href, name, info, status, nr
+                           FROM menu
+                 WHERE id = '" + shared.db.addslashes(id) + "'";
+                 table = shared.db.Select(query);
+                if (table.Rows.Count == 0)
+                {
+                    shared.error.MarkUserError("Action " + id + " not found");
+                    return;
+                }
+                id=  ExtractRowValue("id", 0);
+                main = ExtractRowValue("main", 0);
+                menu = ExtractRowValue("menu", 0);
+                href = ExtractRowValue("href", 0);
+                name = ExtractRowValue("name", 0);
+                info = ExtractRowValue("info", 0);
+                status = ExtractRowValue("status", 0);
+                nr = ExtractRowValue("nr", 0);
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
+        }
+
+
+   
 
     }
 }
