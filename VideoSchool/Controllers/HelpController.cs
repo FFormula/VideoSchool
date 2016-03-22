@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using VideoSchool.Models;
+using VideoSchool.Models.Share;
 
 namespace VideoSchool.Controllers
 {

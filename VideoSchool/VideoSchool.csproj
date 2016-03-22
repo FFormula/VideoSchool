@@ -140,15 +140,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\EMail.cs" />
-    <Compile Include="Models\Log.cs" />
+    <Compile Include="Models\Share\EMail.cs" />
+    <Compile Include="Models\Share\Log.cs" />
+    <Compile Include="Models\Share\Menu.cs" />
     <Compile Include="Models\Units\Menu.cs" />
     <Compile Include="Models\Units\Action.cs" />
-    <Compile Include="Models\Config.cs" />
-    <Compile Include="Models\Error.cs" />
-    <Compile Include="Models\DataBase.cs" />
-    <Compile Include="Models\QTable.cs" />
-    <Compile Include="Models\Shared.cs" />
+    <Compile Include="Models\Share\Config.cs" />
+    <Compile Include="Models\Share\Error.cs" />
+    <Compile Include="Models\Share\DataBase.cs" />
+    <Compile Include="Models\Units\QTable.cs" />
+    <Compile Include="Models\Share\Shared.cs" />
     <Compile Include="Models\Units\BaseUnit.cs" />
     <Compile Include="Models\Units\Role.cs" />
     <Compile Include="Models\Units\User.cs" />
