@@ -25,7 +25,7 @@ namespace VideoSchool.Controllers
 
         public ActionResult About()
         {
-            shared.menu.Active("help_about");
+            shared.menu.SetActive("help_about");
             return View(shared);
         }
 

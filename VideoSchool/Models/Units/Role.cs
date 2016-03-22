@@ -16,19 +16,16 @@ namespace VideoSchool.Models.Units
         public QTable Action4Select { get; set; }
 
         public Role()
-            : base ()
+            : this (null)
         { 
-            id = "";
-            name = "";
-            info = "";
-
-          
-         
         }
 
         public Role(Shared shared)
             : base (shared)
         {
+            id = "";
+            name = "";
+            info = "";
         }
 
         /// <summary>

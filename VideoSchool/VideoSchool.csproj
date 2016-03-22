@@ -142,7 +142,7 @@
     </Compile>
     <Compile Include="Models\EMail.cs" />
     <Compile Include="Models\Log.cs" />
-    <Compile Include="Models\Menu.cs" />
+    <Compile Include="Models\Units\Menu.cs" />
     <Compile Include="Models\Units\Action.cs" />
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\Error.cs" />

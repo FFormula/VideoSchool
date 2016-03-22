@@ -32,7 +32,7 @@ namespace VideoSchool.Controllers
         {
             try 
             {
-                shared.menu.Active ("login_index");
+                shared.menu.SetActive ("login_index");
                 return View(user);
             } 
             catch (Exception ex)
@@ -111,7 +111,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                shared.menu.Active("login_signup");
+                shared.menu.SetActive("home_signup");
                 return View(user);
             }
             catch (Exception ex)
