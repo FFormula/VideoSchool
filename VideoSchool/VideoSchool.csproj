@@ -133,6 +133,7 @@
     <Compile Include="Controllers\CabinetController.cs" />
     <Compile Include="Controllers\CabinetController_Address.cs" />
     <Compile Include="Controllers\CabinetController_Action.cs" />
+    <Compile Include="Controllers\CabinetController_Menus.cs" />
     <Compile Include="Controllers\CabinetController_Role.cs" />
     <Compile Include="Controllers\CabinetController_User.cs" />
     <Compile Include="Controllers\HelpController.cs" />
@@ -143,7 +144,7 @@
     <Compile Include="Models\Share\EMail.cs" />
     <Compile Include="Models\Share\Log.cs" />
     <Compile Include="Models\Share\Menu.cs" />
-    <Compile Include="Models\Units\Menu.cs" />
+    <Compile Include="Models\Units\Menus.cs" />
     <Compile Include="Models\Units\Action.cs" />
     <Compile Include="Models\Share\Config.cs" />
     <Compile Include="Models\Share\Error.cs" />
@@ -182,6 +183,7 @@
     <Content Include="Views\Cabinet\RoleAction.cshtml" />
     <Content Include="Views\Cabinet\Address.cshtml" />
     <Content Include="Views\Cabinet\AddressList.cshtml" />
+    <Content Include="Views\Cabinet\MenusList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

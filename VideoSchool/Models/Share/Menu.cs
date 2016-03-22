@@ -59,6 +59,7 @@ namespace VideoSchool.Models.Share
                    @"SELECT menu, href, name, info 
                        FROM menu 
                       WHERE main = '" + shared.db.addslashes(main) + @"'
+                        AND status > 0
                       ORDER BY nr");
                 items = new MenuItem[table.Rows.Count];
                 for (int j = 0; j < table.Rows.Count; j++)
