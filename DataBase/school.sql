@@ -58,8 +58,9 @@ CREATE TABLE `menu` (
   `info` varchar(255) DEFAULT NULL COMMENT 'Всплывающая подсказка',
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '0-скрыто, 1-открыто',
   `nr` int(11) NOT NULL DEFAULT '0' COMMENT 'Порядок размещения пунктов',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Пункты динамического меню';
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `Индекс 2` (`menu`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Пункты динамического меню';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +69,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,'HOME','home_signup','/Login/Signup','Регистрация','Регистрация в системе',0,10);
+INSERT INTO `menu` VALUES (1,'HOME','home_signup','/Login/Signup','Регистрация','Регистрация в системе',1,10),(2,'HOME','home_login','/Login/Index','Вход','Авторизация',1,5);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,4 +243,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-22 20:49:33
+-- Dump completed on 2016-03-22 22:58:25

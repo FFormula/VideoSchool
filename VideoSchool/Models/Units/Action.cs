@@ -19,10 +19,7 @@ namespace VideoSchool.Models.Units
         public Action (Shared shared)
             : base (shared)
         {
-            id = "";
-            name = "";
-            info = "";
-            status = "0";
+            SelectNew();
         }
 
         public void SelectNew()
@@ -137,6 +134,13 @@ namespace VideoSchool.Models.Units
                 ThrowError(ex);
             }
 	    }
+
+        public void Copy (Action post)
+        {
+            this.name = post.name;
+            this.info = post.info;
+            this.status = post.status;
+        }
 
 /*
          public int GetIdByAction (string action)

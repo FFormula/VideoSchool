@@ -34,7 +34,7 @@ namespace VideoSchool.Controllers
         {
             try 
             {
-                shared.menu.SetActive ("login_index");
+                shared.menu.SetActive ("home_login");
                 return View(user);
             } 
             catch (Exception ex)

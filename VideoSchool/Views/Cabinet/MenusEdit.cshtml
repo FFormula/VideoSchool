@@ -22,19 +22,19 @@
         <h3 class="alert-link">Main:</h3>
 
         <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
-        @Html.TextBox("name", Model.main, new { @class = "form-control" })
+        @Html.TextBox("main", Model.main, new { @class = "form-control" })
     </div>
     <div>
         <h3 class="alert-link">Menu:</h3>
 
         <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
-        @Html.TextBox("name", Model.menu, new { @class = "form-control" })
+        @Html.TextBox("menu", Model.menu, new { @class = "form-control" })
     </div>
     <div>
         <h3 class="alert-link">Href:</h3>
 
         <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
-        @Html.TextBox("name", Model.href, new { @class = "form-control" })
+        @Html.TextBox("href", Model.href, new { @class = "form-control" })
     </div>
 
 
@@ -42,7 +42,7 @@
         <h3 class="alert-link">Name:</h3>
 
         <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
-        @Html.TextBox("name", Model.name, new { @class = "form-control", @placeholder = "Password" })
+        @Html.TextBox("name", Model.name, new { @class = "form-control" })
     </div>
     <div>
         <h3 class="alert-link">Info:</h3>
@@ -57,10 +57,10 @@
     <div>
         <h3 class="alert-link">Nr:</h3>
         <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
-        @Html.TextBox("status", Model.nr, new { @class = "form-control" })
+        @Html.TextBox("nr", Model.nr, new { @class = "form-control" })
     </div>
     <div>
         <input type="submit" value="Save changes" title="Save changes of the users" class="btn btn-success" />
-        @Html.ActionLink("Cancel", "ActionList", "Cabinet")
+        @Html.ActionLink("Cancel", "MenusList", "Cabinet")
     </div>
 }

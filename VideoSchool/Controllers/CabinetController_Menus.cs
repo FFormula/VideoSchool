@@ -22,6 +22,7 @@ namespace VideoSchool.Controllers
             }
         }
 
+        [HttpGet]
         public ActionResult MenusEdit ()
         {
             try
@@ -43,6 +44,38 @@ namespace VideoSchool.Controllers
             {
                 return ShowError(ex);
             }
+        }
+
+        [HttpPost]
+        public ActionResult MenusEdit(Menus post)
+        {
+            try 
+            {
+                string id = (RouteData.Values["id"] ?? "").ToString();
+                if (id == "")
+                    return RedirectToAction("MenusList", "Cabinet");
+                Menus menus = new Menus(this.shared);
+                if (id == "Add")
+                {
+                    menus.SelectNew();
+                    menus.Copy(post);
+                    menus.Insert();
+                }
+                else
+                {
+                    menus.Select(id);
+                    if (shared.error.AnyError())
+                        return RedirectToAction("MenusList", "Cabinet");
+                    menus.Copy(post);
+                    menus.Update();
+                }
+                return RedirectToAction("MenusList", "Cabinet");
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+
         }
     }
 }

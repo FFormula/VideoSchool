@@ -26,17 +26,17 @@ namespace VideoSchool.Models.Units
         public Menus(Shared shared)
             : base (shared)
         {
+            SelectNew();
+        }
+
+        internal void SelectNew()
+        {
             id = "";
             main = "";
             menu = "";
             href = "";
             name = "";
             info = "";
-        }
-
-        internal void SelectNew()
-        {
-            throw new NotImplementedException();
         }
 
         public void SelectMenus ()
@@ -82,7 +82,7 @@ namespace VideoSchool.Models.Units
                     shared.error.MarkUserError("Action " + id + " not found");
                     return;
                 }
-                id=  ExtractRowValue("id", 0);
+                this.id = ExtractRowValue("id", 0);
                 main = ExtractRowValue("main", 0);
                 menu = ExtractRowValue("menu", 0);
                 href = ExtractRowValue("href", 0);
@@ -97,8 +97,92 @@ namespace VideoSchool.Models.Units
             }
         }
 
+        public void Copy(Menus post)
+        {
+            this.main = post.main;
+            this.menu = post.menu;
+            this.name = post.name;
+            this.href = post.href;
+            this.info = post.info;
+            this.status = post.status;
+            this.nr = post.nr;
+        }
 
-   
+        public void Delete(string id)
+        {
+            try
+            {
+                string query = @"
+            DELETE FROM menus
+		     WHERE id = '" + shared.db.addslashes(id) + @"'
+		     LIMIT 1";
+                shared.db.Update(query);
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
+        }
+
+        public void Update()
+        {
+            // action_Update
+            try
+            {
+                string query = @"
+            UPDATE menu
+		       SET main = '" + shared.db.addslashes(this.main) + @"',
+		           menu = '" + shared.db.addslashes(this.menu) + @"',
+		           href = '" + shared.db.addslashes(this.href) + @"',
+		           name = '" + shared.db.addslashes(this.name) + @"',
+		           info = '" + shared.db.addslashes(this.info) + @"',
+		           status = '"+shared.db.addslashes(this.status) + @"',
+		           nr   = '" + shared.db.addslashes(this.nr) + @"'
+		     WHERE id = '"   + shared.db.addslashes(this.id) + @"'
+		     LIMIT 1";
+                shared.db.Update(query);
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
+        }
+
+        public void Insert()		 			//добавить действие
+        {
+            // action_Update
+            try
+            {
+                string count = shared.db.Scalar(
+                    @"SELECT COUNT(*) 
+                        FROM menu
+                       WHERE menu = '" + shared.db.addslashes(this.menu) + @"'");
+                if (count != "0")
+                {
+                    shared.error.MarkUserError("Menu with this menu-code already exists");
+                    return;
+                }
+                string query = @"
+            INSERT INTO menu
+		       SET main = '" + shared.db.addslashes(this.main) + @"',
+		           menu = '" + shared.db.addslashes(this.menu) + @"',
+		           href = '" + shared.db.addslashes(this.href) + @"',
+		           name = '" + shared.db.addslashes(this.name) + @"',
+		           info = '" + shared.db.addslashes(this.info) + @"',
+		           status = '"+shared.db.addslashes(this.status) + @"'";
+                long id = shared.db.Insert(query);
+                this.id = id.ToString();
+                shared.db.Update (@"
+            UPDATE menu
+		       SET nr   = '" + shared.db.addslashes((10 * id).ToString()) + @"'
+		     WHERE id = '"   + shared.db.addslashes (this.id) + @"'
+		     LIMIT 1");
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
+        }
 
     }
 }

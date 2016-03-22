@@ -71,9 +71,7 @@ namespace VideoSchool.Controllers
                 if (id == "Add")
                 {
                     action.SelectNew();
-                    action.name = post.name;
-                    action.info = post.info;
-                    action.status = post.status;
+                    action.Copy(post);
                     action.Insert();
                 }
                 else
@@ -81,9 +79,7 @@ namespace VideoSchool.Controllers
                     action.Select(id);
                     if (shared.error.AnyError())
                         return RedirectToAction("ActionList", "Cabinet");
-                    action.name = post.name;
-                    action.info = post.info;
-                    action.status = post.status;
+                    action.Copy(post);
                     action.Update();
                 }
                 return RedirectToAction("ActionList", "Cabinet");
