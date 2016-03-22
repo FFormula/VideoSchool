@@ -16,6 +16,7 @@ namespace VideoSchool.Models
         public DataBase db { get; private set; }   // sql functions
         public Error error { get; private set; }   // errors manager
         public Menu menu { get; private set; }
+        public Log log { get; private set; }
 
         /// <summary>
         /// Init all stuffs for required Run Mode
@@ -28,6 +29,7 @@ namespace VideoSchool.Models
             error = new Error(this);
             db = new DataBase(this);
             menu = new Menu(this);
+            log = new Log(this);
         }
 
     }
