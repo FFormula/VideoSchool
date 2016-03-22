@@ -43,6 +43,35 @@ INSERT INTO `action` VALUES (1,'user_Update','-',1),(2,'role_Update','-',1),(3,'
 UNLOCK TABLES;
 
 --
+-- Table structure for table `menu`
+--
+
+DROP TABLE IF EXISTS `menu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `menu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '№ записи',
+  `main` varchar(255) NOT NULL COMMENT 'Код блока меню',
+  `menu` varchar(255) NOT NULL COMMENT 'Системное имя пункта',
+  `href` varchar(255) NOT NULL COMMENT 'Ссылка пункта меню',
+  `name` varchar(255) NOT NULL COMMENT 'Текст отображения',
+  `info` varchar(255) DEFAULT NULL COMMENT 'Всплывающая подсказка',
+  `nr` int(11) NOT NULL DEFAULT '0' COMMENT 'Порядок размещения пунктов',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Пункты динамического меню';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `menu`
+--
+
+LOCK TABLES `menu` WRITE;
+/*!40000 ALTER TABLE `menu` DISABLE KEYS */;
+INSERT INTO `menu` VALUES (1,'HOME','home_signup','/Login/Signup','Регистрация','Регистрация в системе',10);
+/*!40000 ALTER TABLE `menu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `role`
 --
 
@@ -90,6 +119,7 @@ CREATE TABLE `role_action` (
 
 LOCK TABLES `role_action` WRITE;
 /*!40000 ALTER TABLE `role_action` DISABLE KEYS */;
+INSERT INTO `role_action` VALUES (1,2),(1,4);
 /*!40000 ALTER TABLE `role_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,7 +163,7 @@ CREATE TABLE `user` (
   `passw` varchar(255) DEFAULT NULL COMMENT 'Закодированный пароль',
   `status` int(11) DEFAULT '0' COMMENT '0-нет доступа, 1-есть',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='Список всех пользователей системы';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Список всех пользователей системы';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,6 +202,7 @@ CREATE TABLE `user_address` (
 
 LOCK TABLES `user_address` WRITE;
 /*!40000 ALTER TABLE `user_address` DISABLE KEYS */;
+INSERT INTO `user_address` VALUES (1,'Lithuania','3200','Area','Висагинас','Street','Personal'),(2,'333','333','444','444','555','555');
 /*!40000 ALTER TABLE `user_address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,4 +241,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-16 20:37:06
+-- Dump completed on 2016-03-22 20:31:59
