@@ -56,6 +56,7 @@ CREATE TABLE `menu` (
   `href` varchar(255) NOT NULL COMMENT 'Ссылка пункта меню',
   `name` varchar(255) NOT NULL COMMENT 'Текст отображения',
   `info` varchar(255) DEFAULT NULL COMMENT 'Всплывающая подсказка',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '0-скрыто, 1-открыто',
   `nr` int(11) NOT NULL DEFAULT '0' COMMENT 'Порядок размещения пунктов',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Пункты динамического меню';
@@ -67,7 +68,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,'HOME','home_signup','/Login/Signup','Регистрация','Регистрация в системе',10);
+INSERT INTO `menu` VALUES (1,'HOME','home_signup','/Login/Signup','Регистрация','Регистрация в системе',0,10);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,4 +242,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-22 20:31:59
+-- Dump completed on 2016-03-22 20:49:33
