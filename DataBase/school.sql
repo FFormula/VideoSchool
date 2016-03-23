@@ -51,7 +51,7 @@ DROP TABLE IF EXISTS `menu`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '№ записи',
-  `main` varchar(255) NOT NULL COMMENT 'Код блока меню',
+  `main_id` int(11) NOT NULL COMMENT 'Код блока меню',
   `menu` varchar(255) NOT NULL COMMENT 'Системное имя пункта',
   `href` varchar(255) NOT NULL COMMENT 'Ссылка пункта меню',
   `name` varchar(255) NOT NULL COMMENT 'Текст отображения',
@@ -59,8 +59,10 @@ CREATE TABLE `menu` (
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '0-скрыто, 1-открыто',
   `nr` int(11) NOT NULL DEFAULT '0' COMMENT 'Порядок размещения пунктов',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `Индекс 2` (`menu`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Пункты динамического меню';
+  UNIQUE KEY `Индекс 2` (`menu`),
+  KEY `FK_menu_menu_main` (`main_id`),
+  CONSTRAINT `FK_menu_menu_main` FOREIGN KEY (`main_id`) REFERENCES `menu_main` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Пункты динамического меню';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,8 +71,35 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,'HOME','home_signup','/Login/Signup','Регистрация','Регистрация в системе',1,10),(2,'HOME','home_login','/Login/Index','Вход','Авторизация',1,5);
+INSERT INTO `menu` VALUES (1,1,'home_signup','/Login/Signup','Регистрация','Регистрация в системе',1,5),(2,1,'home_login','/Login/Index','Вход','Авторизация',1,10),(3,1,'home_menus','/Cabinet/MenusList','Меню','Формирование меню',1,30);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `menu_main`
+--
+
+DROP TABLE IF EXISTS `menu_main`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `menu_main` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '№ списка меню',
+  `main` varchar(255) NOT NULL COMMENT 'Системный код списка',
+  `name` varchar(255) DEFAULT NULL COMMENT 'Название списка',
+  `info` text COMMENT 'Описание раздела',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `main` (`main`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Все списки меню';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `menu_main`
+--
+
+LOCK TABLES `menu_main` WRITE;
+/*!40000 ALTER TABLE `menu_main` DISABLE KEYS */;
+INSERT INTO `menu_main` VALUES (1,'HOME','Главное меню',NULL);
+/*!40000 ALTER TABLE `menu_main` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -243,4 +272,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-22 22:58:25
+-- Dump completed on 2016-03-23 10:08:48
