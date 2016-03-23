@@ -56,7 +56,7 @@ namespace VideoSchool.Models.Units
                        @"SELECT id, main,  name, info
                            FROM menu_main 
                           WHERE " + where + @"
-                          ORDER BY main, id");
+                          ORDER BY main");
             }
             catch (Exception ex)
             {
@@ -74,7 +74,7 @@ namespace VideoSchool.Models.Units
             {
                 string query = @"
                 SELECT id, main, name, info
-                           FROM menu_main
+                  FROM menu_main
                  WHERE id = '" + shared.db.addslashes(id) + "'";
                 table = shared.db.Select(query);
                 if (table.Rows.Count == 0)
@@ -86,7 +86,6 @@ namespace VideoSchool.Models.Units
                 this.main = ExtractRowValue("main", 0);
                 this.name = ExtractRowValue("name", 0);
                 this.info = ExtractRowValue("info", 0);
-
             }
             catch (Exception ex)
             {
@@ -94,16 +93,12 @@ namespace VideoSchool.Models.Units
             }
         }
 
-
         public void Copy(MenuMain post)
         {
             this.main = post.main;
             this.name = post.name;
-            this.info = post.info;
-            
+            this.info = post.info;            
         }
-
-
 
         public void Delete(string id)
         {
@@ -121,7 +116,6 @@ namespace VideoSchool.Models.Units
             }
         }
 
-
         public void Update()
         {
             // action_Update
@@ -129,8 +123,7 @@ namespace VideoSchool.Models.Units
             {
                 string query = @"
             UPDATE menu_main
-		       SET main = '" + shared.db.addslashes(this.main) + @"',
-		       
+		       SET main = '" + shared.db.addslashes(this.main) + @"',		       
 		           name = '" + shared.db.addslashes(this.name) + @"',
 		           info = '" + shared.db.addslashes(this.info) + @"'
 		     WHERE id = '" + shared.db.addslashes(this.id) + @"'
@@ -154,13 +147,12 @@ namespace VideoSchool.Models.Units
                        WHERE main = '" + shared.db.addslashes(this.main) + @"'");
                 if (count != "0")
                 {
-                    shared.error.MarkUserError("Menu with this menu-code already exists");
+                    shared.error.MarkUserError("Main menu with this code already exists");
                     return;
                 }
                 string query = @"
             INSERT INTO menu_main
-		       SET main = '" + shared.db.addslashes(this.main) + @"',
-		         
+		       SET main = '" + shared.db.addslashes(this.main) + @"',		         
 		           name = '" + shared.db.addslashes(this.name) + @"',
 		           info = '" + shared.db.addslashes(this.info) + @"'
 		           ";
@@ -173,8 +165,5 @@ namespace VideoSchool.Models.Units
                 ThrowError(ex);
             }
         }
-
-
-
     }
 }

@@ -111,7 +111,5 @@ namespace VideoSchool.Controllers
                 return ShowError(ex);
             }
         }
-
-
     }
 }

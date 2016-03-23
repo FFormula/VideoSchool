@@ -13,7 +13,7 @@ namespace VideoSchool.Controllers
             try
             { 
                MenuMain menumain = new MenuMain (this.shared);
-                menumain.SelectMenuMain();
+               menumain.SelectMenuMain();
                return View(menumain);
             }
             catch (Exception ex)
@@ -34,9 +34,7 @@ namespace VideoSchool.Controllers
                 if (id == "Add")
                     menumain.SelectNew();
                 else
-                {
                     menumain.Select(id);
-                }
                 return View(menumain);
             }
             catch (Exception ex)

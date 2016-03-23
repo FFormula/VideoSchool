@@ -18,7 +18,6 @@ namespace VideoSchool.Controllers
         {
             shared = new Shared();
             shared.menu.Init("HOME");
-
         }
 
         /// <summary>
