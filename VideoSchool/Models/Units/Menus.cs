@@ -9,7 +9,7 @@ namespace VideoSchool.Models.Units
     public class Menus : BaseUnit
     {
         public string id;
-        public string main { get; set; }
+        public string main_id { get; set; }
         public string menu { get; set; }
         public string href { get; set; }
         public string name { get; set; }
@@ -32,7 +32,7 @@ namespace VideoSchool.Models.Units
         internal void SelectNew()
         {
             id = "";
-            main = "";
+            main_id = "";
             menu = "";
             href = "";
             name = "";
@@ -49,8 +49,7 @@ namespace VideoSchool.Models.Units
                 string where = " 1 ";
                 if (filter != "")
                     where +=
-                    " AND (main = '" + filterSlashes + @"'
-                       OR menu LIKE '%" + filterSlashes + @"%'
+                    " AND(menu LIKE '%" + filterSlashes + @"%'
                        OR href LIKE '%" + filterSlashes + @"%'
                        OR name LIKE '%" + filterSlashes + @"%'
                        OR info LIKE '%" + filterSlashes + @"%'
@@ -58,10 +57,10 @@ namespace VideoSchool.Models.Units
 
                 qtable.Init(
                         "SELECT COUNT(*) FROM menu WHERE " + where,
-                       @"SELECT id, main, menu, href, name, info, status, nr
+                       @"SELECT id, main_id, menu, href, name, info, status, nr
                            FROM menu 
                           WHERE " + where + @"
-                          ORDER BY main, nr");
+                          ORDER BY main_id, nr");
             }
             catch (Exception ex)
             {
@@ -73,7 +72,7 @@ namespace VideoSchool.Models.Units
             try
             {
                 string query = @"
-                SELECT id, main, menu, href, name, info, status, nr
+                SELECT id, main_id, menu, href, name, info, status, nr
                            FROM menu
                  WHERE id = '" + shared.db.addslashes(id) + "'";
                  table = shared.db.Select(query);
@@ -83,7 +82,7 @@ namespace VideoSchool.Models.Units
                     return;
                 }
                 this.id = ExtractRowValue("id", 0);
-                main = ExtractRowValue("main", 0);
+                main_id = ExtractRowValue("main_id", 0);
                 menu = ExtractRowValue("menu", 0);
                 href = ExtractRowValue("href", 0);
                 name = ExtractRowValue("name", 0);
@@ -99,7 +98,7 @@ namespace VideoSchool.Models.Units
 
         public void Copy(Menus post)
         {
-            this.main = post.main;
+            this.main_id = post.main_id;
             this.menu = post.menu;
             this.name = post.name;
             this.href = post.href;
@@ -131,7 +130,7 @@ namespace VideoSchool.Models.Units
             {
                 string query = @"
             UPDATE menu
-		       SET main = '" + shared.db.addslashes(this.main) + @"',
+		       SET main_id = '" + shared.db.addslashes(this.main_id) + @"',
 		           menu = '" + shared.db.addslashes(this.menu) + @"',
 		           href = '" + shared.db.addslashes(this.href) + @"',
 		           name = '" + shared.db.addslashes(this.name) + @"',
@@ -164,7 +163,7 @@ namespace VideoSchool.Models.Units
                 }
                 string query = @"
             INSERT INTO menu
-		       SET main = '" + shared.db.addslashes(this.main) + @"',
+		       SET main_id = '" + shared.db.addslashes(this.main_id) + @"',
 		           menu = '" + shared.db.addslashes(this.menu) + @"',
 		           href = '" + shared.db.addslashes(this.href) + @"',
 		           name = '" + shared.db.addslashes(this.name) + @"',
@@ -201,12 +200,12 @@ namespace VideoSchool.Models.Units
             try
             {
                 Select(id);
-                if (this.id == "" || this.main == "")
+                if (this.id == "" || this.main_id == "")
                     return;
                 string prevID = shared.db.Scalar (
                     @"SELECT id
                         FROM menu
-                       WHERE main = '" + shared.db.addslashes(this.main) + @"'
+                       WHERE main_id = '" + shared.db.addslashes(this.main_id) + @"'
                          AND nr < '" + shared.db.addslashes(this.nr) + @"'
                        ORDER BY nr DESC
                        LIMIT 1");
@@ -223,12 +222,12 @@ namespace VideoSchool.Models.Units
             try
             {
                 Select(id);
-                if (this.id == "" || this.main == "" || this.nr == "")
+                if (this.id == "" || this.main_id == "" || this.nr == "")
                     return;
                 string nextID = shared.db.Scalar(
                     @"SELECT id
                         FROM menu
-                       WHERE main = '" + shared.db.addslashes(this.main) + @"'
+                       WHERE main_id = '" + shared.db.addslashes(this.main_id) + @"'
                          AND nr > '" + shared.db.addslashes(this.nr) + @"'
                        ORDER BY nr ASC
                        LIMIT 1");

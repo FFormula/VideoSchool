@@ -37,8 +37,7 @@
    @foreach (DataRow x in Model.Action4Select.table.Rows)
    {
         <option value="@x["id"]">@x["name"]</option>
-   }
-       
+   }       
     </select>
      <input type="hidden" name="RoleId" value="@Model.id" />
      <button type="submit" value="Filter" class="btn btn-primary form-control" style="float:left; width: 50px;">

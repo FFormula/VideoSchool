@@ -33,7 +33,7 @@ namespace VideoSchool.Models.Share
     public class Menu
     {
         protected Shared shared;
-        public string main;
+        public string main_id;
         public string active { get; private set; }
         public MenuItem[] items;
 
@@ -45,7 +45,7 @@ namespace VideoSchool.Models.Share
         public Menu(Shared shared)
         {
             this.shared = shared;
-            main = "";
+            main_id = "";
             active = "";
             items = new MenuItem[0];
         }
@@ -54,11 +54,15 @@ namespace VideoSchool.Models.Share
         {
             try
             {
-                this.main = main;
+                this.main_id = shared.db.Scalar(
+                    @"SELECT id 
+                        FROM menu_main 
+                       WHERE main = '" + shared.db.addslashes(main) + 
+                    "' LIMIT 1");
                 DataTable table = shared.db.Select(
                    @"SELECT menu, href, name, info 
                        FROM menu 
-                      WHERE main = '" + shared.db.addslashes(main) + @"'
+                      WHERE main_id = '" + shared.db.addslashes(this.main_id) + @"'
                         AND status > 0
                       ORDER BY nr");
                 items = new MenuItem[table.Rows.Count];

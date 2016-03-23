@@ -4,7 +4,7 @@
     ViewBag.Title = "MenusEdit";
 }
 
-    <h2 class="alert-link" >MenusEdit</h2>
+    <h2 class="alert-link">Menus Edit</h2>
 
 @using (Html.BeginForm("MenusEdit", "Cabinet"))
 {
@@ -19,10 +19,10 @@
        
     </div>
     <div>
-        <h3 class="alert-link">Main:</h3>
+        <h3 class="alert-link">Main ID:</h3>
 
         <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
-        @Html.TextBox("main", Model.main, new { @class = "form-control" })
+        @Html.TextBox("main_id", Model.main_id, new { @class = "form-control" })
     </div>
     <div>
         <h3 class="alert-link">Menu:</h3>
