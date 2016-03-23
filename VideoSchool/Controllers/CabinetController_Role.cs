@@ -36,7 +36,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id = (RouteData.Values["id"] ?? "").ToString();
+                string id = GetRouteID();
                 if (id == "")
                     return RedirectToAction("RoleList", "Cabinet");
                 Models.Units.Role role = new Models.Units.Role(shared);
@@ -62,7 +62,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id = (RouteData.Values["id"] ?? "").ToString();
+                string id = GetRouteID();
                 if (id == "")
                     return RedirectToAction("RoleList", "Cabinet");
                 Models.Units.Role role = new Models.Units.Role(shared);
@@ -100,7 +100,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id = (RouteData.Values["id"] ?? "").ToString();
+                string id = GetRouteID();
                 if (id == "")
                     return RedirectToAction("RoleList", "Cabinet");
                 Models.Units.Role role = new Models.Units.Role(shared);

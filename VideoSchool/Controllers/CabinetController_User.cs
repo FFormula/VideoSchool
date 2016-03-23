@@ -36,7 +36,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id = (RouteData.Values["id"] ?? "").ToString();
+                string id = GetRouteID();
                 if (id == "")
                     return RedirectToAction("UserList", "Cabinet");
                 User user = new User(shared);
@@ -59,7 +59,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id = (RouteData.Values["id"] ?? "").ToString();
+                string id = GetRouteID();
                 if (id == "")
                     return RedirectToAction("UserList", "Cabinet");
                 User user = new User(shared);

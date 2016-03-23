@@ -4,8 +4,6 @@
     ViewBag.Title = "Menus List";
 }
 
-
-
 <h2>
     <span class="glyphicon glyphicon-menu-hamburger"></span>
     &nbsp; List of all Menus
@@ -14,14 +12,11 @@
 @using (Html.BeginForm("ActionList", "Cabinet", FormMethod.Get))
 {
     <div>
-
         @Html.TextBox("filter", Model.filter, new { @class = "field-filter form-control" })
         @* <input type="submit" value="Filter" class="btn btn-primary" /> *@
         <button type="submit" value="Filter" class="btn btn-primary form-control btn-filter">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
         </button>
-
-
     </div>
 }
 
@@ -34,38 +29,33 @@
 
 </div>
 @if (Model.qtable.lines > 0)
-    {
-
-
-         
+{         
     <table class="table table-hover">
         <tr class="success">
+            <th>Move</th>
             <th><span class="glyphicon glyphicon-edit"></span></th>
-            <th>Main</th>
             <th>Menu</th>
             <th>Href</th>
             <th>Name</th>
             <th>Status</th>
-            <th>nr</th>
-           
         </tr>
         @foreach (DataRow x in Model.qtable.table.Rows)
-
         {
             <tr>
+                <td>
+                    <a href="~/Cabinet/MenusMoveUp/@x["id"]"><span class="glyphicon glyphicon-arrow-up">&nbsp;</span></a>
+                    &nbsp;
+                    <a href="~/Cabinet/MenusMoveDn/@x["id"]"><span class="glyphicon glyphicon-arrow-down">&nbsp;</span></a>
+                </td>
                 <td>
                     @Html.ActionLink(@x["id"].ToString(), "MenusEdit", "Cabinet",
                                  new { id = x["id"].ToString() }, new { @class = "btn btn-success", @title = "edit action " + @x["id"].ToString() })
                 </td>
-                <td>@x["main"].ToString()</td>
                 <td>@x["menu"].ToString()</td>
                 <td>@x["href"].ToString()</td>
                 <td>@x["name"].ToString()</td>
-                
                 <td>@x["status"].ToString()</td>
-                <td>@x["nr"].ToString()</td>
             </tr>
-
         }
     </table>
 }

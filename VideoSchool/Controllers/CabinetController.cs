@@ -43,6 +43,11 @@ namespace VideoSchool.Controllers
             return View(user);
         }
 
+        public string GetRouteID()
+        {
+            return (RouteData.Values["id"] ?? "").ToString();
+        }
+
         /// <summary>
         /// Generate an Error View
         /// </summary>

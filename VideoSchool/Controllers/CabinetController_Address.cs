@@ -15,11 +15,10 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id; 
-                if (RouteData.Values["id"] == null)
+                string id = GetRouteID();
+                if (id == "")
                     return RedirectToAction("UserList", "Cabinet");
-                id = RouteData.Values["id"].ToString();
-               UserAddress userAddress = new UserAddress(shared);
+                UserAddress userAddress = new UserAddress(shared);
                
                 userAddress.Select(id);
                 if (edit == "ModeEdit")
@@ -66,10 +65,9 @@ namespace VideoSchool.Controllers
         [HttpPost]
         public ActionResult Address(UserAddress post)
         {
-            string id;
-            if (RouteData.Values["id"] == null)
+            string id = GetRouteID();
+            if (id == "")
                 return RedirectToAction("UserList", "Cabinet");
-            id = RouteData.Values["id"].ToString();
             return SaveAddress(post, id);
         }
 

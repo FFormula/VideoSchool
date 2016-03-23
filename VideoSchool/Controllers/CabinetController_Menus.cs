@@ -27,15 +27,14 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id = (RouteData.Values["id"] ?? "").ToString();
+                string id = GetRouteID();
                 if (id == "")
                     return RedirectToAction("MenusList", "Cabinet");
                 Menus menus = new Menus(this.shared);
                 if (id == "Add")
                     menus.SelectNew();
                 else
-                {
-                   
+                {                   
                     menus.Select(id);
                 }
                 return View(menus);
@@ -51,7 +50,7 @@ namespace VideoSchool.Controllers
         {
             try 
             {
-                string id = (RouteData.Values["id"] ?? "").ToString();
+                string id = GetRouteID();
                 if (id == "")
                     return RedirectToAction("MenusList", "Cabinet");
                 Menus menus = new Menus(this.shared);
@@ -75,7 +74,40 @@ namespace VideoSchool.Controllers
             {
                 return ShowError(ex);
             }
+        }
 
+        public ActionResult MenusMoveUp()
+        {
+            try
+            {
+                string id = GetRouteID();
+                if (id == "")
+                    return RedirectToAction("MenusList", "Cabinet");
+                Menus menus = new Menus(this.shared);
+                menus.MoveUp(id);
+                return RedirectToAction("MenusList", "Cabinet");
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
+
+        public ActionResult MenusMoveDn()
+        {
+            try
+            {
+                string id = GetRouteID();
+                if (id == "")
+                    return RedirectToAction("MenusList", "Cabinet");
+                Menus menus = new Menus(this.shared);
+                menus.MoveDn(id);
+                return RedirectToAction("MenusList", "Cabinet");
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
         }
     }
 }

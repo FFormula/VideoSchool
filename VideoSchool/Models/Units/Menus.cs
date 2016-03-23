@@ -61,7 +61,7 @@ namespace VideoSchool.Models.Units
                        @"SELECT id, main, menu, href, name, info, status, nr
                            FROM menu 
                           WHERE " + where + @"
-                          ORDER BY main, nr DESC");
+                          ORDER BY main, nr");
             }
             catch (Exception ex)
             {
@@ -184,5 +184,61 @@ namespace VideoSchool.Models.Units
             }
         }
 
+        protected void SwapNR (string prevID)
+        {
+            if (prevID == "") return;
+            Menus prev = new Menus(shared);
+            prev.Select(prevID);
+            string prevNR = prev.nr;
+            prev.nr = this.nr;
+            prev.Update();
+            this.nr = prevNR;
+            this.Update();
+        }
+
+        public void MoveUp(string id)
+        {
+            try
+            {
+                Select(id);
+                if (this.id == "" || this.main == "")
+                    return;
+                string prevID = shared.db.Scalar (
+                    @"SELECT id
+                        FROM menu
+                       WHERE main = '" + shared.db.addslashes(this.main) + @"'
+                         AND nr < '" + shared.db.addslashes(this.nr) + @"'
+                       ORDER BY nr DESC
+                       LIMIT 1");
+                SwapNR(prevID);
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
+        }
+
+        public void MoveDn(string id)
+        {
+            try
+            {
+                Select(id);
+                if (this.id == "" || this.main == "" || this.nr == "")
+                    return;
+                string nextID = shared.db.Scalar(
+                    @"SELECT id
+                        FROM menu
+                       WHERE main = '" + shared.db.addslashes(this.main) + @"'
+                         AND nr > '" + shared.db.addslashes(this.nr) + @"'
+                       ORDER BY nr ASC
+                       LIMIT 1");
+                SwapNR(nextID);
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
+        }
+    
     }
 }

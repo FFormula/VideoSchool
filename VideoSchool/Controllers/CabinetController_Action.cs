@@ -38,7 +38,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id = (RouteData.Values["id"] ?? "").ToString();
+                string id = GetRouteID();
                 if (id == "")
                     return RedirectToAction("ActionList", "Cabinet");
                 Models.Units.Action action = new Models.Units.Action(shared);
@@ -64,7 +64,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id = (RouteData.Values["id"] ?? "").ToString();
+                string id = GetRouteID();
                 if (id == "")
                     return RedirectToAction("ActionList", "Cabinet");
                 Models.Units.Action action = new Models.Units.Action(shared);
@@ -99,7 +99,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id = (RouteData.Values["id"] ?? "").ToString();
+                string id = GetRouteID();
                 if (id == "")
                     return RedirectToAction("ActionList", "Cabinet");
                 Models.Units.Action action = new Models.Units.Action(shared);
