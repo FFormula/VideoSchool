@@ -1,0 +1,45 @@
+﻿@model VideoSchool.Models.Units.MenuMain
+
+@{
+    ViewBag.Title = "MenuMainEdit";
+}
+
+<h2 class="alert-link">MenuMain Edit</h2>
+
+@using (Html.BeginForm("MenuMainEdit", "Cabinet"))
+{
+    <div style="color: red">
+        @ViewBag.error
+    </div>
+    <div>
+        <h2 class="alert-link"></h2>
+        <span class="alert alert-info">
+            <strong>ID: </strong> @Model.id
+        </span>
+
+    </div>
+    <div>
+        <h3 class="alert-link">Main:</h3>
+
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+        @Html.TextBox("main", Model.main, new { @class = "form-control" })
+    </div>
+
+    <div>
+        <h3 class="alert-link">Name:</h3>
+
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+        @Html.TextBox("name", Model.name, new { @class = "form-control" })
+    </div>
+    <div>
+        <h3 class="alert-link">Info:</h3>
+        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+        @Html.TextBox("info", Model.info, new { @class = "form-control" })
+    </div>
+
+    <div>
+        <input type="submit" value="Save changes" title="Save changes of the Menu Mains" class="btn btn-success" />
+        @Html.ActionLink("Cancel", "MenusList", "Cabinet")
+    </div>
+}
+

@@ -1,4 +1,5 @@
 ﻿@model VideoSchool.Models.Units.Menus
+
 @using System.Data;
 @{
     ViewBag.Title = "Menus List";
@@ -9,15 +10,30 @@
     &nbsp; List of all Menus
 </h2>
 
-@using (Html.BeginForm("ActionList", "Cabinet", FormMethod.Get))
+@using (Html.BeginForm("MenusList", "Cabinet", FormMethod.Get))
 {
-    <div>
+    <div class="col-lg-12 row">
         @Html.TextBox("filter", Model.filter, new { @class = "field-filter form-control" })
         @* <input type="submit" value="Filter" class="btn btn-primary" /> *@
         <button type="submit" value="Filter" class="btn btn-primary form-control btn-filter">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
         </button>
     </div>
+   
+}
+@using (Html.BeginForm("MenusList", "Cabinet", FormMethod.Get)) { 
+<div class="col-lg-12 row">
+    <select class="field-filter form-control" name="SelectMenuId">
+        @foreach (DataRow x in Model.menuMainSelect.table.Rows)
+            {
+            <option value="@x["id"]">@x["name"]</option>
+
+        }
+    </select>
+    <button type="submit" value="Filter1" class="btn btn-primary form-control btn-filter" title="Filter from Selection MenuMain" style="margin-left: 7px; margin-top: -2px" >
+        <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+    </button>
+</div>
 }
 
 <div class="col-lg-12 row">
@@ -25,9 +41,10 @@
     @Html.ActionLink("Add", "MenusEdit", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus btn btn-default", @title = "add new action" })
 </div>
 <hr />
-<div>
 
-</div>
+
+
+
 @if (Model.qtable.lines > 0)
 {         
     <table class="table table-hover">

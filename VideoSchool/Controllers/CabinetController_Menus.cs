@@ -8,12 +8,14 @@ namespace VideoSchool.Controllers
 {
     public partial class CabinetController : Controller
     {
-        public ActionResult MenusList ()
+     /*   public ActionResult MenusList ()
         {
             try
             { 
                Menus menus = new Menus (this.shared);
-               menus.SelectMenus();
+               
+                menus.SelectMenus();
+               menus.SelectMenuMainForFilterMenus();
                return View(menus);
             }
             catch (Exception ex)
@@ -21,6 +23,32 @@ namespace VideoSchool.Controllers
                 return ShowError(ex);
             }
         }
+
+    */
+
+       
+        public ActionResult MenusList(string SelectMenuId = "")
+        {
+            try
+            {
+                Menus menus = new Menus(this.shared);
+                menus.filter = SelectMenuId ?? "";
+                if (SelectMenuId != "")
+                    menus.SelectMenuForMain();
+                else
+                    menus.SelectMenus();
+                menus.SelectMenuMainForFilterMenus();
+
+
+
+                return View(menus);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
+
 
         [HttpGet]
         public ActionResult MenusEdit ()

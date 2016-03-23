@@ -15,8 +15,12 @@ namespace VideoSchool.Models.Units
         public string name { get; set; }
         public string info { get; set; }
         public string status { get; set; }
-        public string nr     { get; set; }
+        public string nr { get; set; }
 
+
+
+        
+        public QTable menuMainSelect { get; set; }
 
         public Menus () : 
             this (null)
@@ -38,6 +42,8 @@ namespace VideoSchool.Models.Units
             name = "";
             info = "";
         }
+
+     
 
         public void SelectMenus ()
         {
@@ -67,6 +73,12 @@ namespace VideoSchool.Models.Units
                 ThrowError(ex);
             }
         }
+
+        internal void SelectMenusByMain()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Select(string id)
         {
             try
@@ -238,6 +250,59 @@ namespace VideoSchool.Models.Units
                 ThrowError(ex);
             }
         }
-    
+
+        /// <summary>
+        /// Select QTable MenuMain from Select Filters
+        /// </summary>
+        public void SelectMenuMainForFilterMenus()
+        {
+            try
+            {
+
+                menuMainSelect = new QTable(shared);
+                menuMainSelect.Init(
+                        "SELECT 1 ",
+                         @"SELECT  id, name FROM menu_main;");
+
+
+
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
+
+
+        }
+
+
+        internal void SelectMenuForMain()
+        {
+            try
+            {
+
+                qtable = new QTable(shared);
+                string filterSlashes = shared.db.addslashes(filter);
+
+                string where = " 1 ";
+                if (filter != "")
+                    where +=
+                    " AND(main_id = '" + filterSlashes + @"'
+                                            )";
+
+                qtable.Init(
+                        "SELECT COUNT(*) FROM menu WHERE " + where,
+                       @"SELECT id, main_id, menu, href, name, info, status, nr
+                           FROM menu 
+                          WHERE " + where + @"
+                          ORDER BY main_id, nr");
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
+        }
+
+
     }
 }
