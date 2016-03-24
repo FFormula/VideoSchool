@@ -142,5 +142,15 @@ namespace VideoSchool.Models.Units
                 ThrowError(ex);
             }
         }
+
+        internal void Copy(UserAddress post)
+        {
+            this.zip = post.zip;
+            this.area = post.area;
+            this.city = post.city;
+            this.street = post.street;
+            this.country = post.country;
+            this.personal = post.personal;
+        }
     }
 }

@@ -10,6 +10,8 @@ namespace VideoSchool.Controllers
     {
         Shared shared;
         string currUserId = "";
+        string role;
+        string id;
 
         /// <summary>
         /// Constructor
@@ -17,7 +19,6 @@ namespace VideoSchool.Controllers
         public CabinetController ()
         {
             shared = new Shared();
-            shared.menu.Init("HOME");
         }
 
         /// <summary>
@@ -25,8 +26,17 @@ namespace VideoSchool.Controllers
         /// </summary>
         public void Init ()
         {
-            currUserId = Session["user_id"].ToString();
-            shared.menu.Init("HOME");
+            role = GetRouteRole().ToUpper();
+            shared.menu.Init(role.ToUpper());
+            id = GetRouteID();
+            try   { currUserId = Session["user_id"].ToString(); }
+            catch { currUserId = "";  }
+        }
+
+        public void Init (string menu)
+        {
+            Init();
+            shared.menu.SetActive(menu);
         }
 
         /// <summary>
@@ -35,16 +45,21 @@ namespace VideoSchool.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            Init();
+            Init("cabinet_index");
             User user = new User(shared);
             user.Select(currUserId);
             ViewBag.UserID = currUserId;
             return View(user);
         }
 
-        public string GetRouteID()
+        protected string GetRouteID()
         {
             return (RouteData.Values["id"] ?? "").ToString();
+        }
+
+        protected string GetRouteRole()
+        {
+            return (RouteData.Values["role"] ?? "").ToString();
         }
 
         /// <summary>

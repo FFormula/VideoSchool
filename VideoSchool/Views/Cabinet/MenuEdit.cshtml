@@ -1,12 +1,12 @@
 ﻿@model VideoSchool.Models.Units.Menus
 
 @{
-    ViewBag.Title = "MenusEdit";
+    ViewBag.Title = "MenuEdit";
 }
 
-    <h2 class="alert-link">Menus Edit</h2>
+    <h2 class="alert-link">Menu Edit</h2>
 
-@using (Html.BeginForm("MenusEdit", "Cabinet"))
+@using (Html.BeginForm("MenuEdit", "Cabinet"))
 {
     <div style="color: red">
         @ViewBag.error
@@ -20,27 +20,21 @@
     </div>
     <div>
         <h3 class="alert-link">Main ID:</h3>
-
         <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
         @Html.TextBox("main_id", Model.main_id, new { @class = "form-control" })
     </div>
     <div>
         <h3 class="alert-link">Menu:</h3>
-
         <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
         @Html.TextBox("menu", Model.menu, new { @class = "form-control" })
     </div>
     <div>
         <h3 class="alert-link">Href:</h3>
-
         <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
         @Html.TextBox("href", Model.href, new { @class = "form-control" })
     </div>
-
-
     <div>
         <h3 class="alert-link">Name:</h3>
-
         <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
         @Html.TextBox("name", Model.name, new { @class = "form-control" })
     </div>

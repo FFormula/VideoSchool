@@ -1,59 +1,58 @@
-﻿@model VideoSchool.Models.Units.MenuMain
+﻿@model VideoSchool.Models.Units.Action
 @using System.Data;
 
 @{
-    ViewBag.Title = "MenuMainList";
+    ViewBag.Title = "Action List";
 }
 
 <h2>
-    <span class="glyphicon glyphicon-th-list"></span>
-    &nbsp; List of all MenuMain
+    <span class="glyphicon glyphicon-apple"></span>
+    &nbsp; List of all actions
 </h2>
 
-@using (Html.BeginForm("MenuMainList", "Cabinet", FormMethod.Get))
+@using (Html.BeginForm("Action", "Cabinet", FormMethod.Get))
 {
     <div>
+      
         @Html.TextBox("filter", Model.filter, new { @class = "field-filter form-control" })
         @* <input type="submit" value="Filter" class="btn btn-primary" /> *@
         <button type="submit" value="Filter" class="btn btn-primary form-control btn-filter">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
         </button>
+
+       
     </div>
 }
 
 <div class="col-lg-12 row">
     There are @Model.qtable.lines rows.
-    @Html.ActionLink("Add", "MenuMainEdit", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus btn btn-default", @title = "add new action" })
+    @Html.ActionLink("Add", "ActionEdit", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus btn btn-default", @title = "add new action" })
 </div>
 <hr />
 <div>
-
+   
 </div>
 @if (Model.qtable.lines > 0)
 {
     <table class="table table-hover">
         <tr class="success">
-           
             <th><span class="glyphicon glyphicon-edit"></span></th>
-            <th>Main</th>
             <th>Name</th>
             <th>Info</th>
+            <th>Status</th>
         </tr>
         @foreach (DataRow x in Model.qtable.table.Rows)
         {
             <tr>
-              
                 <td>
-                    @Html.ActionLink(@x["id"].ToString(), "MenuMainEdit", "Cabinet",
-                                 new { id = x["id"].ToString() }, new { @class = "btn btn-success", @title = "edit menumain " + @x["id"].ToString() })
-                </td>
-                <td>@x["main"].ToString()</td>
-                <td>@x["name"].ToString()</td>
-                <td>@x["info"].ToString()</td>
-            </tr>
+                    @Html.ActionLink(@x["id"].ToString(), "ActionEdit", "Cabinet",
+                                 new { id = x["id"].ToString() }, new { @class= "btn btn-success", @title="edit action "+@x["id"].ToString() })
+            </td>
+            <td>@x["name"].ToString()</td>
+            <td>@x["info"].ToString()</td>
+            <td>@x["status"].ToString()</td>
+        </tr>
+
         }
     </table>
 }
-
-
-

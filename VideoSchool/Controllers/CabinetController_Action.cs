@@ -14,10 +14,11 @@ namespace VideoSchool.Controllers
         /// <param name="filter">Any searchable filter</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult ActionList(string filter)
+        public ActionResult Action(string filter)
         {
             try
             {
+                Init("cabinet_action");
                 Models.Units.Action action = new Models.Units.Action(shared);
                 action.filter = filter ?? "";
                 action.SelectActions();
@@ -38,9 +39,9 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id = GetRouteID();
+                Init("cabinet_action");
                 if (id == "")
-                    return RedirectToAction("ActionList", "Cabinet");
+                    return RedirectToAction("Action", "Cabinet");
                 Models.Units.Action action = new Models.Units.Action(shared);
                 if (id == "Add")
                     action.SelectNew();
@@ -64,9 +65,9 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id = GetRouteID();
+                Init("cabinet_action");
                 if (id == "")
-                    return RedirectToAction("ActionList", "Cabinet");
+                    return RedirectToAction("Action", "Cabinet");
                 Models.Units.Action action = new Models.Units.Action(shared);
                 if (id == "Add")
                 {
@@ -78,11 +79,11 @@ namespace VideoSchool.Controllers
                 {
                     action.Select(id);
                     if (shared.error.AnyError())
-                        return RedirectToAction("ActionList", "Cabinet");
+                        return RedirectToAction("Action", "Cabinet");
                     action.Copy(post);
                     action.Update();
                 }
-                return RedirectToAction("ActionList", "Cabinet");
+                return RedirectToAction("Action", "Cabinet");
             }
             catch (Exception ex)
             {
@@ -99,12 +100,12 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id = GetRouteID();
+                Init("cabinet_action");
                 if (id == "")
-                    return RedirectToAction("ActionList", "Cabinet");
+                    return RedirectToAction("Action", "Cabinet");
                 Models.Units.Action action = new Models.Units.Action(shared);
                 action.Delete(id);
-                return RedirectToAction("ActionList", "Cabinet");
+                return RedirectToAction("Action", "Cabinet");
             }
             catch (Exception ex)
             {

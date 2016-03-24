@@ -6,9 +6,12 @@ namespace VideoSchool.Models.Units
     public class UserPassw : User
     {
         Random rand = new Random();
-        string code;
 
-        public UserPassw (Shared shared) : base (shared)
+        public UserPassw() : this(null)
+        {
+        }
+
+        public UserPassw(Shared shared) : base (shared)
         {
         }
 

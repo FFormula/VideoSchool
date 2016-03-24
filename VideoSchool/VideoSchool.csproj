@@ -133,10 +133,12 @@
     <Compile Include="Controllers\CabinetController.cs" />
     <Compile Include="Controllers\CabinetController_Address.cs" />
     <Compile Include="Controllers\CabinetController_Action.cs" />
-    <Compile Include="Controllers\CabinetController_MenuMain.cs" />
-    <Compile Include="Controllers\CabinetController_Menus.cs" />
+    <Compile Include="Controllers\CabinetController_Menu.cs" />
     <Compile Include="Controllers\CabinetController_Role.cs" />
     <Compile Include="Controllers\CabinetController_User.cs" />
+    <Compile Include="Controllers\CabinetController_Password.cs" />
+    <Compile Include="Controllers\CabinetController_Passport.cs" />
+    <Compile Include="Controllers\CabinetController_Contact.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
@@ -145,6 +147,8 @@
     <Compile Include="Models\Share\EMail.cs" />
     <Compile Include="Models\Share\Log.cs" />
     <Compile Include="Models\Share\Menu.cs" />
+    <Compile Include="Models\Units\UserContact.cs" />
+    <Compile Include="Models\Units\UserPassport.cs" />
     <Compile Include="Models\Units\MenuMain.cs" />
     <Compile Include="Models\Units\Menus.cs" />
     <Compile Include="Models\Units\Action.cs" />
@@ -174,21 +178,24 @@
     <Content Include="Views\Cabinet\Index.cshtml" />
     <Content Include="Views\Help\Index.cshtml" />
     <Content Include="Views\Help\About.cshtml" />
-    <Content Include="Views\Cabinet\UserList.cshtml" />
+    <Content Include="Views\Cabinet\User.cshtml" />
     <Content Include="Views\Cabinet\UserEdit.cshtml" />
-    <Content Include="Views\Cabinet\ActionList.cshtml" />
+    <Content Include="Views\Cabinet\Action.cshtml" />
     <Content Include="Views\Cabinet\ActionEdit.cshtml" />
-    <Content Include="Views\Cabinet\RoleList.cshtml" />
+    <Content Include="Views\Cabinet\Role.cshtml" />
     <Content Include="Views\Login\RequestPassword.cshtml" />
     <Content Include="Views\Login\ActivatePassword.cshtml" />
     <Content Include="Views\Cabinet\RoleEdit.cshtml" />
     <Content Include="Views\Cabinet\RoleAction.cshtml" />
     <Content Include="Views\Cabinet\Address.cshtml" />
     <Content Include="Views\Cabinet\AddressList.cshtml" />
-    <Content Include="Views\Cabinet\MenusList.cshtml" />
-    <Content Include="Views\Cabinet\MenusEdit.cshtml" />
-    <Content Include="Views\Cabinet\MenuMainList.cshtml" />
+    <Content Include="Views\Cabinet\Menu.cshtml" />
+    <Content Include="Views\Cabinet\MenuEdit.cshtml" />
+    <Content Include="Views\Cabinet\MenuMain.cshtml" />
     <Content Include="Views\Cabinet\MenuMainEdit.cshtml" />
+    <Content Include="Views\Cabinet\Password.cshtml" />
+    <Content Include="Views\Cabinet\Passport.cshtml" />
+    <Content Include="Views\Cabinet\Contact.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -16,27 +16,22 @@
         <span class="alert alert-info">
             <strong>ID: </strong> @Model.id
         </span>
-
     </div>
     <div>
         <h3 class="alert-link">Main:</h3>
-
         <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
         @Html.TextBox("main", Model.main, new { @class = "form-control" })
     </div>
-
     <div>
         <h3 class="alert-link">Name:</h3>
-
         <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
         @Html.TextBox("name", Model.name, new { @class = "form-control" })
     </div>
     <div>
         <h3 class="alert-link">Info:</h3>
         <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
-        @Html.TextBox("info", Model.info, new { @class = "form-control" })
+        @Html.TextArea("info", Model.info, new { @class = "form-control", @cols = "40", @rows = "6" })
     </div>
-
     <div>
         <input type="submit" value="Save changes" title="Save changes of the Menu Mains" class="btn btn-success" />
         @Html.ActionLink("Cancel", "MenusList", "Cabinet")

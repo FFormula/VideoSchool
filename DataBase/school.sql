@@ -59,10 +59,9 @@ CREATE TABLE `menu` (
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '0-скрыто, 1-открыто',
   `nr` int(11) NOT NULL DEFAULT '0' COMMENT 'Порядок размещения пунктов',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `Индекс 2` (`menu`),
   KEY `FK_menu_menu_main` (`main_id`),
   CONSTRAINT `FK_menu_menu_main` FOREIGN KEY (`main_id`) REFERENCES `menu_main` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Пункты динамического меню';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='Пункты динамического меню';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +70,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,1,'home_signup','/Login/Signup','Регистрация','Регистрация в системе',1,5),(2,1,'home_login','/Login/Index','Вход','Авторизация',1,10),(3,1,'home_menus','/Cabinet/MenusList','Меню','Формирование меню',1,30);
+INSERT INTO `menu` VALUES (1,1,'home_signup','/Login/Signup','Регистрация','Регистрация в системе',1,10),(2,1,'home_login','/Login/Index','Вход','Авторизация',1,5),(3,9,'cabinet_menu','/Cabinet/Admin/Menu','Пункты меню','Формирование меню',1,120),(4,9,'cabinet_menumain','/Cabinet/Admin/MenuMain','Типы меню','',1,110),(5,2,'cabinet_index','/Cabinet/Profile','Сводка','Основная информация об учётной записи.',1,50),(6,2,'cabinet_address','/Cabinet/Profile/Address','Адрес','Домашний адрес для отправки бумажной корреспонденции',1,80),(7,2,'cabinet_password','/Cabinet/Profile/Password','Пароль','Смена пароля',1,90),(8,2,'cabinet_passport','/Cabinet/Profile/Passport','Паспорт','Персональная информация - имя, фамилия, дата рождения, страна/город, язык, сайт, о себе.',1,60),(9,2,'cabinet_contact','/Cabinet/Profile/Contact','Контакты','Контактная информация с подтверждением: почта, телефон, skype, vk, fb.',1,70),(10,9,'cabinet_user','/Cabinet/Admin/User','Пользователи','Список зарегистрированных участников проекта',1,30),(11,9,'cabinet_action','/Cabinet/Admin/Action','Действия','Список всех возможных действий в системе',1,40),(12,9,'cabinet_role','/Cabinet/Admin/Role','Роли','Список всех типов участников - ролей',1,100);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +88,7 @@ CREATE TABLE `menu_main` (
   `info` text COMMENT 'Описание раздела',
   PRIMARY KEY (`id`),
   UNIQUE KEY `main` (`main`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Все списки меню';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Все списки меню';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +97,7 @@ CREATE TABLE `menu_main` (
 
 LOCK TABLES `menu_main` WRITE;
 /*!40000 ALTER TABLE `menu_main` DISABLE KEYS */;
-INSERT INTO `menu_main` VALUES (1,'HOME','Главное меню',NULL);
+INSERT INTO `menu_main` VALUES (1,'HOME','Главное меню',NULL),(2,'PROFILE','Личный кабинет','Общая информация, личные данные, контакты, адрес, подписки, сообщения, персональная страница.'),(3,'STUDENT','Кабинет студента','Курсы обучения, подписки, медали, журнал успеваемости'),(4,'TEACHER','Кабинет тренера','Созданные видеокурсы, материалы, архив, отчёты, условия сотрудничества, доходы и заработок.'),(5,'PARTNER','Кабинет партнёра','Партнёрские инструменты, условия сотрудничества, статистика кликов и регистраций, список приглашённых пользователей, доходы и отчисления, заказ выплат.'),(6,'BOOKER','Кабинет бухгалтера','Платежи курсантов, предоставление доступа к материалам, инструменты для выплат учителям и партнёрам, статистика.'),(7,'EDITOR','Кабинет редактора','Публикация статей, управление архивом, размещение рекламных объявлений, рассылки.'),(8,'MAGIC','Кабинет модератора','Поддержка, ответы на вопросы, проверка и редактирование сообщений.'),(9,'ADMIN','Кабинет администратора','Управление сайтом, меню, медалями, регистрация учеников, групп и школ, системные настройки, переводы на другие языки.');
 /*!40000 ALTER TABLE `menu_main` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,7 +232,7 @@ CREATE TABLE `user_address` (
 
 LOCK TABLES `user_address` WRITE;
 /*!40000 ALTER TABLE `user_address` DISABLE KEYS */;
-INSERT INTO `user_address` VALUES (1,'Lithuania','3200','Area','Висагинас','Street','Personal'),(2,'333','333','444','444','555','555');
+INSERT INTO `user_address` VALUES (1,'Lithuania','3200','Area12','Висагинас','Street','Personal'),(2,'333','333','444','444','555','555');
 /*!40000 ALTER TABLE `user_address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,4 +271,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-23 10:08:48
+-- Dump completed on 2016-03-24 12:25:40

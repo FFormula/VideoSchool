@@ -11,13 +11,14 @@ namespace VideoSchool.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Address(string edit="")
+        public ActionResult AddressFor(string edit = "")
         {
             try
             {
+                Init("cabinet_addressfor");
                 string id = GetRouteID();
                 if (id == "")
-                    return RedirectToAction("UserList", "Cabinet");
+                    return RedirectToAction("User", "Cabinet");
                 UserAddress userAddress = new UserAddress(shared);
                
                 userAddress.Select(id);
@@ -32,7 +33,19 @@ namespace VideoSchool.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Save posted address data for specified user
+        /// </summary>
+        /// <param name="post"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult AddressFor(UserAddress post)
+        {
+            Init("cabinet_addressfor");
+            if (id == "")
+                return RedirectToAction("User", "Cabinet");
+            return SaveAddress(post, id);
+        }
 
 
         /// <summary>
@@ -40,16 +53,16 @@ namespace VideoSchool.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult MyAddress()
+        public ActionResult Address()
         {
             try
             {
-                Init();
+                Init("cabinet_address");
                 if (currUserId == "")
-                    return RedirectToAction("Index", "Cabinet");
+                    return RedirectToAction("Index", "Login");
                 UserAddress userAddress = new UserAddress(shared);
                 userAddress.Select(currUserId);
-                return View("AddressList", userAddress);
+                return View(userAddress);
             }
             catch (Exception ex)
             {
@@ -58,30 +71,16 @@ namespace VideoSchool.Controllers
         }
 
         /// <summary>
-        /// Save posted address data for specified user
+        /// Save posted address data for current user
         /// </summary>
         /// <param name="post"></param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult Address(UserAddress post)
         {
-            string id = GetRouteID();
-            if (id == "")
-                return RedirectToAction("UserList", "Cabinet");
-            return SaveAddress(post, id);
-        }
-
-        /// <summary>
-        /// Save posted address data for current user
-        /// </summary>
-        /// <param name="post"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult MyAddress(UserAddress post)
-        {
-            Init();
+            Init("cabinet_address");
             if (currUserId == "")
-                return RedirectToAction("Index", "Cabinet");
+                return RedirectToAction("Index", "Login");
             return SaveAddress(post, currUserId);
         }
 
@@ -98,12 +97,7 @@ namespace VideoSchool.Controllers
             {
                 UserAddress userAddress = new UserAddress(shared);
                 userAddress.id = id;
-                userAddress.zip = post.zip;
-                userAddress.area = post.area;
-                userAddress.city = post.city;
-                userAddress.street = post.street;
-                userAddress.country = post.country;
-                userAddress.personal = post.personal;
+                userAddress.Copy(post);
                 userAddress.Update();
                 if (shared.error.AnyError())
                 {
@@ -111,7 +105,7 @@ namespace VideoSchool.Controllers
                     return View("AddressList", post);
                 }
                 ViewBag.success = "OK";
-                return View("AddressList", post);
+                return View("AddressList", userAddress);
             }
             catch (Exception ex)
             {

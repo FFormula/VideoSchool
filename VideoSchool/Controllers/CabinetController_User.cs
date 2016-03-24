@@ -12,10 +12,11 @@ namespace VideoSchool.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult UserList(string filter = null)
+        public ActionResult User(string filter = null)
         {
             try
             {
+                Init("cabinet_user");
                 User user = new User(shared);
                 user.filter = filter ?? "";
                 user.SelectUsers();
@@ -36,9 +37,9 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id = GetRouteID();
+                Init("cabinet_user");
                 if (id == "")
-                    return RedirectToAction("UserList", "Cabinet");
+                    return RedirectToAction("User", "Cabinet");
                 User user = new User(shared);
                 user.Select(id);
                 return View(user);
@@ -59,17 +60,17 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                string id = GetRouteID();
+                Init("cabinet_user");
                 if (id == "")
-                    return RedirectToAction("UserList", "Cabinet");
+                    return RedirectToAction("User", "Cabinet");
                 User user = new User(shared);
                 user.Select(id);
                 if (shared.error.AnyError())
-                    return RedirectToAction("UserList", "Cabinet");
+                    return RedirectToAction("User", "Cabinet");
                 user.name = post.name;
                 user.email = post.email;
                 user.Update();
-                return RedirectToAction("UserList", "Cabinet");
+                return RedirectToAction("User", "Cabinet");
             }
             catch (Exception ex)
             {
