@@ -9,15 +9,19 @@ namespace VideoSchool.Controllers
     public partial class CabinetController : Controller
     {
 
-        public ActionResult Menu (string SelectMenuId = "")
+        public ActionResult Menu (string SelectMenuId = "", string filter="")
         {
             try
             {
                 Init("cabinet_menu");
                 Menus menus = new Menus(this.shared);
-                menus.filter = SelectMenuId ?? "";
-                if (SelectMenuId != "")
-                    menus.SelectMenuForMain();
+                if (filter!="")
+                {
+                    menus.filter = filter;
+                    menus.SelectMenus();
+                }
+                else if (SelectMenuId != "")
+                    menus.SelectMenuForMain(SelectMenuId);
                 else
                     menus.SelectMenus();
                 menus.SelectMenuMainForFilterMenus();
@@ -39,9 +43,15 @@ namespace VideoSchool.Controllers
                     return RedirectToAction("Menu", "Cabinet");
                 Menus menus = new Menus(this.shared);
                 if (id == "Add")
+                {
+                    menus.SelectMenuMainForFilterMenus("0");
                     menus.SelectNew();
+                }
                 else
+                {
+                    menus.SelectMenuMainForFilterMenus(id);
                     menus.Select(id);
+                }
                 return View(menus);
             }
             catch (Exception ex)
@@ -180,6 +190,9 @@ namespace VideoSchool.Controllers
             {
                 return ShowError(ex);
             }
+
+
+
         }
     }
 }

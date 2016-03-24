@@ -21,6 +21,8 @@ namespace VideoSchool.Models.Units
 
         
         public QTable menuMainSelect { get; set; }
+        public string SelectedMenuId { get; private set; }
+
 
         public Menus () : 
             this (null)
@@ -88,6 +90,7 @@ namespace VideoSchool.Models.Units
                            FROM menu
                  WHERE id = '" + shared.db.addslashes(id) + "'";
                  table = shared.db.Select(query);
+               // this.SelectedMenuId = id;
                 if (table.Rows.Count == 0)
                 {
                     shared.error.MarkUserError("Action " + id + " not found");
@@ -258,14 +261,27 @@ namespace VideoSchool.Models.Units
         {
             try
             {
-
                 menuMainSelect = new QTable(shared);
+                
                 menuMainSelect.Init(
                         "SELECT 1 ",
                          @"SELECT  id, name FROM menu_main;");
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+            }
+        }
 
-
-
+        public void SelectMenuMainForFilterMenus(string id = "")
+        {
+            try
+            {
+                menuMainSelect = new QTable(shared);
+                this.SelectedMenuId = id;
+                menuMainSelect.Init(
+                        "SELECT 1 ",
+                         @"SELECT  id, name FROM menu_main;");
             }
             catch (Exception ex)
             {
@@ -276,16 +292,18 @@ namespace VideoSchool.Models.Units
         }
 
 
-        internal void SelectMenuForMain()
+
+
+        internal void SelectMenuForMain(string SelectMenuId="")
         {
             try
             {
-
                 qtable = new QTable(shared);
-                string filterSlashes = shared.db.addslashes(filter);
+                string filterSlashes = shared.db.addslashes(SelectMenuId);
+                this.SelectedMenuId = SelectMenuId;
 
                 string where = " 1 ";
-                if (filter != "")
+                if (filterSlashes != "")
                     where +=
                     " AND(main_id = '" + filterSlashes + @"'
                                             )";
@@ -302,6 +320,10 @@ namespace VideoSchool.Models.Units
                 ThrowError(ex);
             }
         }
+
+
+
+ 
 
 
     }

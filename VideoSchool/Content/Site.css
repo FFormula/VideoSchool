@@ -28,5 +28,10 @@ textarea {
                margin-left: -4px;
                margin-top: 5px;
 }
+
+.menuedit-span {
+
+    width:90px; margin-top: 5px; text-align:left;
+}
 * { margin:0; padding:0;
 }

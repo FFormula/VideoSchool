@@ -10,23 +10,16 @@
     &nbsp; List of all Menus
 </h2>
 
-@using (Html.BeginForm("Menu", "Cabinet", FormMethod.Get))
-{
-    <div class="col-lg-12 row">
-        @Html.TextBox("filter", Model.filter, new { @class = "field-filter form-control" })
-        @* <input type="submit" value="Filter" class="btn btn-primary" /> *@
-        <button type="submit" value="Filter" class="btn btn-primary form-control btn-filter">
-            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-        </button>
-    </div>
-   
-}
+
+
 @using (Html.BeginForm("Menu", "Cabinet", FormMethod.Get)) { 
 <div class="col-lg-12 row">
     <select class="field-filter form-control" name="SelectMenuId">
         @foreach (DataRow x in Model.menuMainSelect.table.Rows)
             {
-            <option value="@x["id"]">@x["name"]</option>
+            <option @if (x["id"].ToString() == Model.SelectedMenuId)
+                        { @Html.Raw("selected") }
+            value ="@x["id"]">@x["name"]</option>
 
         }
     </select>
