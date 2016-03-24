@@ -16,6 +16,7 @@ namespace VideoSchool.Models.Units
         public BaseUnit (Shared shared)
         {
             this.shared = shared;
+            qtable = new QTable(shared);
         }
 
         /// <summary>

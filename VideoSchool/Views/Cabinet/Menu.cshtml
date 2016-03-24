@@ -15,6 +15,7 @@
 @using (Html.BeginForm("Menu", "Cabinet", FormMethod.Get)) { 
 <div class="col-lg-12 row">
     <select class="field-filter form-control" name="SelectMenuId">
+        <option>-----</option>
         @foreach (DataRow x in Model.menuMainSelect.table.Rows)
             {
             <option @if (x["id"].ToString() == Model.SelectedMenuId)
@@ -53,9 +54,9 @@
         {
             <tr>
                 <td>
-                    <a href="~/Cabinet/Admin/MenuMoveUp/@x["id"]"><span class="glyphicon glyphicon-arrow-up">&nbsp;</span></a>
+                    <a href="~/Cabinet/Admin/MenuMoveUp/@x["id"]/?SelectMenuId=@Model.SelectedMenuId"><span class="glyphicon glyphicon-arrow-up">&nbsp;</span></a>
                     &nbsp;
-                    <a href="~/Cabinet/Admin/MenuMoveDn/@x["id"]"><span class="glyphicon glyphicon-arrow-down">&nbsp;</span></a>
+                    <a href="~/Cabinet/Admin/MenuMoveDn/@x["id"]/?SelectMenuId=@Model.SelectedMenuId"><span class="glyphicon glyphicon-arrow-down">&nbsp;</span></a>
                 </td>
                 <td>
                     @Html.ActionLink(@x["id"].ToString(), "MenuEdit", "Cabinet",

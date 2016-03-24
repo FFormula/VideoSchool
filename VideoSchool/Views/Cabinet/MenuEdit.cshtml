@@ -16,7 +16,7 @@
     <div class="col-lg-12 row">
         
         <span class="field-image input-group-addon " style="width:90px;"><i class="glyphicon glyphicon-check"></i> Main ID:</span>
-        <div >
+        <div>
             <select class="form-control" name="main_id">
                 @foreach (DataRow x in Model.menuMainSelect.table.Rows)
                 {
@@ -24,10 +24,8 @@
                             value="@x["id"]">
                        @x["id"] - @x["name"]
                         </option>
-
                 }
-            </select>
-           
+            </select>           
         </div>
 
     </div>

@@ -23,6 +23,8 @@ namespace VideoSchool.Models.Units
         public QTable (Shared shared)
         {
             this.shared = shared;
+            lines = 0;
+            table = null;
         }
 
         public void Init (string queryCount, string queryLines)

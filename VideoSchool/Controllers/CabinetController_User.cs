@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.Mvc;
-using VideoSchool.Models;
 using VideoSchool.Models.Units;
 
 namespace VideoSchool.Controllers
