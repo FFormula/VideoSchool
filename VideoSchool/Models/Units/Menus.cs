@@ -17,8 +17,9 @@ namespace VideoSchool.Models.Units
         public string status { get; set; }
         public string nr { get; set; }
         
-        public QTable menuMainSelect { get; set; }
+        public QTable selectMenuMain { get; set; }
         public string SelectedMenuId { get; private set; }
+        public string menuMainId { get; set; }
 
         public Menus () : 
             this (null)
@@ -39,40 +40,26 @@ namespace VideoSchool.Models.Units
             href = "";
             name = "";
             info = "";
-        }     
+        }
 
-        public void SelectMenus ()
+        public void SelectMenuInMenuMain(string menuMainId)
         {
             try
             {
+                this.menuMainId = menuMainId;
                 qtable = new QTable(shared);
-                string filterSlashes = shared.db.addslashes(filter);
-
-                string where = " 1 ";
-                if (filter != "")
-                    where +=
-                    " AND(menu LIKE '%" + filterSlashes + @"%'
-                       OR href LIKE '%" + filterSlashes + @"%'
-                       OR name LIKE '%" + filterSlashes + @"%'
-                       OR info LIKE '%" + filterSlashes + @"%'
-                       OR id =       '" + filterSlashes + @"')";
-
+                string where = " main_id = '" + shared.db.addslashes(menuMainId) + "'";
                 qtable.Init(
                         "SELECT COUNT(*) FROM menu WHERE " + where,
                        @"SELECT id, main_id, menu, href, name, info, status, nr
                            FROM menu 
                           WHERE " + where + @"
-                          ORDER BY main_id, nr");
+                       ORDER BY nr");
             }
             catch (Exception ex)
             {
                 ThrowError(ex);
             }
-        }
-
-        internal void SelectMenusByMain()
-        {
-            throw new NotImplementedException();
         }
 
         public void Select(string id)
@@ -81,7 +68,7 @@ namespace VideoSchool.Models.Units
             {
                 string query = @"
                 SELECT id, main_id, menu, href, name, info, status, nr
-                           FROM menu
+                  FROM menu
                  WHERE id = '" + shared.db.addslashes(id) + "'";
                  table = shared.db.Select(query);
                // this.SelectedMenuId = id;
@@ -121,9 +108,9 @@ namespace VideoSchool.Models.Units
             try
             {
                 string query = @"
-            DELETE FROM menus
-		     WHERE id = '" + shared.db.addslashes(id) + @"'
-		     LIMIT 1";
+                    DELETE FROM menu
+		             WHERE id = '" + shared.db.addslashes(id) + @"'
+		             LIMIT 1";
                 shared.db.Update(query);
             }
             catch (Exception ex)
@@ -138,16 +125,16 @@ namespace VideoSchool.Models.Units
             try
             {
                 string query = @"
-            UPDATE menu
-		       SET main_id = '" + shared.db.addslashes(this.main_id) + @"',
-		           menu = '" + shared.db.addslashes(this.menu) + @"',
-		           href = '" + shared.db.addslashes(this.href) + @"',
-		           name = '" + shared.db.addslashes(this.name) + @"',
-		           info = '" + shared.db.addslashes(this.info) + @"',
-		           status = '"+shared.db.addslashes(this.status) + @"',
-		           nr   = '" + shared.db.addslashes(this.nr) + @"'
-		     WHERE id = '"   + shared.db.addslashes(this.id) + @"'
-		     LIMIT 1";
+                    UPDATE menu
+		               SET main_id = '" + shared.db.addslashes(this.main_id) + @"',
+		                   menu = '" + shared.db.addslashes(this.menu) + @"',
+		                   href = '" + shared.db.addslashes(this.href) + @"',
+		                   name = '" + shared.db.addslashes(this.name) + @"',
+		                   info = '" + shared.db.addslashes(this.info) + @"',
+		                   status = '"+shared.db.addslashes(this.status) + @"',
+		                   nr   = '" + shared.db.addslashes(this.nr) + @"'
+		             WHERE id = '"   + shared.db.addslashes(this.id) + @"'
+		             LIMIT 1";
                 shared.db.Update(query);
             }
             catch (Exception ex)
@@ -171,20 +158,20 @@ namespace VideoSchool.Models.Units
                     return;
                 }
                 string query = @"
-            INSERT INTO menu
-		       SET main_id = '" + shared.db.addslashes(this.main_id) + @"',
-		           menu = '" + shared.db.addslashes(this.menu) + @"',
-		           href = '" + shared.db.addslashes(this.href) + @"',
-		           name = '" + shared.db.addslashes(this.name) + @"',
-		           info = '" + shared.db.addslashes(this.info) + @"',
-		           status = '"+shared.db.addslashes(this.status) + @"'";
+                    INSERT INTO menu
+		               SET main_id = '" + shared.db.addslashes(this.main_id) + @"',
+		                   menu = '" + shared.db.addslashes(this.menu) + @"',
+		                   href = '" + shared.db.addslashes(this.href) + @"',
+		                   name = '" + shared.db.addslashes(this.name) + @"',
+		                   info = '" + shared.db.addslashes(this.info) + @"',
+		                   status = '"+shared.db.addslashes(this.status) + @"'";
                 long id = shared.db.Insert(query);
                 this.id = id.ToString();
                 shared.db.Update (@"
-            UPDATE menu
-		       SET nr   = '" + shared.db.addslashes((10 * id).ToString()) + @"'
-		     WHERE id = '"   + shared.db.addslashes (this.id) + @"'
-		     LIMIT 1");
+                    UPDATE menu
+		               SET nr   = '" + shared.db.addslashes((10 * id).ToString()) + @"'
+		             WHERE id = '"   + shared.db.addslashes (this.id) + @"'
+		             LIMIT 1");
             }
             catch (Exception ex)
             {
@@ -251,74 +238,22 @@ namespace VideoSchool.Models.Units
         /// <summary>
         /// Select QTable MenuMain from Select Filters
         /// </summary>
-        public void SelectMenuMainForFilterMenus()
+        public void SelectMenuMain()
         {
             try
             {
-                menuMainSelect = new QTable(shared);
-                
-                menuMainSelect.Init(
-                        "SELECT 1 ",
-                         @"SELECT  id, name FROM menu_main;");
+                selectMenuMain = new QTable(shared);                
+                selectMenuMain.Init(
+                    "SELECT 1 ",
+                   @"SELECT id, main, name
+                       FROM menu_main
+                   ORDER BY main;");
             }
             catch (Exception ex)
             {
                 ThrowError(ex);
             }
         }
-
-        public void SelectMenuMainForFilterMenus(string id = "")
-        {
-            try
-            {
-                menuMainSelect = new QTable(shared);
-                this.SelectedMenuId = id;
-                menuMainSelect.Init(
-                        "SELECT 1 ",
-                         @"SELECT  id, name FROM menu_main;");
-            }
-            catch (Exception ex)
-            {
-                ThrowError(ex);
-            }
-
-
-        }
-
-
-
-
-        internal void SelectMenuForMain(string SelectMenuId="")
-        {
-            try
-            {
-                qtable = new QTable(shared);
-                string filterSlashes = shared.db.addslashes(SelectMenuId);
-                this.SelectedMenuId = SelectMenuId;
-
-                string where = " 1 ";
-                if (filterSlashes != "")
-                    where +=
-                    " AND(main_id = '" + filterSlashes + @"'
-                                            )";
-
-                qtable.Init(
-                        "SELECT COUNT(*) FROM menu WHERE " + where,
-                       @"SELECT id, main_id, menu, href, name, info, status, nr
-                           FROM menu 
-                          WHERE " + where + @"
-                          ORDER BY main_id, nr");
-            }
-            catch (Exception ex)
-            {
-                ThrowError(ex);
-            }
-        }
-
-
-
- 
-
 
     }
 }

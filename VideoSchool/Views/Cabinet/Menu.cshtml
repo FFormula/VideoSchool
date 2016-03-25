@@ -12,16 +12,11 @@
 
 
 
-@using (Html.BeginForm("Menu", "Cabinet", FormMethod.Get)) { 
 <div class="col-lg-12 row">
-    <select class="field-filter form-control" name="SelectMenuId">
-        <option>-----</option>
-        @foreach (DataRow x in Model.menuMainSelect.table.Rows)
-            {
-            <option @if (x["id"].ToString() == Model.SelectedMenuId)
-                        { @Html.Raw("selected") }
-            value ="@x["id"]">@x["name"]</option>
-
+    <select class="field-filter form-control" name="SelectMenuId" onchange="document.location = '/Cabinet/Admin/Menu/' + this.value;">
+        @foreach (DataRow x in Model.selectMenuMain.table.Rows)
+        {
+            <option @if (x["id"].ToString() == Model.menuMainId ) { @Html.Raw("selected") } value ="@x["id"]">@x["main"] – @x["name"]</option>
         }
     </select>
     <button type="submit" value="Filter1" class="btn btn-primary form-control btn-filter" title="Filter from Selection MenuMain" style="margin-left: 7px; margin-top: -2px" >
@@ -35,9 +30,6 @@
     @Html.ActionLink("Add", "MenuEdit", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus btn btn-default", @title = "add new action" })
 </div>
 <hr />
-
-
-
 
 @if (Model.qtable.lines > 0)
 {         
@@ -54,9 +46,9 @@
         {
             <tr>
                 <td>
-                    <a href="~/Cabinet/Admin/MenuMoveUp/@x["id"]/?SelectMenuId=@Model.SelectedMenuId"><span class="glyphicon glyphicon-arrow-up">&nbsp;</span></a>
+                    <a href="~/Cabinet/Admin/MenuMoveUp/@x["id"]"><span class="glyphicon glyphicon-arrow-up">&nbsp;</span></a>
                     &nbsp;
-                    <a href="~/Cabinet/Admin/MenuMoveDn/@x["id"]/?SelectMenuId=@Model.SelectedMenuId"><span class="glyphicon glyphicon-arrow-down">&nbsp;</span></a>
+                    <a href="~/Cabinet/Admin/MenuMoveDn/@x["id"]"><span class="glyphicon glyphicon-arrow-down">&nbsp;</span></a>
                 </td>
                 <td>
                     @Html.ActionLink(@x["id"].ToString(), "MenuEdit", "Cabinet",

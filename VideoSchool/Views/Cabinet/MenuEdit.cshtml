@@ -18,29 +18,25 @@
         <span class="field-image input-group-addon " style="width:90px;"><i class="glyphicon glyphicon-check"></i> Main ID:</span>
         <div>
             <select class="form-control" name="main_id">
-                @foreach (DataRow x in Model.menuMainSelect.table.Rows)
+                @foreach (DataRow x in Model.selectMenuMain.table.Rows)
                 {
-                    <option @if (x["id"].ToString() == Model.SelectedMenuId) { @Html.Raw("selected")  }
+                    <option @if (x["id"].ToString() == Model.main_id) { @Html.Raw("selected")  }
                             value="@x["id"]">
-                       @x["id"] - @x["name"]
+                       @x["id"] - @x["main"] - @x["name"]
                         </option>
                 }
             </select>           
         </div>
-
     </div>
-    <div class="col-lg-12 row">
-        
+    <div class="col-lg-12 row">        
         <span class="field-image input-group-addon menuedit-span"  ><i class="glyphicon glyphicon-check"></i> Menu:</span>
         @Html.TextBox("menu", Model.menu, new { @class = "form-control" })
     </div>
-    <div class="col-lg-12 row">
-        
+    <div class="col-lg-12 row">        
         <span class="field-image input-group-addon  menuedit-span" ><i class="glyphicon glyphicon-check"></i> Href:</span>
         @Html.TextBox("href", Model.href, new { @class = "form-control" })
     </div>
-    <div class="col-lg-12 row">
-        
+    <div class="col-lg-12 row">        
         <span class="field-image input-group-addon  menuedit-span" style="width:90px;"><i class="glyphicon glyphicon-check"></i> Name:</span>
         @Html.TextBox("name", Model.name, new { @class = "form-control" })
     </div>
@@ -48,18 +44,16 @@
         <span class="field-image input-group-addon  menuedit-span"><i class="glyphicon glyphicon-check"></i> Info:</span>
         @Html.TextBox("info", Model.info, new { @class = "form-control" })
     </div>
-    <div class="col-lg-12 row">
-        
+    <div class="col-lg-12 row">        
         <span class="field-image input-group-addon menuedit-span"><i class="glyphicon glyphicon-check"></i> Status: </span>
         @Html.TextBox("status", Model.status, new { @class = "form-control" })
     </div>
-    <div class="col-lg-12 row">
-       
+    <div class="col-lg-12 row">       
         <span class="field-image input-group-addon menuedit-span"><i class="glyphicon glyphicon-check"></i> Nr:</span>
         @Html.TextBox("nr", Model.nr, new { @class = "form-control" })
     </div>
     <div class="col-lg-12 row">
         <input type="submit" value="Save changes" title="Save changes of the users" class="btn btn-success" />
-        @Html.ActionLink("Cancel", "MenusList", "Cabinet")
+        @Html.ActionLink("Delete", "DelMenu", "Cabinet", new { id = Model.id }, new { @class = "btn btn-danger" } )
     </div>
 }

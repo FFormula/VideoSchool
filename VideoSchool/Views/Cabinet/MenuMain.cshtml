@@ -46,7 +46,11 @@
                     @Html.ActionLink(@x["id"].ToString(), "MenuMainEdit", "Cabinet",
                                  new { id = x["id"].ToString() }, new { @class = "btn btn-success", @title = "edit menumain " + @x["id"].ToString() })
                 </td>
-                <td>@x["main"].ToString()</td>
+                <td>
+                    @Html.ActionLink(@x["main"].ToString(), "Menu", "Cabinet",
+                        new { id = x["id"].ToString() },
+                        new { @class = "btn btn-default", @title = "Show menu items for " + @x["id"].ToString() })
+                </td>
                 <td>@x["name"].ToString()</td>
                 <td>@x["info"].ToString()</td>
             </tr>

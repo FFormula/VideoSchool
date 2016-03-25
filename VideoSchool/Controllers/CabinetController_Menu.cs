@@ -9,15 +9,15 @@ namespace VideoSchool.Controllers
     public partial class CabinetController : Controller
     {
 
-        public ActionResult Menu (string SelectMenuId = "", string filter="")
+        public ActionResult Menu ()
         {
             try
             {
                 Init("cabinet_menu");
-                Menus menus = new Menus(this.shared);
-                if (SelectMenuId != "")
-                    menus.SelectMenuForMain(SelectMenuId);
-                menus.SelectMenuMainForFilterMenus();
+                Menus menus = new Menus(shared);
+                if (id != "")
+                    menus.SelectMenuInMenuMain(id);
+                menus.SelectMenuMain();
                 return View(menus);
             }
             catch (Exception ex)
@@ -39,7 +39,7 @@ namespace VideoSchool.Controllers
                     menus.SetDefaults();
                 else
                     menus.Select(id);
-                menus.SelectMenuMainForFilterMenus(menus.main_id);
+                menus.SelectMenuMain();
                 return View(menus);
             }
             catch (Exception ex)
@@ -55,7 +55,7 @@ namespace VideoSchool.Controllers
             {
                 Init("cabinet_menu");
                 if (id == "")
-                    return RedirectToAction("Menu", "Cabinet");
+                    return RedirectToAction("MainMenu", "Cabinet");
                 Menus menus = new Menus(this.shared);
                 if (id == "Add")
                 {
@@ -67,11 +67,11 @@ namespace VideoSchool.Controllers
                 {
                     menus.Select(id);
                     if (shared.error.AnyError())
-                        return RedirectToAction("Menu", "Cabinet");
+                        return RedirectToAction("MainMenu", "Cabinet");
                     menus.Copy(post);
                     menus.Update();
                 }
-                return RedirectToAction("Menu", "Cabinet");
+                return RedirectToAction("Menu", "Cabinet", new { id = menus.main_id } );
             }
             catch (Exception ex)
             {
@@ -79,7 +79,7 @@ namespace VideoSchool.Controllers
             }
         }
 
-        public ActionResult MenuMoveUp(string SelectMenuId = "")
+        public ActionResult MenuMoveUp()
         {
             try
             {
@@ -88,7 +88,7 @@ namespace VideoSchool.Controllers
                     return RedirectToAction("Menu", "Cabinet");
                 Menus menus = new Menus(this.shared);
                 menus.MoveUp(id);
-                return RedirectToAction("Menu", "Cabinet", new { SelectMenuId = SelectMenuId });
+                return RedirectToAction("Menu", "Cabinet", new { id = menus.main_id });
             }
             catch (Exception ex)
             {
@@ -96,7 +96,7 @@ namespace VideoSchool.Controllers
             }
         }
 
-        public ActionResult MenuMoveDn(string SelectMenuId = "")
+        public ActionResult MenuMoveDn()
         {
             try
             {
@@ -105,7 +105,7 @@ namespace VideoSchool.Controllers
                     return RedirectToAction("Menu", "Cabinet");
                 Menus menus = new Menus(this.shared);
                 menus.MoveDn(id);
-                return RedirectToAction("Menu", "Cabinet", new { SelectMenuId = SelectMenuId });
+                return RedirectToAction("Menu", "Cabinet", new { id = menus.main_id });
             }
             catch (Exception ex)
             {
@@ -117,7 +117,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                Init("cabinet_menumain");
+                Init("cabinet_menu");
                 MenuMain menumain = new MenuMain(this.shared);
                 menumain.SelectMenuMain();
                 return View(menumain);
@@ -133,7 +133,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                Init("cabinet_menumain");
+                Init("cabinet_menu");
                 if (id == "")
                     return RedirectToAction("MenuMain", "Cabinet");
                 MenuMain menumain = new MenuMain(this.shared);
@@ -154,7 +154,7 @@ namespace VideoSchool.Controllers
         {
             try
             {
-                Init("cabinet_menumain");
+                Init("cabinet_menu");
                 if (id == "")
                     return RedirectToAction("MenuMain", "Cabinet");
                 MenuMain menumain = new MenuMain(this.shared);
@@ -178,9 +178,28 @@ namespace VideoSchool.Controllers
             {
                 return ShowError(ex);
             }
-
-
-
         }
+
+        public ActionResult DelMenu()
+        {
+            try
+            {
+                Init("cabinet_menu");
+                if (id == "")
+                    return RedirectToAction("MenuMain", "Cabinet");
+                Menus menus = new Menus(this.shared);
+                menus.Select(id);
+                if (shared.error.AnyError())
+                    return RedirectToAction("MenuMain", "Cabinet");
+                string menuMainId = menus.main_id;
+                menus.Delete(id);
+                return RedirectToAction("Menu", "Cabinet", new { id = menuMainId });
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
+        }
+
     }
 }
