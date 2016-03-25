@@ -19,10 +19,10 @@ namespace VideoSchool.Models.Units
         public Action (Shared shared)
             : base (shared)
         {
-            SelectNew();
+            SetDefaults();
         }
 
-        public void SelectNew()
+        public void SetDefaults()
         {
             this.id = "New";
             this.name = "";

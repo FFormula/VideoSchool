@@ -17,7 +17,7 @@ namespace VideoSchool.Controllers
             try
             {
                 Init("cabinet_role");
-                Role role = new Models.Units.Role(shared);
+                Role role = new Role(shared);
                 role.filter = filter ?? "";
                 role.SelectRoles();
                 return View(role);
@@ -40,9 +40,9 @@ namespace VideoSchool.Controllers
                 Init("cabinet_role");
                 if (id == "")
                     return RedirectToAction("Role", "Cabinet");
-                Models.Units.Role role = new Models.Units.Role(shared);
+                Role role = new Role(shared);
                 if (id == "Add")
-                    role.SelectNew();
+                    role.SetDefaults();
                 else
                     role.Select(id);
                 return View(role);
@@ -69,10 +69,8 @@ namespace VideoSchool.Controllers
                 Models.Units.Role role = new Models.Units.Role(shared);
                 if (id == "Add")
                 {
-                    role.SelectNew();
-                    role.name = post.name;
-                    role.info = post.info;
-
+                    role.SetDefaults();
+                    role.Copy(post);
                     role.Insert();
                 }
                 else
@@ -80,9 +78,7 @@ namespace VideoSchool.Controllers
                     role.Select(id);
                     if (shared.error.AnyError())
                         return RedirectToAction("Role", "Cabinet");
-                    role.name = post.name;
-                    role.info = post.info;
-
+                    role.Copy(post);
                     role.Update();
                 }
                 return RedirectToAction("Role", "Cabinet");
@@ -97,23 +93,17 @@ namespace VideoSchool.Controllers
         /// Show List of Action for specified Role
         /// </summary>
         /// <returns></returns>
-        public ActionResult RoleAction()
+        public ActionResult RoleAction(string RoleId)
         {
             try
             {
                 Init("cabinet_role");
-                if (id == "")
+                if (RoleId == "")
                     return RedirectToAction("Role", "Cabinet");
-                Models.Units.Role role = new Models.Units.Role(shared);
-                if (id == "Add")
-                    role.SelectNew();
-                else
-                {
-                    role.Select(id);
-                    role.SelectActionByRoleID();
-                    role.SelectActionForAddRole(role.id);
-                }
-                return View(role);
+                RoleAction roleAction = new RoleAction(shared);
+                roleAction.SelectActionsInRole(RoleId);
+                roleAction.SelectNewActionsForRole(RoleId);
+                return View(roleAction);
             }
             catch (Exception ex)
             {
@@ -125,23 +115,21 @@ namespace VideoSchool.Controllers
         /// Add new record to table role_action
         /// </summary>
         /// <param name="RoleId"></param>
-        /// <param name="AddActionId"></param>
+        /// <param name="ActionId"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult AddAction4Role(string RoleId = "", string AddActionId = "")
+        public ActionResult AddRoleAction(string RoleId = "", string ActionId = "")
         {
             try
             {
                 Init("cabinet_role");
-                /*if (RoleId == "")
-                    return RedirectToAction("Role", "Cabinet");*/
-                Models.Units.Role role = new Models.Units.Role(shared);
-
-                role.Select(RoleId);
-                role.InsertActionToRole(RoleId, AddActionId);
-
-
-                return RedirectToAction("RoleAction", "Cabinet", new { id = RoleId });
+                if (RoleId == "") return RedirectToAction("RoleAction", "Cabinet");
+                if (ActionId == "") return RedirectToAction("RoleAction", "Cabinet");
+                RoleAction roleAction = new RoleAction(shared);
+                roleAction.InsertRoleAction(RoleId, ActionId);
+                if (shared.error.AnyError())
+                    return RedirectToAction("RoleAction", "Cabinet");
+                return RedirectToAction("RoleAction", "Cabinet", new { RoleId = RoleId });
             }
             catch (Exception ex)
             {
@@ -155,16 +143,18 @@ namespace VideoSchool.Controllers
         /// <param name="RoleId"></param>
         /// <param name="DelActionId"></param>
         /// <returns></returns>
-        public ActionResult DelActionInRole(string RoleId = "", string DelActionId = "")
+        public ActionResult DelActionRole(string RoleId = "", string ActionId = "")
         {
             try 
             {
                 Init("cabinet_role");
-                Models.Units.Role role = new Models.Units.Role(shared);
-                role.Select(RoleId);
-                role.DeleteFromRole(RoleId, DelActionId);
-
-                return RedirectToAction("RoleAction", "Cabinet", new { id = RoleId });
+                if (RoleId == "") return RedirectToAction("Role", "Cabinet");
+                if (ActionId == "") return RedirectToAction("RoleAction", "Cabinet", new { RoleId = RoleId });
+                RoleAction roleAction = new RoleAction(shared);
+                roleAction.DeleteRoleAction(RoleId, ActionId);
+                if (shared.error.AnyError())
+                    return RedirectToAction("RoleAction", "Cabinet", new { RoleId = RoleId });
+                return RedirectToAction("RoleAction", "Cabinet", new { RoleId = RoleId });
             }
             catch (Exception ex)
             {

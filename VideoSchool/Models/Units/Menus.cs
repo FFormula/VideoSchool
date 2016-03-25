@@ -16,13 +16,9 @@ namespace VideoSchool.Models.Units
         public string info { get; set; }
         public string status { get; set; }
         public string nr { get; set; }
-
-
-
         
         public QTable menuMainSelect { get; set; }
         public string SelectedMenuId { get; private set; }
-
 
         public Menus () : 
             this (null)
@@ -32,10 +28,10 @@ namespace VideoSchool.Models.Units
         public Menus(Shared shared)
             : base (shared)
         {
-            SelectNew();
+            SetDefaults();
         }
 
-        internal void SelectNew()
+        public void SetDefaults()
         {
             id = "";
             main_id = "";
@@ -43,9 +39,7 @@ namespace VideoSchool.Models.Units
             href = "";
             name = "";
             info = "";
-        }
-
-     
+        }     
 
         public void SelectMenus ()
         {

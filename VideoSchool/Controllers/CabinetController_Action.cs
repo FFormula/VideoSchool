@@ -44,7 +44,7 @@ namespace VideoSchool.Controllers
                     return RedirectToAction("Action", "Cabinet");
                 Models.Units.Action action = new Models.Units.Action(shared);
                 if (id == "Add")
-                    action.SelectNew();
+                    action.SetDefaults();
                 else
                     action.Select(id);
                 return View(action);
@@ -71,7 +71,7 @@ namespace VideoSchool.Controllers
                 Models.Units.Action action = new Models.Units.Action(shared);
                 if (id == "Add")
                 {
-                    action.SelectNew();
+                    action.SetDefaults();
                     action.Copy(post);
                     action.Insert();
                 }

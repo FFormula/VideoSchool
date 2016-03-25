@@ -146,6 +146,7 @@
     <Compile Include="Models\Share\EMail.cs" />
     <Compile Include="Models\Share\Log.cs" />
     <Compile Include="Models\Share\Menu.cs" />
+    <Compile Include="Models\Units\RoleAction.cs" />
     <Compile Include="Models\Units\UserContact.cs" />
     <Compile Include="Models\Units\UserPassport.cs" />
     <Compile Include="Models\Units\MenuMain.cs" />

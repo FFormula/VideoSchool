@@ -21,10 +21,10 @@ namespace VideoSchool.Models.Units
         public MenuMain(Shared shared)
             : base (shared)
         {
-            SelectNew();
+            SetDefaults();
         }
 
-        internal void SelectNew()
+        internal void SetDefaults()
         {
             id = "";
             main = "";

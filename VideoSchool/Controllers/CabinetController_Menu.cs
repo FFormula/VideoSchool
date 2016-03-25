@@ -36,7 +36,7 @@ namespace VideoSchool.Controllers
                     return RedirectToAction("Menu", "Cabinet");
                 Menus menus = new Menus(this.shared);
                 if (id == "Add")
-                    menus.SelectNew();
+                    menus.SetDefaults();
                 else
                     menus.Select(id);
                 menus.SelectMenuMainForFilterMenus(menus.main_id);
@@ -59,7 +59,7 @@ namespace VideoSchool.Controllers
                 Menus menus = new Menus(this.shared);
                 if (id == "Add")
                 {
-                    menus.SelectNew();
+                    menus.SetDefaults();
                     menus.Copy(post);
                     menus.Insert();
                 }
@@ -138,7 +138,7 @@ namespace VideoSchool.Controllers
                     return RedirectToAction("MenuMain", "Cabinet");
                 MenuMain menumain = new MenuMain(this.shared);
                 if (id == "Add")
-                    menumain.SelectNew();
+                    menumain.SetDefaults();
                 else
                     menumain.Select(id);
                 return View(menumain);
@@ -160,7 +160,7 @@ namespace VideoSchool.Controllers
                 MenuMain menumain = new MenuMain(this.shared);
                 if (id == "Add")
                 {
-                    menumain.SelectNew();
+                    menumain.SetDefaults();
                     menumain.Copy(post);
                     menumain.Insert();
                 }

@@ -1,45 +1,54 @@
-﻿@model VideoSchool.Models.Units.Role
+﻿@model VideoSchool.Models.Units.RoleAction
 @using System.Data;
 
 @{
     ViewBag.Title = "RoleAction";
 }
 
-<div class="alert alert-info">Actions of Role <strong>@Model.name</strong> </div>
+<div class="alert alert-info">Actions of Role <strong>@Model.role.name</strong> </div>
 
 <table class="table table-hover">
     <tr class="success">
-        <th><span class="glyphicon glyphicon-edit"></span></th>
-        <th>Name</th>
+        <th>RoleID</th>
+        <th>ActionID</th>
+        <th>Role</th>
+        <th>Action</th>
         <th>Info</th>
-        <th>Manager</th>
+        <th>&nbsp;</th>
     </tr>
 
-@foreach (DataRow x in Model.currentRoleAction.table.Rows)
+@if (Model.selectActionsInRole.lines > 0)
 {
+    foreach (DataRow x in Model.selectActionsInRole.table.Rows)
+    {
        <tr>
-        <td>@x["id"].ToString()</td>
-        
-        <td>@x["name"].ToString()</td>
-        <td>@x["info"].ToString()</td>
+        <td>@x["role_id"].ToString()</td>
+        <td>@x["action_id"].ToString()</td>
+        <td>@x["role_name"].ToString()</td>
+        <td>@x["action_name"].ToString()</td>
+        <td>@x["action_info"].ToString()</td>
         <td>
-            <a href="~/Cabinet/DelActionInRole?DelActionId=@x["id"]&RoleId=@Model.id" >
+            <a href="DelActionRole?RoleId=@x["role_id"]&ActionId=@x["action_id"]" >
                 <span class='btn btn-default glyphicon glyphicon-minus' style='color:red'>  </span>
             </a>
        </tr>
+    }
 }
 </table>
-@using (Html.BeginForm("AddAction4Role", "Cabinet", FormMethod.Get))
+@using (Html.BeginForm("AddRoleAction", "Cabinet", FormMethod.Get))
 {
 <div class="col-md-4">
    
-     <select name="AddActionId" class="form-control input-lg col-md-4" style="float:left">
-   @foreach (DataRow x in Model.Action4Select.table.Rows)
-   {
-        <option value="@x["id"]">@x["name"]</option>
-   }       
-    </select>
-     <input type="hidden" name="RoleId" value="@Model.id" />
+     <select name="ActionId" class="form-control input-lg col-md-4" style="float:left">
+    @if (Model.selectNewActionsForRole.lines > 0)
+     {
+       foreach (DataRow x in Model.selectNewActionsForRole.table.Rows)
+       {
+         <option value="@x["id"]">@x["name"]</option>
+       }       
+     }
+     </select>
+     <input type="hidden" name="RoleId" value="@Model.role.id" />
      <button type="submit" value="Filter" class="btn btn-primary form-control" style="float:left; width: 50px;">
           <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </button>

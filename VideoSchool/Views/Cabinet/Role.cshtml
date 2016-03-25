@@ -48,12 +48,14 @@
             <tr>
                 <td>
                     @Html.ActionLink(@x["id"].ToString(), "RoleEdit", "Cabinet",
-                                 new { id = x["id"].ToString() }, new { @class = "btn btn-success", @title = "edit role " + @x["id"].ToString() })
+                        new { id = x["id"].ToString() }, 
+                        new { @class = "btn btn-success", @title = "edit role " + @x["id"].ToString() })
                 </td>
                 <td>@x["name"].ToString()</td>
                 <td>@x["info"].ToString()</td>
                 <td>@Html.ActionLink("Actions "+@x["name"].ToString(), "RoleAction", "Cabinet",
-                                 new { id = x["id"].ToString() }, new { @class = "btn btn-default", @title = "edit actions for role " + @x["id"].ToString() })</td>
+                        new { RoleId = x["id"].ToString() }, 
+                        new { @class = "btn btn-default", @title = "edit actions for role " + @x["id"].ToString() })</td>
             </tr>
 
         }
