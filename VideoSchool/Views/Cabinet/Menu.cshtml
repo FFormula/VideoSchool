@@ -13,7 +13,8 @@
 
 
 <div class="col-lg-12 row">
-    <select class="field-filter form-control" name="SelectMenuId" onchange="document.location = '/Cabinet/Admin/Menu/' + this.value;">
+    <select class="field-filter form-control" name="SelectMenuId" 
+            onchange="document.location = '/Cabinet/Admin/Menu/' + this.value;">
         @foreach (DataRow x in Model.selectMenuMain.table.Rows)
         {
             <option @if (x["id"].ToString() == Model.menuMainId ) { @Html.Raw("selected") } value ="@x["id"]">@x["main"] – @x["name"]</option>

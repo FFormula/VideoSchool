@@ -59,14 +59,14 @@ namespace VideoSchool.Controllers
         /// <param name="post"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult RoleEdit(Models.Units.Role post)
+        public ActionResult RoleEdit(Role post)
         {
             try
             {
                 Init("cabinet_role");
                 if (id == "")
                     return RedirectToAction("Role", "Cabinet");
-                Models.Units.Role role = new Models.Units.Role(shared);
+                Role role = new Role(shared);
                 if (id == "Add")
                 {
                     role.SetDefaults();
