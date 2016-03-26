@@ -41,7 +41,7 @@
     @foreach (DataRow x in Model.qtable.table.Rows)
     {
         <tr>
-            <td>@Html.ActionLink(@x["id"].ToString(), "UserEdit", "Cabinet", 
+            <td>@Html.ActionLink(@x["id"].ToString(), "EditUser", "Cabinet", 
                                  new { id = x["id"].ToString() }, new { })</td>
             <td>@x["name"].ToString()</td>
             <td>@x["email"].ToString()</td>

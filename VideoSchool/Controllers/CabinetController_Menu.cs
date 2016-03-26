@@ -27,7 +27,7 @@ namespace VideoSchool.Controllers
         }
 
         [HttpGet]
-        public ActionResult MenuEdit ()
+        public ActionResult EditMenu()
         {
             try
             {
@@ -40,7 +40,7 @@ namespace VideoSchool.Controllers
                 else
                     menus.Select(id);
                 menus.SelectMenuMain();
-                return View(menus);
+                return View("MenuEdit",menus);
             }
             catch (Exception ex)
             {
@@ -49,7 +49,7 @@ namespace VideoSchool.Controllers
         }
 
         [HttpPost]
-        public ActionResult MenuEdit(Menus post)
+        public ActionResult EditMenu(Menus post)
         {
             try 
             {
@@ -79,7 +79,7 @@ namespace VideoSchool.Controllers
             }
         }
 
-        public ActionResult MenuMoveUp()
+        public ActionResult MoveUpMenu()
         {
             try
             {
@@ -96,7 +96,7 @@ namespace VideoSchool.Controllers
             }
         }
 
-        public ActionResult MenuMoveDn()
+        public ActionResult MoveDnMenu()
         {
             try
             {
@@ -129,7 +129,7 @@ namespace VideoSchool.Controllers
         }
 
         [HttpGet]
-        public ActionResult MenuMainEdit()
+        public ActionResult EditMenuMain()
         {
             try
             {
@@ -141,7 +141,7 @@ namespace VideoSchool.Controllers
                     menumain.SetDefaults();
                 else
                     menumain.Select(id);
-                return View(menumain);
+                return View("MenuMainEdit", menumain);
             }
             catch (Exception ex)
             {
@@ -150,7 +150,7 @@ namespace VideoSchool.Controllers
         }
 
         [HttpPost]
-        public ActionResult MenuMainEdit(MenuMain post)
+        public ActionResult EditMenuMain(MenuMain post)
         {
             try
             {

@@ -33,7 +33,7 @@ namespace VideoSchool.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult RoleEdit()
+        public ActionResult EditRole()
         {
             try
             {
@@ -45,7 +45,7 @@ namespace VideoSchool.Controllers
                     role.SetDefaults();
                 else
                     role.Select(id);
-                return View(role);
+                return View("RoleEdit",role);
             }
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ namespace VideoSchool.Controllers
         /// <param name="post"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult RoleEdit(Role post)
+        public ActionResult EditRole(Role post)
         {
             try
             {
@@ -118,7 +118,7 @@ namespace VideoSchool.Controllers
         /// <param name="ActionId"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult RoleActionAdd(string RoleId = "", string ActionId = "")
+        public ActionResult AddRoleAction(string RoleId = "", string ActionId = "")
         {
             try
             {

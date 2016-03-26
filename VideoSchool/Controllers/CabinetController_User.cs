@@ -32,7 +32,7 @@ namespace VideoSchool.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult UserEdit()
+        public ActionResult EditUser()
         {
             try
             {
@@ -55,7 +55,7 @@ namespace VideoSchool.Controllers
         /// <param name="post"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult UserEdit(User post)
+        public ActionResult EditUser(User post)
         {
             try
             {

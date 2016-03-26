@@ -19,7 +19,7 @@
             <button type="submit" value="Filter" class="btn btn-primary form-control btn-filter">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
             </button> &nbsp;
-            @Html.ActionLink("Add", "RoleEdit", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus btn btn-success", @title = "add new role" })
+            @Html.ActionLink("Add", "EditRole", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus btn btn-success", @title = "add new role" })
 
         </div>
     }
@@ -47,7 +47,7 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(@x["id"].ToString(), "RoleEdit", "Cabinet",
+                    @Html.ActionLink(@x["id"].ToString(), "EditRole", "Cabinet",
                         new { id = x["id"].ToString() }, 
                         new { @class = "btn btn-success", @title = "edit role " + @x["id"].ToString() })
                 </td>

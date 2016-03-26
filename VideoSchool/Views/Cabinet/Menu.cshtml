@@ -28,7 +28,7 @@
 
 <div class="col-lg-12 row">
     There are @Model.qtable.lines rows.
-    @Html.ActionLink("Add", "MenuEdit", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus btn btn-default", @title = "add new action" })
+    @Html.ActionLink("Add", "EditMenu", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus btn btn-default", @title = "add new action" })
 </div>
 <hr />
 
@@ -47,12 +47,12 @@
         {
             <tr>
                 <td>
-                    <a href="~/Cabinet/Admin/MenuMoveUp/@x["id"]"><span class="glyphicon glyphicon-arrow-up">&nbsp;</span></a>
+                    <a href="~/Cabinet/Admin/MoveUpMenu/@x["id"]"><span class="glyphicon glyphicon-arrow-up">&nbsp;</span></a>
                     &nbsp;
-                    <a href="~/Cabinet/Admin/MenuMoveDn/@x["id"]"><span class="glyphicon glyphicon-arrow-down">&nbsp;</span></a>
+                    <a href="~/Cabinet/Admin/MoveDnMenu/@x["id"]"><span class="glyphicon glyphicon-arrow-down">&nbsp;</span></a>
                 </td>
                 <td>
-                    @Html.ActionLink(@x["id"].ToString(), "MenuEdit", "Cabinet",
+                    @Html.ActionLink(@x["id"].ToString(), "EditMenu", "Cabinet",
                                  new { id = x["id"].ToString() }, new { @class = "btn btn-success", @title = "edit action " + @x["id"].ToString() })
                 </td>
                 <td>@x["menu"].ToString()</td>

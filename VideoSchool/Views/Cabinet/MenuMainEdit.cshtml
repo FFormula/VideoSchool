@@ -6,7 +6,7 @@
 
 <h2 class="alert-link">MenuMain Edit</h2>
 
-@using (Html.BeginForm("MenuMainEdit", "Cabinet"))
+@using (Html.BeginForm("EditMenuMain", "Cabinet"))
 {
     <div style="color: red">
         @ViewBag.error
@@ -35,7 +35,7 @@
     </div>
     <div class="col-lg-12 row">
         <input type="submit" value="Save changes" title="Save changes of the Menu Mains" class="btn btn-success" />
-        @Html.ActionLink("Cancel", "MenusList", "Cabinet")
+        @Html.ActionLink("Cancel", "MenuMain", "Cabinet")
     </div>
 }
 
