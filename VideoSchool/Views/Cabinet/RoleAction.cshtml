@@ -28,14 +28,14 @@
         <td>@x["action_name"].ToString()</td>
         <td>@x["action_info"].ToString()</td>
         <td>
-            <a href="DelActionRole?RoleId=@x["role_id"]&ActionId=@x["action_id"]" >
+            <a href="ActionRoleDrop?RoleId=@x["role_id"]&ActionId=@x["action_id"]" >
                 <span class='btn btn-default glyphicon glyphicon-minus' style='color:red'>  </span>
             </a>
        </tr>
     }
 }
 </table>
-@using (Html.BeginForm("AddRoleAction", "Cabinet", FormMethod.Get))
+@using (Html.BeginForm("RoleActionAdd", "Cabinet", FormMethod.Get))
 {
 <div class="col-md-4">
    

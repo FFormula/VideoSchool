@@ -35,7 +35,7 @@ namespace VideoSchool.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult ActionEdit()
+        public ActionResult EditAction()
         {
             try
             {
@@ -47,7 +47,7 @@ namespace VideoSchool.Controllers
                     action.SetDefaults();
                 else
                     action.Select(id);
-                return View(action);
+                return View("ActionEdit",action);
             }
             catch (Exception ex)
             {
@@ -61,7 +61,7 @@ namespace VideoSchool.Controllers
         /// <param name="post"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ActionEdit(Models.Units.Action post)
+        public ActionResult EditAction(Models.Units.Action post)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace VideoSchool.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult ActionDrop()
+        public ActionResult DropAction()
         {
             try
             {

@@ -26,7 +26,7 @@
 
 <div class="col-lg-12 row">
     There are @Model.qtable.lines rows.
-    @Html.ActionLink("Add", "ActionEdit", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus btn btn-default", @title = "add new action" })
+    @Html.ActionLink("Add", "EditAction", "Cabinet", new { id = "Add" }, new { @class = "glyphicon glyphicon-plus btn btn-default", @title = "add new action" })
 </div>
 <hr />
 <div>
@@ -45,7 +45,7 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(@x["id"].ToString(), "ActionEdit", "Cabinet",
+                    @Html.ActionLink(@x["id"].ToString(), "EditAction", "Cabinet",
                                  new { id = x["id"].ToString() }, new { @class= "btn btn-success", @title="edit action "+@x["id"].ToString() })
             </td>
             <td>@x["name"].ToString()</td>

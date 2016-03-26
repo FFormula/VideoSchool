@@ -118,7 +118,7 @@ namespace VideoSchool.Controllers
         /// <param name="ActionId"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult AddRoleAction(string RoleId = "", string ActionId = "")
+        public ActionResult RoleActionAdd(string RoleId = "", string ActionId = "")
         {
             try
             {
@@ -143,7 +143,7 @@ namespace VideoSchool.Controllers
         /// <param name="RoleId"></param>
         /// <param name="DelActionId"></param>
         /// <returns></returns>
-        public ActionResult DelActionRole(string RoleId = "", string ActionId = "")
+        public ActionResult ActionRoleDrop(string RoleId = "", string ActionId = "")
         {
             try 
             {

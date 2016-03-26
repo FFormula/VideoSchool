@@ -11,28 +11,29 @@
     <div style="color: red">
         @ViewBag.error
     </div>
-    <div>
+    <div class="col-lg-12 row">
         <h2 class="alert-link"></h2>
         <span class="alert alert-info">
             <strong>ID: </strong> @Model.id
         </span>
+        <h2 class="alert-link"></h2>
     </div>
-    <div>
-        <h3 class="alert-link">Main:</h3>
-        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+    <div class="col-lg-12 row">
+        <!--<h3 class="alert-link">Main:</h3>-->
+        <span class="field-image input-group-addon menuedit-span " ><i class="glyphicon glyphicon-check"><strong> Main:</strong></i></span>
         @Html.TextBox("main", Model.main, new { @class = "form-control" })
     </div>
-    <div>
-        <h3 class="alert-link">Name:</h3>
-        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+    <div class="col-lg-12 row">
+        
+        <span class="field-image input-group-addon menuedit-span"><i class="glyphicon glyphicon-check"><strong> Name: </strong></i></span>
         @Html.TextBox("name", Model.name, new { @class = "form-control" })
     </div>
-    <div>
-        <h3 class="alert-link">Info:</h3>
-        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+    <div class="col-lg-12 row">
+        
+        <span class="field-image input-group-addon" style="width:90px; text-align: left; margin-top: 2px;"><i class="glyphicon glyphicon-check"><strong> Info: </strong></i></span>
         @Html.TextArea("info", Model.info, new { @class = "form-control", @cols = "40", @rows = "6" })
     </div>
-    <div>
+    <div class="col-lg-12 row">
         <input type="submit" value="Save changes" title="Save changes of the Menu Mains" class="btn btn-success" />
         @Html.ActionLink("Cancel", "MenusList", "Cabinet")
     </div>

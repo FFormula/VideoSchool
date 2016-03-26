@@ -1,41 +1,41 @@
 ﻿@model VideoSchool.Models.Units.Action
 
 @{
-    ViewBag.Title = "ActionEdit";
+    ViewBag.Title = "EditAction";
 }
 
     <h2 class="alert-link" >ActionEdit</h2>
 
-@using (Html.BeginForm("ActionEdit", "Cabinet"))
+@using (Html.BeginForm("EditAction", "Cabinet"))
 {
     <div style="color: red">
         @ViewBag.error
     </div>
-    <div>
+    <div class="col-lg-12 row">
         <h2 class="alert-link"></h2>
         <span class="alert alert-info">
             <strong>ID: </strong> @Model.id 
         </span>
-       
+        <h2 class="alert-link"></h2>
     </div>
-    <div>
-        <h3 class="alert-link">Name:</h3>
+    <div class="col-lg-12 row">
+        
 
-        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+        <span class="field-image input-group-addon menuedit-span"><i class="glyphicon glyphicon-check"> Name:</i></span>
         @Html.TextBox("name", Model.name, new { @class = "form-control", @placeholder = "Password" })
     </div>
-    <div>
-        <h3 class="alert-link">Info:</h3>
-        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+    <div class="col-lg-12 row">
+       
+        <span class="field-image input-group-addon menuedit-span"><i class="glyphicon glyphicon-check"> Info:</i></span>
         @Html.TextBox("info", Model.info, new { @class = "form-control" })
     </div>
-    <div>
-        <h3 class="alert-link">Status:</h3>
-        <span class="field-image input-group-addon"><i class="glyphicon glyphicon-check"></i></span>
+    <div class="col-lg-12 row">
+       
+        <span class="field-image input-group-addon menuedit-span"><i class="glyphicon glyphicon-check"> Status:</i></span>
         @Html.TextBox("status", Model.status, new { @class = "form-control" })
     </div>
-    <div>
+    <div class="col-lg-12 row">
         <input type="submit" value="Save changes" title="Save changes of the users" class="btn btn-success" />
-        @Html.ActionLink("Delete action", "ActionDrop", "Cabinet", new { id = Model.id }, new { @class="btn btn-warning" })
+        @Html.ActionLink("Delete action", "DropAction", "Cabinet", new { id = Model.id }, new { @class="btn btn-warning" })
     </div>
 }
