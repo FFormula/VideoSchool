@@ -30,11 +30,13 @@ namespace VideoSchool.Controllers
             try
             {
                 UserPassw passw = new UserPassw(shared);
-
                 passw.Copy(post);
+                passw.id = Session["user_id"].ToString();
                 passw.ChangePassword();
                 Init("cabinet_password");
-                return View(passw);
+                if (shared.error.AnyError())
+                    return View(passw);
+                return RedirectToAction("Logout", "Login");
             }
             catch (Exception ex)
             {

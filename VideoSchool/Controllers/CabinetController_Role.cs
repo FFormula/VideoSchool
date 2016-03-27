@@ -143,7 +143,7 @@ namespace VideoSchool.Controllers
         /// <param name="RoleId"></param>
         /// <param name="DelActionId"></param>
         /// <returns></returns>
-        public ActionResult ActionRoleDrop(string RoleId = "", string ActionId = "")
+        public ActionResult DropActionRole(string RoleId = "", string ActionId = "")
         {
             try 
             {

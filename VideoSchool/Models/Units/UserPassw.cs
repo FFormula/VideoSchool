@@ -72,28 +72,40 @@ namespace VideoSchool.Models.Units
         /// <param name="new_passw">New user password</param>
         /// <returns>True - changed successfully, False - old password is wrong</returns>
 
-        internal void ChangePassword()
+        public void ChangePassword()
         {
             try
             {
-                if (this.newPassword == this.newPassword1) 
-                    
+                if (this.newPassword != this.newPassword1)
                 {
-                    string query = @"
-		              UPDATE user
-		                SET passw = password('this.passw')
-		                WHERE id = '1'
-		                AND passw = password('old_passw')
-		                LIMIT 1";
-                    shared.db.Update(query);
-
-                   
+                    shared.error.MarkUserError("Passwords mismatch");
+                    return;
                 }
+                if (this.newPassword.Length < 4)
+                {
+                    shared.error.MarkUserError("New password too short");
+                    return;
+                }
+                string match = shared.db.Scalar(@"
+                     SELECT COUNT(*) FROM user 
+		              WHERE id = '" + shared.db.addslashes(this.id) + @"'
+		                AND passw = password('" + shared.db.addslashes(this.oldPassword) + @"')");
+                if (match != "1")
+                {
+                    shared.error.MarkUserError("Incorrect password. Operation aborted.");
+                    return;
+                }
+                string query = @"
+		             UPDATE user
+		                SET passw = password('" + shared.db.addslashes(this.newPassword) + @"')
+		              WHERE id = '" + shared.db.addslashes (this.id) + @"'
+		                AND passw = password('" + shared.db.addslashes(this.oldPassword) + @"')
+		              LIMIT 1";
+                shared.db.Update(query);
             }
             catch (Exception ex)
             {
                 ThrowError(ex);
-             
             }
         }
 
