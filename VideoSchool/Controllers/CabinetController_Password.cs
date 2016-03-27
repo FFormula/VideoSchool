@@ -21,5 +21,13 @@ namespace VideoSchool.Controllers
                 return ShowError(ex);
             }
         }
+
+        public ActionResult EditPassword()
+        {
+            UserPassw passw = new UserPassw(shared);
+            Init("cabinet_password");
+
+            return View("PasswordNew", passw);
+        }
     }
 }

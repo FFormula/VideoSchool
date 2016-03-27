@@ -196,6 +196,7 @@
     <Content Include="Views\Cabinet\Password.cshtml" />
     <Content Include="Views\Cabinet\Passport.cshtml" />
     <Content Include="Views\Cabinet\Contact.cshtml" />
+    <Content Include="Views\Cabinet\PasswordNew.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
