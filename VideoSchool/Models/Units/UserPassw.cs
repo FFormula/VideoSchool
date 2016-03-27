@@ -1,11 +1,19 @@
 ﻿using System;
 using VideoSchool.Models.Share;
 
+
 namespace VideoSchool.Models.Units
 {
     public class UserPassw : User
     {
         Random rand = new Random();
+        
+        
+        public string oldPassword { get; set; }
+        public string newPassword { get; set; }
+        public string newPassword1 { get; set; }
+
+
 
         public UserPassw() : this(null)
         {
@@ -54,6 +62,49 @@ namespace VideoSchool.Models.Units
                 ThrowError(ex);
                 return "";
             }
+        }
+
+
+        /// <summary>
+        /// Change user password manually, with old and new one.
+        /// </summary>
+        /// <param name="old_passw">Old user password</param>
+        /// <param name="new_passw">New user password</param>
+        /// <returns>True - changed successfully, False - old password is wrong</returns>
+
+        internal void ChangePassword()
+        {
+            try
+            {
+                if (this.newPassword == this.newPassword1) 
+                    
+                {
+                    string query = @"
+		              UPDATE user
+		                SET passw = password('this.passw')
+		                WHERE id = '1'
+		                AND passw = password('old_passw')
+		                LIMIT 1";
+                    shared.db.Update(query);
+
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                ThrowError(ex);
+             
+            }
+        }
+
+        internal void Copy(UserPassw post)
+        {
+            this.passw = post.passw;
+            this.name = post.name;
+            this.oldPassword = post.oldPassword;
+            this.newPassword = post.newPassword;
+            this.newPassword1 = post.newPassword1;
+           
         }
 
         public string getRandomCode (int length = 16)
@@ -111,23 +162,9 @@ namespace VideoSchool.Models.Units
             }
         }
 
-        /// <summary>
-        /// Change user password manually, with old and new one.
-        /// </summary>
-        /// <param name="old_passw">Old user password</param>
-        /// <param name="new_passw">New user password</param>
-        /// <returns>True - changed successfully, False - old password is wrong</returns>
-        bool ChangePassword(string old_passw, string new_passw)		// смена старого пароля
-        {
-            // no action checking
-            string query = @"
-		    UPDATE user
-		       SET passw = password('this.passw')
-		     WHERE id = '1'
-		       AND passw = password('old_passw')
-		     LIMIT 1";
-            return true;
-        }
+   
+      
+
 
 
     }

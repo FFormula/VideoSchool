@@ -7,7 +7,7 @@ namespace VideoSchool.Controllers
 {
     public partial class CabinetController : Controller
     {
-
+        [HttpGet]
         public ActionResult Password()
         {
             try
@@ -22,12 +22,26 @@ namespace VideoSchool.Controllers
             }
         }
 
-        public ActionResult EditPassword()
-        {
-            UserPassw passw = new UserPassw(shared);
-            Init("cabinet_password");
 
-            return View("PasswordNew", passw);
+
+        [HttpPost]
+        public ActionResult Password(UserPassw post)
+        {
+            try
+            {
+                UserPassw passw = new UserPassw(shared);
+
+                passw.Copy(post);
+                passw.ChangePassword();
+                Init("cabinet_password");
+                return View(passw);
+            }
+            catch (Exception ex)
+            {
+                return ShowError(ex);
+            }
         }
+
+
     }
 }
